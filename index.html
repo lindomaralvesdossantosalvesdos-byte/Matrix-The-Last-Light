@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
 <title>Matrix: The Last Light</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,6 +16,11 @@
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIk1hdHJpeDogVGhlIExhc3QgTGlnaHQiLCAic2hvcnRfbmFtZSI6ICJNYXRyaXggVExMIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogImZ1bGxzY3JlZW4iLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDAwMDAwIiwgInRoZW1lX2NvbG9yIjogIiMwMDAwMDAiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQtcHJpbWFyeSIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInJTNFJTNDcmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgZmlsbD0nJTIzMDAwJy8lM0UlM0N0ZXh0IHg9JzI1NicgeT0nMzIwJyBmb250LXNpemU9JzI4MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZmlsbD0nJTIzMDBFNjc2JyBmb250LXdlaWdodD0nYm9sZCclM0VNJTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ==">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
 <style>
+/* Anti-flash branco no WebView */
+html{background:#000000!important;}
+body{background:#000000!important;opacity:0;animation:fadeIn .3s ease .1s forwards;}
+@keyframes fadeIn{to{opacity:1;}}
+
 html{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:#000;}
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -909,6 +916,12 @@ body::after{
 .battle-hpbar{height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,.1);width:90px;}
 .battle-hpfill{height:100%;border-radius:2px;transition:width .4s ease;}
 .battle-hpnum{font-size:9px;color:rgba(255,255,255,.35);font-family:var(--font-ui);}
+</style>
+<style>
+/* WebIntoApp fullscreen garantido */
+*{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;}
+canvas{display:block;}
+button{-webkit-appearance:none;touch-action:manipulation;}
 </style>
 </head>
 <body onclick="if(!SFX.ctx)SFX.init();" ontouchstart="if(!SFX.ctx)SFX.init();">
