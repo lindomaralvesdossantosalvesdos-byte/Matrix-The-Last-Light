@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Matrix TLL">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#000000">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIk1hdHJpeDogVGhlIExhc3QgTGlnaHQiLCAic2hvcnRfbmFtZSI6ICJNYXRyaXggVExMIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDAwMDAwIiwgInRoZW1lX2NvbG9yIjogIiMwMDAwMDAiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJyUzRSUzQ3JlY3Qgd2lkdGg9JzUxMicgaGVpZ2h0PSc1MTInIGZpbGw9JyUyMzAwMCcvJTNFJTNDdGV4dCB4PScyNTYnIHk9JzMyMCcgZm9udC1zaXplPScyODAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGZvbnQtZmFtaWx5PSdtb25vc3BhY2UnIGZpbGw9JyUyMzAwRTY3NicgZm9udC13ZWlnaHQ9J2JvbGQnJTNFTSUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSJ9XX0=">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -181,27 +182,26 @@ body::after{
   font-family:var(--font-ui);font-size:12px;
   color:var(--g);display:flex;align-items:center;gap:5px;letter-spacing:1px;
 }
-.hud-bars{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px;}
-.hud-row{display:flex;align-items:center;gap:8px;}
+.hud-bars{display:flex;flex-direction:row;gap:6px;}
+.hud-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
 .hud-lbl{
   font-family:var(--font-ui);font-weight:400;
-  font-size:9px;color:#3a5a3a;letter-spacing:2px;
-  width:26px;flex-shrink:0;text-transform:uppercase;
+  font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:uppercase;
 }
 .hud-track{
-  flex:1;height:3px;
-  background:rgba(255,255,255,.04);
-  border-radius:2px;overflow:hidden;
+  width:100%;height:5px;
+  background:rgba(255,255,255,.06);
+  border-radius:3px;overflow:hidden;
 }
-.hud-fill{height:100%;transition:width .6s cubic-bezier(.4,0,.2,1);border-radius:2px;}
+.hud-fill{height:100%;transition:width .6s cubic-bezier(.4,0,.2,1);border-radius:3px;}
 .f-hp {background:linear-gradient(90deg,#00cc33,#00FF41);}
 .f-san{background:linear-gradient(90deg,#5555cc,#8888FF);}
 .f-luc{background:linear-gradient(90deg,#0088bb,#00CCFF);}
 .f-esp{background:linear-gradient(90deg,#cc9900,#FFD700);}
 .f-rad{background:linear-gradient(90deg,#cc3300,#FF5500);}
 .hud-val{
-  font-size:9px;color:#2a4a2a;
-  width:20px;text-align:right;flex-shrink:0;
+  font-family:var(--font-ui);font-weight:600;
+  font-size:11px;color:rgba(255,255,255,.5);text-align:center;
 }
 .hud-val.danger{color:var(--red);}
 
@@ -791,6 +791,32 @@ body::after{
   z-index:0;
 }
 #s-menu > *{ position:relative;z-index:1; }
+
+/* MENU ANIMATIONS */
+@keyframes logoIn{from{opacity:0;transform:translateY(-30px) scale(.85);}to{opacity:1;transform:none;}}
+@keyframes btnIn{from{opacity:0;transform:translateX(-20px);}to{opacity:1;transform:none;}}
+@keyframes lineEx{from{width:0;}to{width:180px;}}
+@keyframes partFloat{0%{transform:translateY(100vh);opacity:0;}10%{opacity:.5;}90%{opacity:.2;}100%{transform:translateY(-10px) translateX(var(--dx,0px));opacity:0;}}
+.logo{animation:logoIn 1s .1s both;}
+.logo-sub{animation:logoIn .8s .35s both;}
+.menu-line{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);margin:12px auto;animation:lineEx .8s .5s ease forwards;}
+.mbtn{opacity:0;animation:btnIn .5s ease forwards;}
+.mbtn:nth-child(3){animation-delay:.55s}
+.mbtn:nth-child(4){animation-delay:.7s}
+.mbtn:nth-child(5){animation-delay:.85s}
+.mbtn:nth-child(6){animation-delay:1s}
+.menu-part{position:absolute;width:2px;height:2px;background:var(--g);border-radius:50%;animation:partFloat linear infinite;pointer-events:none;}
+
+/* BATTLE ARENA */
+.battle-arena{width:100%;border-radius:8px;overflow:hidden;border:1px solid rgba(255,59,59,.25);background:#050a05;margin-bottom:6px;}
+.battle-canvas{width:100%;display:block;image-rendering:pixelated;}
+.battle-hprow{display:flex;justify-content:space-between;padding:6px 10px;background:rgba(0,0,0,.85);border-top:1px solid rgba(255,255,255,.05);}
+.battle-hpblock{display:flex;flex-direction:column;gap:2px;flex:1;}
+.battle-hpblock.r{align-items:flex-end;}
+.battle-hpname{font-family:var(--font-ui);font-weight:600;font-size:10px;letter-spacing:2px;}
+.battle-hpbar{height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,.1);width:90px;}
+.battle-hpfill{height:100%;border-radius:2px;transition:width .4s ease;}
+.battle-hpnum{font-size:9px;color:rgba(255,255,255,.35);font-family:var(--font-ui);}
 </style>
 </head>
 <body>
@@ -798,13 +824,17 @@ body::after{
 <div id="popup"></div>
 
 <!-- MENU -->
-<div id="s-menu" class="scr on">
+<div id="s-menu" class="scr on" style="overflow:hidden;position:relative;">
+  <div id="menu-parts" style="position:absolute;inset:0;pointer-events:none;z-index:0;"></div>
+  <div style="position:relative;z-index:1;display:contents;">
   <div class="logo">MATRIX</div>
+  <div class="menu-line"></div>
   <div class="logo-sub">THE LAST LIGHT</div>
   <button class="mbtn" onclick="G.startGame()">INICIAR MATRIX</button>
   <button class="mbtn" onclick="G.showFinals()">ÁRVORE DE FINAIS</button>
   <button class="mbtn" onclick="G.showComputer()">💻 COMPUTADOR CENTRAL</button>
   <button class="mbtn" id="install-btn" onclick="installApp()" style="display:none;border-color:rgba(0,230,118,.4);margin-top:10px">⬇ INSTALAR COMO APP</button>
+  </div>
   <div class="menu-footer">Radiação • Sanidade • Lucidez • Esperança<br>Suas escolhas determinarão seu destino</div>
 </div>
 
@@ -1071,6 +1101,181 @@ const SAVE = {
 // ============================================================
 // GAME ENGINE
 // ============================================================
+
+// ================================================
+// BATTLE — Arena 2D pixel art
+// ================================================
+const BATTLE={
+  cv:null,ctx:null,raf:null,
+  fr:0,weapon:'punhos',mkey:'urso',
+  mhp:30,mmhp:30,
+  pAnim:'idle',pFr:0,
+  eAnim:'idle',eFr:0,
+  shk:0,flashA:0,flashC:'rgba(255,0,0,.4)',
+
+  bg(ctx,W,H){
+    // Ceu
+    ctx.fillStyle='#04080a';ctx.fillRect(0,0,W,H);
+    // Montanhas
+    ctx.fillStyle='#0a1a0d';
+    ctx.beginPath();ctx.moveTo(0,H);
+    [[0,.72],[.08,.52],[.2,.65],[.38,.48],[.55,.62],[.72,.5],[.88,.65],[1,.72]].forEach(([x,y])=>ctx.lineTo(x*W,y*H));
+    ctx.lineTo(W,H);ctx.closePath();ctx.fill();
+    // Arbores
+    [.04,.14,.34,.66,.84,.93].forEach(tx=>{
+      const x=tx*W,by=H*.74;
+      ctx.fillStyle='#081408';
+      ctx.fillRect(x-2,by,4,H*.14);
+      ctx.fillStyle='#0b1c0c';
+      ctx.beginPath();ctx.moveTo(x,by-H*.11);ctx.lineTo(x-9,by);ctx.lineTo(x+9,by);ctx.closePath();ctx.fill();
+    });
+    // Chao
+    ctx.fillStyle='#060e06';ctx.fillRect(0,H*.74,W,H*.26);
+    // Alcapao bunker
+    ctx.fillStyle='#1a2e1a';ctx.fillRect(W*.1,H*.71,W*.13,H*.04);
+    ctx.fillStyle='#0e1e0e';ctx.fillRect(W*.115,H*.71,2,H*.04);ctx.fillRect(W*.18,H*.71,2,H*.04);
+    // Cercas
+    for(let fx=W*.06;fx<W*.26;fx+=7){ctx.fillStyle='#162616';ctx.fillRect(fx,H*.67,2,H*.06);}
+    ctx.fillStyle='#162616';ctx.fillRect(W*.06,H*.685,W*.20,1);
+    // Lua
+    ctx.fillStyle='rgba(180,210,180,.12)';ctx.beginPath();ctx.arc(W*.84,H*.17,W*.038,0,Math.PI*2);ctx.fill();
+  },
+
+  drawWilliam(ctx,W,H){
+    const x=W*.22,y=H*.77;
+    const f=Math.floor(this.fr/10)%2;
+    let ox=0,oy=0;
+    if(this.pAnim==='attack'){const af=Math.floor(this.pFr/5)%4;ox=af<2?9:2;oy=af<2?-3:0;}
+    if(this.pAnim==='hurt'){oy=Math.sin(this.pFr*.6)*3;}
+    // Sombra
+    ctx.fillStyle='rgba(0,0,0,.25)';ctx.beginPath();ctx.ellipse(x,y,11,3,0,0,Math.PI*2);ctx.fill();
+    // Corpo
+    ctx.fillStyle='#253525';ctx.fillRect(x-8+ox,y-22+oy,16,14);
+    // Cabeca
+    ctx.fillStyle='#c8a882';ctx.fillRect(x-6+ox,y-34+oy,12,12);
+    // Cabelo
+    ctx.fillStyle='#3a2518';ctx.fillRect(x-6+ox,y-34+oy,12,4);
+    // Olhos
+    ctx.fillStyle='#00E676';ctx.fillRect(x-3+ox,y-27+oy,2,2);ctx.fillRect(x+1+ox,y-27+oy,2,2);
+    // Pernas
+    const lg=f?1:-1;
+    ctx.fillStyle='#182818';
+    ctx.fillRect(x-7+ox,y-8+oy+lg,6,8);ctx.fillRect(x+1+ox,y-8+oy-lg,6,8);
+    // Arma
+    const wc={espada:'#aaaaff',arco:'#88ffaa',escopeta:'#ffaa44',punhos:'#ff8888'};
+    ctx.fillStyle=wc[this.weapon]||'#aaa';
+    if(this.weapon==='espada'){
+      const sx=x+12+ox+(this.pAnim==='attack'?10:4);
+      ctx.fillRect(sx,y-30+oy,2,18);ctx.fillRect(sx-3,y-26+oy,8,2);
+    } else if(this.weapon==='arco'){
+      ctx.strokeStyle=wc.arco;ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(x+14+ox,y-22+oy,8,-1.2,1.2);ctx.stroke();
+      if(this.pAnim==='attack'){ctx.beginPath();ctx.moveTo(x+14+ox,y-18+oy);ctx.lineTo(x+28+ox,y-22+oy);ctx.stroke();}
+    } else if(this.weapon==='escopeta'){
+      ctx.fillRect(x+10+ox,y-24+oy,14+(this.pAnim==='attack'?5:0),4);
+      ctx.fillRect(x+12+ox,y-26+oy,8,2);
+    } else {
+      if(this.pAnim==='attack'){ctx.beginPath();ctx.arc(x+22+ox,y-22+oy,6,0,Math.PI*2);ctx.fill();}
+      else {ctx.fillRect(x+8+ox,y-22+oy,6,5);ctx.fillRect(x+8+ox,y-18+oy,8,5);}
+    }
+  },
+
+  drawMonster(ctx,W,H){
+    const x=W*.76,y=H*.77;
+    const sh=this.eAnim==='hurt'?Math.sin(this.eFr*.8)*5:0;
+    const fl=Math.sin(this.fr*.09)*3;
+    if(this.eAnim==='dead'){
+      ctx.globalAlpha=.2;ctx.fillStyle='#440000';ctx.fillRect(x-16,y-6,32,6);ctx.globalAlpha=1;return;
+    }
+    ctx.fillStyle='rgba(0,0,0,.2)';ctx.beginPath();ctx.ellipse(x+sh,y,16,4,0,0,Math.PI*2);ctx.fill();
+    if(this.mkey==='urso'){
+      ctx.fillStyle='#4a2a18';ctx.fillRect(x-18+sh,y-30+fl,36,26);
+      ctx.fillStyle='#5a3218';ctx.fillRect(x-12+sh,y-48+fl,24,20);
+      ctx.fillRect(x-15+sh,y-54+fl,9,9);ctx.fillRect(x+6+sh,y-54+fl,9,9);
+      ctx.fillStyle='#FF2200';ctx.fillRect(x-7+sh,y-42+fl,5,5);ctx.fillRect(x+2+sh,y-42+fl,5,5);
+      ctx.fillStyle='#3a2010';ctx.fillRect(x-16+sh,y-6+fl,12,10);ctx.fillRect(x+4+sh,y-6+fl,12,10);
+    } else if(this.mkey==='coruja'){
+      ctx.fillStyle='#6a5828';ctx.fillRect(x-12+sh,y-30+fl,24,22);
+      ctx.fillStyle='#7a6835';ctx.beginPath();ctx.arc(x+sh,y-40+fl,15,0,Math.PI*2);ctx.fill();
+      const ws=Math.sin(this.fr*.14)*10;
+      ctx.fillStyle='#5a4818';ctx.fillRect(x-32-ws+sh,y-34+fl,20,14);ctx.fillRect(x+12+ws+sh,y-34+fl,20,14);
+      ctx.fillStyle='#ffdd00';ctx.beginPath();ctx.arc(x-5+sh,y-42+fl,5,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+5+sh,y-42+fl,5,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#000';ctx.beginPath();ctx.arc(x-5+sh,y-42+fl,2,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(x+5+sh,y-42+fl,2,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#cc8800';ctx.beginPath();ctx.moveTo(x-3+sh,y-37+fl);ctx.lineTo(x+3+sh,y-37+fl);ctx.lineTo(x+sh,y-31+fl);ctx.closePath();ctx.fill();
+    } else {
+      ctx.fillStyle='#8a5828';ctx.fillRect(x-20+sh,y-26+fl,40,18);
+      ctx.fillRect(x-7+sh,y-38+fl,14,14);ctx.fillRect(x-9+sh,y-50+fl,18,14);
+      ctx.strokeStyle='#aa7835';ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(x-5+sh,y-50+fl);ctx.lineTo(x-13+sh,y-66+fl);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(x+5+sh,y-50+fl);ctx.lineTo(x+13+sh,y-66+fl);ctx.stroke();
+      ctx.fillStyle='#FF4400';ctx.fillRect(x-5+sh,y-45+fl,3,3);ctx.fillRect(x+2+sh,y-45+fl,3,3);
+      const la=Math.sin(this.fr*.18)*5;
+      ctx.fillStyle='#6a3818';
+      ctx.fillRect(x-17+sh,y-9+fl+la,7,12);ctx.fillRect(x-6+sh,y-9+fl-la,7,12);
+      ctx.fillRect(x+3+sh,y-9+fl+la,7,12);ctx.fillRect(x+11+sh,y-9+fl-la,7,12);
+    }
+  },
+
+  loop(){
+    if(!this.cv)return;
+    this.cv.width=this.cv.offsetWidth;
+    this.cv.height=Math.floor(this.cv.offsetWidth*.45);
+    const ctx=this.ctx,W=this.cv.width,H=this.cv.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.save();
+    if(this.shk){ctx.translate(this.shk,0);this.shk*=.7;if(Math.abs(this.shk)<.5)this.shk=0;}
+    this.bg(ctx,W,H);
+    this.drawWilliam(ctx,W,H);
+    this.drawMonster(ctx,W,H);
+    ctx.fillStyle='rgba(255,255,255,.12)';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText('VS',W*.5,H*.42);
+    if(this.flashA>0){ctx.fillStyle=this.flashC;ctx.globalAlpha=this.flashA;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;this.flashA-=.07;}
+    ctx.restore();
+    this.fr++;
+    if(this.pAnim!=='idle'){this.pFr++;if(this.pFr>26){this.pAnim='idle';this.pFr=0;}}
+    if(this.eAnim!=='idle'&&this.eAnim!=='dead'){this.eFr++;if(this.eFr>22){this.eAnim='idle';this.eFr=0;}}
+    this.raf=requestAnimationFrame(()=>this.loop());
+  },
+
+  init(cvId,weapon,mkey,mhp,mmhp){
+    this.cv=document.getElementById(cvId);
+    if(!this.cv)return;
+    this.ctx=this.cv.getContext('2d');
+    this.weapon=weapon;this.mkey=mkey;this.mhp=mhp;this.mmhp=mmhp;
+    this.fr=0;this.pAnim='idle';this.pFr=0;this.eAnim='idle';this.eFr=0;this.flashA=0;this.shk=0;
+    if(this.raf)cancelAnimationFrame(this.raf);
+    this.loop();
+  },
+
+  triggerAttack(){
+    this.pAnim='attack';this.pFr=0;
+    const self=this;
+    setTimeout(function(){
+      self.eAnim='hurt';self.eFr=0;
+      self.flashC='rgba(255,30,30,.35)';self.flashA=.6;self.shk=7;
+    },200);
+  },
+
+  triggerHurt(){
+    this.pAnim='hurt';this.pFr=0;
+    this.flashC='rgba(30,30,255,.2)';this.flashA=.35;
+  },
+
+  triggerDead(){
+    this.eAnim='dead';
+    this.flashC='rgba(0,255,80,.15)';this.flashA=.4;
+  },
+
+  updateHp(hp,max){
+    this.mhp=hp;this.mmhp=max;
+    const b=document.getElementById('b-ebar');if(b)b.style.width=Math.max(0,(hp/max)*100)+'%';
+    const n=document.getElementById('b-enum');if(n)n.textContent=hp+'/'+max;
+  },
+
+  stop(){if(this.raf){cancelAnimationFrame(this.raf);this.raf=null;}this.cv=null;this.ctx=null;}
+};
+
 const G = {
   save: SAVE.load(),
   run: null,
@@ -1139,29 +1344,27 @@ const G = {
   renderHUD(){
     const s=this.run.stats;
     const w=DATA.weapons[this.run.weapon];
-    const clr=(v,t=30)=>v<=t?'danger':'';
-    document.getElementById('hud').innerHTML=`
-      <div class="hud-top">
-        <div class="hud-day-info">DIA ${this.run.day}/20</div>
-        <div class="hud-weapon">${w.icon} ${w.label}</div>
-      </div>
-      <div class="hud-bars">
-        ${this.bar('HP',s.hp,'f-hp',clr(s.hp))}
-        ${this.bar('RAD',s.radioatividade,'f-rad',s.radioatividade>=80?'danger':'')}
-        ${this.bar('SAN',s.sanidade,'f-san',clr(s.sanidade))}
-        ${this.bar('LUC',s.lucidez,'f-luc',clr(s.lucidez))}
-        ${this.bar('ESP',s.esperanca,'f-esp',clr(s.esperanca))}
-        <div class="hud-row"><div class="hud-lbl">MED</div><div style="font-size:10px;color:#B8860B">${this.run.monstersKilled} mortos</div></div>
-      </div>`;
+    document.getElementById('hud').innerHTML=
+      '<div class="hud-top">'+
+      '<div class="hud-day-info">DIA '+this.run.day+'/20</div>'+
+      '<div class="hud-weapon">'+w.icon+' '+w.label+'</div>'+
+      '</div>'+
+      '<div class="hud-bars">'+
+      this.stat('HP',s.hp,'f-hp',s.hp<=30)+
+      this.stat('SAN',s.sanidade,'f-san',s.sanidade<=25)+
+      this.stat('LUC',s.lucidez,'f-luc',s.lucidez<=25)+
+      this.stat('ESP',s.esperanca,'f-esp',s.esperanca<=20)+
+      this.stat('RAD',s.radioatividade,'f-rad',s.radioatividade>=80)+
+      '</div>';
   },
 
-  bar(label,val,cls,dangerCls=''){
+  stat(label,val,cls,isDanger){
     const pct=Math.max(0,Math.min(100,val));
-    return `<div class="hud-row">
-      <div class="hud-lbl">${label}</div>
-      <div class="hud-track"><div class="hud-fill ${cls}" style="width:${pct}%"></div></div>
-      <div class="hud-val ${dangerCls}">${Math.round(val)}</div>
-    </div>`;
+    return '<div class="hud-stat">'+
+      '<div class="hud-lbl">'+label+'</div>'+
+      '<div class="hud-track"><div class="hud-fill '+cls+'" style="width:'+pct+'%"></div></div>'+
+      '<div class="hud-val '+(isDanger?'danger':'')+'">'+Math.round(val)+'</div>'+
+      '</div>';
   },
 
   // --- DAY RENDER ---
@@ -1403,28 +1606,44 @@ const G = {
     },220);
   },
 
-  renderCombat(log){
+  renderCombat(log,instant){
     this.renderHUD();
-    const c=this.combat;
-    const w=this.run.weapon;
+    const c=this.combat,w=this.run.weapon;
     const isWeak=DATA.weapons[w].special===c.key;
     const hpPct=Math.max(0,(c.hp/c.maxHp)*100);
+    const wData=DATA.weapons[w];
+    const weakH=isWeak?'<div class="monster-weakness">FRAQUEZA: '+wData.label+'</div>':'';
+    const logH=log||'Escolha sua acao...';
 
-    // Se tem log (após ataque), não faz fade — apenas atualiza
-    const html=`
-      <div class="combat-area">
-        <div class="monster-card">
-          <div class="monster-name">${c.icon} ${c.name.toUpperCase()}</div>
-          <div class="monster-info">CLASSE: ${c.class}</div>
-          <div class="monster-hp-track"><div class="monster-hp-fill" style="width:${hpPct}%;transition:width .5s ease"></div></div>
-          <div class="monster-info">HP: ${c.hp} / ${c.maxHp}</div>
-          ${isWeak?'<div class="monster-weakness">⚡ FRAQUEZA: '+DATA.weapons[w].label+'</div>':''}
-        </div>
-        <div class="combat-log">${log||'▶ Escolha sua ação...'}</div>
-        <button class="atk-btn" onclick="G.attack()">⚔ ATACAR</button>
-        <button class="flee-btn" onclick="G.flee()">↩ RECUAR (perde turno)</button>
-      </div>`;
-    this.setGameBody(html, !!log); // instante se for update de combate (menos interrupção)
+    const html=
+      '<div class="combat-area">'+
+      '<div class="battle-arena">'+
+      '<canvas id="b-cv" class="battle-canvas"></canvas>'+
+      '<div class="battle-hprow">'+
+        '<div class="battle-hpblock">'+
+          '<div class="battle-hpname" style="color:var(--g)">WILLIAM</div>'+
+          '<div class="battle-hpbar"><div class="battle-hpfill" style="width:'+Math.round(this.run.stats.hp)+'%;background:linear-gradient(90deg,#00bb33,#00FF41)"></div></div>'+
+          '<div class="battle-hpnum">HP '+Math.round(this.run.stats.hp)+'</div>'+
+        '</div>'+
+        '<div class="battle-hpblock r">'+
+          '<div class="battle-hpname" style="color:var(--red)">'+c.name.toUpperCase()+'</div>'+
+          '<div class="battle-hpbar"><div id="b-ebar" class="battle-hpfill" style="width:'+hpPct+'%;background:linear-gradient(90deg,#cc2200,#FF4422)"></div></div>'+
+          '<div id="b-enum" class="battle-hpnum">'+c.hp+'/'+c.maxHp+'</div>'+
+        '</div>'+
+      '</div></div>'+
+      weakH+
+      '<div class="combat-log">'+logH+'</div>'+
+      '<button class="atk-btn" onclick="G.attack()">ATACAR</button>'+
+      '<button class="flee-btn" onclick="G.flee()">RECUAR (perde turno)</button>'+
+      '</div>';
+
+    const doInit=function(){BATTLE.init('b-cv',w,c.key,c.hp,c.maxHp);};
+    if(instant){
+      document.getElementById('game-body').innerHTML=html;doInit();
+    } else {
+      this.setGameBody(html,false);
+      setTimeout(doInit,240);
+    } // instante se for update de combate
   },
 
   attack(){
@@ -1433,38 +1652,39 @@ const G = {
     let dmg=Math.floor(Math.random()*(w.max-w.min+1))+w.min;
     let crit=false;
     if(Math.random()*100<w.crit){dmg+=12;crit=true;}
-    // Weakness bonus
     if(w.special===c.key) dmg=Math.floor(dmg*2);
     c.hp=Math.max(0,c.hp-dmg);
-    let log=`Você atacou o ${c.name} por ${dmg} de dano${crit?' 💥 CRÍTICO!':''}${w.special===c.key?' ⚡ FRAQUEZA!':''}.`;
+    const log1='Voce atacou o '+c.name+' por '+dmg+' de dano'+(crit?' CRITICO!':'')+(w.special===c.key?' FRAQUEZA!':'')+'.';
+    let log=log1;
+
+    BATTLE.triggerAttack();
+    BATTLE.updateHp(c.hp,c.maxHp);
 
     if(c.hp<=0){
       this.run.monstersKilled++;
       this.run.killedTypes[c.key]=true;
-      log+=` ${c.icon} ${c.name} foi derrotado!`;
-      // Show kill message then advance
-      this.renderHUD();
-      document.getElementById('game-body').innerHTML=`
-        <div class="combat-area">
-          <div class="monster-card">
-            <div class="monster-name" style="color:#00FF41">${c.icon} DERROTADO</div>
-            <div class="monster-info" style="color:#00FF41">${c.name} foi eliminado.</div>
-          </div>
-          <div class="combat-log" style="color:#00FF41">${log}</div>
-        </div>`;
-      setTimeout(()=>this.nextDay(),1500);
+      log+=' '+c.name+' foi derrotado!';
+      BATTLE.triggerDead();
+      const self=this;
+      setTimeout(function(){
+        self.renderHUD();
+        const el=document.querySelector('.combat-log');
+        if(el)el.innerHTML='<span style="color:#00FF41">'+log+'</span>';
+        setTimeout(function(){BATTLE.stop();self.nextDay();},900);
+      },700);
     } else {
-      // Monster counterattack
       const m=DATA.monsters[c.key];
       const s=this.run.stats;
-      for(const [stat,val] of Object.entries(m.dmg)){
-        s[stat]=Math.max(0,s[stat]-val);
-      }
-      const dmgStats=Object.entries(m.dmg).map(([k,v])=>k.toUpperCase()+' -'+v).join(', ');
-      log+=`\n${c.icon} ${c.name} contra-atacou! ${dmgStats}.`;
-      this.renderHUD();
-      const dead=this.checkDeath();
-      if(!dead) this.renderCombat(log.replace(/\n/g,'<br>'));
+      const self=this;
+      setTimeout(function(){
+        BATTLE.triggerHurt();
+        for(const e of Object.entries(m.dmg)){s[e[0]]=Math.max(0,s[e[0]]-e[1]);}
+        const ds=Object.entries(m.dmg).map(function(e){return e[0].toUpperCase()+' -'+e[1];}).join(', ');
+        const fullLog=log1+'\n'+c.icon+' '+c.name+' contra-atacou! '+ds+'.';
+        self.renderHUD();
+        const dead=self.checkDeath();
+        if(!dead){const el=document.querySelector('.combat-log');if(el)el.innerHTML=fullLog.replace(/\n/g,'<br>');}
+      },420);
     }
   },
 
@@ -1699,6 +1919,7 @@ const G = {
 };
 
 // Start
+(function(){var c=document.getElementById('menu-parts');if(!c)return;for(var i=0;i<20;i++){var p=document.createElement('div');p.className='menu-part';var sz=Math.random()*3+1,dur=Math.random()*7+5,dl=Math.random()*7,lf=Math.random()*100,dx=(Math.random()-.5)*80;p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+lf+'%;bottom:-5px;animation:partFloat '+dur+'s '+dl+'s linear infinite;--dx:'+dx+'px;';c.appendChild(p);}})();
 G.showScreen('s-menu');
 </script>
 
