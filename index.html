@@ -2,6 +2,10 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Matrix TLL">
+  <meta name="mobile-web-app-capable" content="yes">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
@@ -13,8 +17,36 @@
 <meta name="apple-mobile-web-app-title" content="Matrix TLL">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#000000">
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIk1hdHJpeDogVGhlIExhc3QgTGlnaHQiLCAic2hvcnRfbmFtZSI6ICJNYXRyaXggVExMIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogImZ1bGxzY3JlZW4iLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDAwMDAwIiwgInRoZW1lX2NvbG9yIjogIiMwMDAwMDAiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQtcHJpbWFyeSIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInJTNFJTNDcmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgZmlsbD0nJTIzMDAwJy8lM0UlM0N0ZXh0IHg9JzI1NicgeT0nMzIwJyBmb250LXNpemU9JzI4MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZmlsbD0nJTIzMDBFNjc2JyBmb250LXdlaWdodD0nYm9sZCclM0VNJTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ==">
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIk1hdHJpeDogVGhlIExhc3QgTGlnaHQiLCAic2hvcnRfbmFtZSI6ICJNYXRyaXggVExMIiwgImRlc2NyaXB0aW9uIjogIlJQRyBkZSBzb2JyZXZpdlx1MDBlYW5jaWEgcFx1MDBmM3MtYXBvY2FsXHUwMGVkcHRpY28iLCAic3RhcnRfdXJsIjogIi4vIiwgImRpc3BsYXkiOiAiZnVsbHNjcmVlbiIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdC1wcmltYXJ5IiwgImJhY2tncm91bmRfY29sb3IiOiAiIzAwMDAwMCIsICJ0aGVtZV9jb2xvciI6ICIjMDBlNjc2IiwgImNhdGVnb3JpZXMiOiBbImdhbWVzIl0sICJwcmVmZXJfcmVsYXRlZF9hcHBsaWNhdGlvbnMiOiBmYWxzZSwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgNTEyIDUxMiclM0UlM0NyZWN0IHdpZHRoPSc1MTInIGhlaWdodD0nNTEyJyBmaWxsPSclMjMwMDAnLyUzRSUzQ3RleHQgeD0nMjU2JyB5PSczMjAnIGZvbnQtc2l6ZT0nMjgwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmaWxsPSclMjMwMEU2NzYnIGZvbnQtd2VpZ2h0PSdib2xkJyUzRU0lM0MvdGV4dCUzRSUzQy9zdmclM0UiLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLCAicHVycG9zZSI6ICJhbnkgbWFza2FibGUifV19">
+<style>
+/* ── FONTES OFFLINE — fallbacks de sistema que imitam o estilo ── */
+/* Rajdhani: geométrica, condensada, futurista */
+@font-face {
+  font-family: 'Rajdhani';
+  src: local('Rajdhani'), local('Impact'), local('Arial Narrow'), local('Arial');
+  font-weight: 300 600;
+}
+/* Share Tech Mono: monospace tech */
+@font-face {
+  font-family: 'Share Tech Mono';
+  src: local('Share Tech Mono'), local('Courier New'), local('Courier'), local('monospace');
+}
+/* VT323: pixel/retro */
+@font-face {
+  font-family: 'VT323';
+  src: local('VT323'), local('Courier New'), local('Courier');
+}
+
+/* CSS vars garantindo fallbacks completos */
+:root {
+  --font-title: 'Rajdhani', 'Impact', 'Arial Narrow', sans-serif;
+  --font-ui: 'Share Tech Mono', 'Courier New', monospace;
+  --font-pixel: 'VT323', 'Courier New', monospace;
+}
+</style>
+<!-- Tenta carregar Google Fonts se online, mas o jogo funciona sem elas -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<style>@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600&family=Share+Tech+Mono&family=VT323&display=swap') layer(gfonts);</style>
 <style>
 /* Anti-flash branco no WebView */
 html{background:#000000!important;}
@@ -5820,6 +5852,64 @@ let _dPrmt=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dPrmt=e;const b=document.getElementById('install-btn');if(b)b.style.display='flex';});
 function installApp(){if(!_dPrmt){G.popup('Abra no Chrome → Menu → Adicionar à tela inicial','#00E676');return;}_dPrmt.prompt();_dPrmt.userChoice.then(()=>{_dPrmt=null;});}
 window.addEventListener('appinstalled',()=>{G.popup('✓ Matrix TLL instalado como app!','#00E676');const b=document.getElementById('install-btn');if(b)b.style.display='none';});
+</script>
+
+<script>
+// ── SERVICE WORKER OFFLINE ──
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+
+  const SW_CODE = `
+const CACHE = 'matrix-tll-v1';
+const SHELL = ['./'];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(cached => {
+      if(cached) return cached;
+      return fetch(e.request).then(resp => {
+        if(!resp || resp.status !== 200 || resp.type === 'opaque') return resp;
+        const clone = resp.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+        return resp;
+      }).catch(() => caches.match('./'));
+    })
+  );
+});
+`;
+
+  const blob = new Blob([SW_CODE], {type:'application/javascript'});
+  const swUrl = URL.createObjectURL(blob);
+
+  navigator.serviceWorker.register(swUrl, {scope: './'})
+    .then(reg => {
+      console.log('[SW] Registrado — jogo disponível offline!');
+      // Mostrar banner de offline disponível
+      reg.addEventListener('updatefound', () => {
+        const nw = reg.installing;
+        nw.addEventListener('statechange', () => {
+          if(nw.state === 'installed' && navigator.serviceWorker.controller){
+            console.log('[SW] Atualizado!');
+          }
+        });
+      });
+    })
+    .catch(e => console.log('[SW] Erro:', e));
+})();
 </script>
 </body>
 </html>
