@@ -646,6 +646,89 @@ body::after{
 .ws-item-cost{font-family:var(--font-ui);font-size:11px;color:#ff9900;flex-shrink:0;letter-spacing:1px;}
 .ws-locked{text-align:center;padding:30px;color:rgba(255,153,0,.3);font-family:var(--font-ui);font-size:12px;letter-spacing:2px;}
 
+/* Driver raro azul */
+.choice-btn.driver-rare{
+  border-color:rgba(0,150,255,.4)!important;
+  background:rgba(0,100,255,.04)!important;
+}
+.choice-btn.driver-rare:hover{
+  background:rgba(0,100,255,.08)!important;
+  border-color:rgba(0,150,255,.6)!important;
+}
+.choice-btn.driver-rare .choice-title{color:#44aaff!important;}
+.choice-btn.driver-rare .choice-effects{color:rgba(100,180,255,.6)!important;}
+
+/* Auditório */
+.cidade-mapa{width:100%;height:100%;background:#050f05;position:relative;}
+.cidade-building{
+  position:absolute;
+  width:44px;height:44px;
+  border-radius:8px;
+  border:1px solid rgba(0,255,65,.15);
+  background:#0a140a;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  font-size:18px;cursor:pointer;
+  transition:all .25s;
+  transform:translate(-50%,-50%);
+}
+.cidade-building.built{
+  border-color:rgba(0,255,65,.5);
+  background:rgba(0,255,65,.06);
+  box-shadow:0 0 12px rgba(0,255,65,.15);
+}
+.cidade-building.affordable{
+  border-color:rgba(255,153,0,.4);
+  animation:pulse 2s infinite;
+}
+.cidade-building-label{
+  font-family:var(--font-ui);font-size:7px;
+  color:rgba(0,255,65,.5);letter-spacing:1px;
+  text-align:center;margin-top:2px;
+  max-width:60px;line-height:1.2;
+}
+/* Estrada/trilhos no mapa */
+.cidade-road{
+  position:absolute;
+  background:rgba(0,255,65,.04);
+  border:1px solid rgba(0,255,65,.06);
+}
+.cidade-trem{
+  position:absolute;
+  font-size:22px;
+  animation:tremMove 8s linear infinite;
+}
+@keyframes tremMove{
+  0%{left:-40px;}100%{left:110%;}
+}
+/* Quest badge */
+.quest-badge{
+  position:absolute;top:-6px;right:-6px;
+  background:#ff9900;color:#000;
+  font-size:8px;border-radius:50%;
+  width:14px;height:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:bold;
+}
+.auditorio-btn{
+  width:100%;padding:14px;margin-top:10px;
+  background:rgba(255,153,0,.06);
+  border:1px solid rgba(255,153,0,.3);
+  border-radius:8px;cursor:pointer;
+  font-family:var(--font-ui);font-size:12px;
+  color:#ff9900;letter-spacing:2px;
+  transition:all .2s;
+}
+.auditorio-btn:hover{background:rgba(255,153,0,.1);}
+.auditorio-locked{
+  width:100%;padding:14px;margin-top:10px;
+  background:transparent;
+  border:1px solid rgba(255,153,0,.08);
+  border-radius:8px;
+  font-family:var(--font-ui);font-size:10px;
+  color:rgba(255,153,0,.2);letter-spacing:2px;text-align:center;
+}
+
 /* ===== COMPUTER =====  */
 #s-computer{justify-content:flex-start;padding:20px 16px;overflow-y:auto;gap:14px;}
 .comp-header{width:100%;}
@@ -675,19 +758,42 @@ body::after{
   font-size:9px;letter-spacing:4px;color:rgba(0,180,50,.4);
   margin-bottom:14px;
 }
-.drivers-row{display:flex;gap:8px;}
+.drivers-row{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.drivers-line{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+}
 .driver-slot{
-  flex:1;border:1px solid rgba(0,255,65,.08);
-  border-radius:var(--radius);
-  padding:12px 6px;text-align:center;
-  font-family:var(--font-ui);font-weight:400;
-  font-size:10px;letter-spacing:2px;transition:all .3s;
+  border:1px solid rgba(0,255,65,.08);
+  border-radius:6px;
+  padding:7px 3px;
+  text-align:center;
+  font-family:var(--font-ui);
+  font-size:9px;
+  letter-spacing:1px;
+  transition:all .3s;
   color:#1a2a1a;
+  line-height:1.5;
 }
 .driver-slot.collected{
-  border-color:rgba(0,255,65,.3);color:var(--g);
+  border-color:rgba(0,255,65,.3);
+  color:var(--g);
   background:var(--g-faint);
-  box-shadow:0 0 14px rgba(0,255,65,.08);
+  box-shadow:0 0 10px rgba(0,255,65,.08);
+}
+.driver-slot.collected-rare{
+  border-color:rgba(0,150,255,.35);
+  color:#44aaff;
+  background:rgba(0,100,255,.04);
+}
+.driver-slot.locked{
+  border-color:rgba(0,255,65,.04);
+  color:#111a11;
 }
 .drivers-hint{
   font-family:var(--font-ui);font-weight:300;
@@ -755,6 +861,7 @@ body::after{
   animation:scanmove 10s linear infinite;
 }
 @keyframes scanmove{0%{background-position:0 0}100%{background-position:0 200px}}
+@keyframes pulse-orange{0%,100%{border-color:rgba(255,153,0,.6);box-shadow:0 0 6px rgba(255,153,0,.3)}50%{border-color:rgba(255,153,0,1);box-shadow:0 0 12px rgba(255,153,0,.6)}}
 .vhs-label{
   font-family:var(--font-ui);font-weight:300;
   font-size:9px;letter-spacing:5px;color:var(--g);opacity:.25;
@@ -916,6 +1023,286 @@ body::after{
 .battle-hpbar{height:4px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,.1);width:90px;}
 .battle-hpfill{height:100%;border-radius:2px;transition:width .4s ease;}
 .battle-hpnum{font-size:9px;color:rgba(255,255,255,.35);font-family:var(--font-ui);}
+
+/* ===== STATUS BADGES HUD ===== */
+.hud-statuses{
+  display:flex;flex-wrap:wrap;gap:4px;
+  padding:4px 12px 0;
+  min-height:0;
+}
+.status-badge{
+  font-size:10px;letter-spacing:1px;
+  padding:2px 7px;border-radius:3px;
+  border:1px solid currentColor;
+  display:flex;align-items:center;gap:3px;
+  font-family:var(--font);
+  animation:statusPulse 2.5s ease-in-out infinite;
+}
+.status-badge .sb-plus{font-weight:bold;opacity:.7;}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.6}}
+.status-badge.s-buf{color:#ffe066;border-color:rgba(255,224,102,.4);background:rgba(255,200,0,.07);}
+.status-badge.s-deb{color:#ff5533;border-color:rgba(255,85,51,.35);background:rgba(255,60,30,.07);}
+.status-badge.s-neu{color:#88ccff;border-color:rgba(136,204,255,.3);background:rgba(100,180,255,.05);}
+.status-badge.s-env{color:#88ff88;border-color:rgba(100,255,100,.3);background:rgba(60,200,60,.06);}
+
+/* Pílula de troca piscando */
+.choice-btn.pilula-troca{
+  border-color:#ff2200!important;
+  animation:pilulaFlash 0.7s ease-in-out infinite;
+}
+@keyframes pilulaFlash{0%,100%{box-shadow:0 0 8px rgba(255,30,0,.5);opacity:1}50%{box-shadow:0 0 20px rgba(255,30,0,.9);opacity:.7}}
+
+/* ===== SKILL TREE SCREEN ===== */
+#s-skilltree{
+  padding:0;
+  overflow:hidden;
+  background:var(--bg);
+}
+.st-header{
+  text-align:center;
+  padding:52px 16px 8px;
+  flex-shrink:0;
+}
+.st-title{
+  font-family:var(--title);
+  font-size:clamp(28px,8vw,42px);
+  letter-spacing:6px;
+  color:var(--g);
+}
+.st-subtitle{
+  font-size:11px;letter-spacing:3px;color:var(--gd);
+  margin-top:4px;opacity:.7;
+}
+.st-tabs{
+  display:flex;gap:0;flex-shrink:0;
+  border-bottom:1px solid var(--g-border);
+  padding:0 12px;
+}
+.st-tab{
+  flex:1;padding:8px 4px;
+  font-size:10px;letter-spacing:2px;
+  background:transparent;border:none;
+  color:#444;cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:color .2s, border-color .2s;
+  font-family:var(--font);
+}
+.st-tab.active{
+  border-bottom-color:currentColor;
+}
+.st-tab.bencao{color:#ffe066;}
+.st-tab.maldito{color:#ff6633;}
+.st-tab.peste{color:#aaaaaa;}
+.st-tab:disabled{opacity:.3;cursor:default;}
+
+.st-tree-wrap{
+  flex:1;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  padding:8px;
+  min-height:0;
+}
+.st-svg{
+  width:100%;height:100%;
+  max-width:340px;max-height:420px;
+}
+
+/* SVG skill nodes */
+.sn-locked rect{fill:#0a0a0a;stroke:#1a2a1a;stroke-width:1.5;}
+.sn-locked text{fill:#1a2a1a;}
+.sn-available rect{fill:#050f05;stroke-width:2;cursor:pointer;filter:drop-shadow(0 0 4px currentColor);}
+.sn-available text{cursor:pointer;}
+.sn-unlocked rect{stroke-width:2;cursor:pointer;}
+.sn-unlocked text{cursor:pointer;}
+
+.sn-passive rect{rx:50%;ry:50%;} /* círculo para habilidade passiva */
+
+.st-edge{stroke:#1a2a1a;stroke-width:1;opacity:.6;}
+.st-edge.active{opacity:1;}
+
+.st-node-info{
+  padding:8px 16px;
+  min-height:60px;max-height:80px;
+  font-size:11px;line-height:1.5;
+  color:var(--gd);
+  border-top:1px solid var(--g-border);
+  flex-shrink:0;overflow:hidden;
+}
+.sni-name{font-size:13px;letter-spacing:2px;margin-bottom:2px;}
+.sni-desc{opacity:.7;font-size:10px;}
+.sni-cost{font-size:10px;margin-top:3px;}
+
+.st-actions{
+  display:flex;gap:8px;
+  padding:8px 16px 16px;
+  flex-shrink:0;
+}
+.st-btn{
+  flex:1;padding:10px;
+  font-family:var(--font);font-size:11px;letter-spacing:2px;
+  border:1px solid var(--g-border);background:transparent;
+  color:var(--gd);cursor:pointer;border-radius:var(--radius);
+}
+.st-btn.primary{
+  border-color:var(--g);color:var(--g);
+  background:rgba(0,255,65,.05);
+}
+.st-btn.primary:hover{background:rgba(0,255,65,.1);}
+.st-btn:disabled{opacity:.3;cursor:default;}
+
+/* Bloqueio de árvore */
+.st-locked-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,.85);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:12px;font-size:12px;letter-spacing:2px;
+  color:var(--gd);pointer-events:none;
+  z-index:20;
+}
+.st-locked-overlay .lock-icon{font-size:40px;}
+
+/* Menu item skill tree */
+.mbtn.st-unlock{
+  border-color:rgba(255,200,0,.3);
+  background:rgba(255,200,0,.03);
+}
+
+
+/* ===== WORK STATION BUTTON ESPECIAL ===== */
+#ws-menu-btn{
+  background:transparent;
+  border:1px solid rgba(255,140,0,.35);
+  font-family:var(--font-ui);
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:4px;
+  padding:0;
+  width:min(300px,88vw);
+  margin:5px 0;
+  text-transform:uppercase;
+  position:relative;
+  border-radius:var(--radius);
+  overflow:hidden;
+  cursor:pointer;
+  color:#ff9900;
+  transition:all .3s ease;
+}
+#ws-menu-btn .ws-btn-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:10px 0 8px;
+  gap:2px;
+  position:relative;
+  z-index:2;
+}
+#ws-menu-btn .ws-train-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:15px;
+  letter-spacing:5px;
+  color:#ff9900;
+}
+#ws-menu-btn .ws-train-emoji{
+  font-size:20px;
+  animation:trainBounce 1.8s ease-in-out infinite;
+  display:inline-block;
+}
+@keyframes trainBounce{
+  0%,100%{transform:translateX(0) scaleX(1);}
+  25%{transform:translateX(3px) scaleX(1.05);}
+  75%{transform:translateX(-2px) scaleX(.97);}
+}
+#ws-menu-btn .ws-label{
+  font-size:13px;letter-spacing:5px;
+  color:#ff9900;
+  text-shadow:0 0 12px rgba(255,140,0,.6);
+}
+#ws-menu-btn .ws-sub{
+  font-size:9px;letter-spacing:3px;
+  color:rgba(255,140,0,.5);
+  font-family:var(--font);
+}
+/* Sparkle pisca-pisca */
+#ws-menu-btn .ws-sparks{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+#ws-menu-btn .ws-spark{
+  position:absolute;
+  font-size:11px;
+  animation:sparkFloat var(--dur) ease-in-out infinite var(--dl);
+  opacity:0;
+}
+@keyframes sparkFloat{
+  0%{opacity:0;transform:translateY(0) scale(.5);}
+  20%{opacity:1;transform:translateY(-4px) scale(1);}
+  80%{opacity:.6;transform:translateY(-8px) scale(.8);}
+  100%{opacity:0;transform:translateY(-12px) scale(.3);}
+}
+/* Faixa laranja no topo e fundo */
+#ws-menu-btn::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,140,0,.7) 30%,rgba(255,200,0,.9) 50%,rgba(255,140,0,.7) 70%,transparent);
+  animation:wsLineScan 2.5s ease-in-out infinite;
+}
+#ws-menu-btn::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,140,0,.4) 50%,transparent);
+}
+@keyframes wsLineScan{
+  0%,100%{opacity:.4;}
+  50%{opacity:1;}
+}
+#ws-menu-btn:hover{
+  border-color:rgba(255,160,0,.6);
+  box-shadow:0 0 20px rgba(255,130,0,.2), inset 0 0 20px rgba(255,100,0,.05);
+}
+#ws-menu-btn:active{transform:scale(.98);}
+
+
+/* ===== MAPA PIXEL ART CIDADE ===== */
+#cidade-mapa{
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
+  background:#1a2a0a;
+  position:relative;
+  flex:1;
+  overflow:hidden;
+  border-bottom:1px solid rgba(0,255,65,.08);
+}
+.city-svg{
+  width:100%;height:100%;
+  image-rendering:pixelated;
+}
+/* Building click overlay */
+.city-building-btn{
+  position:absolute;
+  cursor:pointer;
+  background:transparent;
+  border:none;
+  padding:0;
+  transform-origin:center bottom;
+  transition:filter .15s;
+}
+.city-building-btn:hover{
+  filter:brightness(1.4);
+}
+.city-building-btn.built-glow{
+  filter:drop-shadow(0 0 3px rgba(0,255,65,.6));
+}
+.city-building-btn.can-buy-glow{
+  filter:drop-shadow(0 0 3px rgba(255,200,0,.5));
+}
+
 </style>
 <style>
 /* WebIntoApp fullscreen garantido */
@@ -937,9 +1324,18 @@ button{-webkit-appearance:none;touch-action:manipulation;}
   <div class="logo-sub">THE LAST LIGHT</div>
   <button class="mbtn" onclick="G.startGame()">INICIAR MATRIX</button>
   <button class="mbtn" onclick="G.showFinals()">ÁRVORE DE FINAIS</button>
-          <button class="menu-btn" id="ws-menu-btn" onclick="G.showWorkStation()" style="border-color:rgba(255,153,0,.3);color:#ff9900;">
-            <span>🏭 WORK STATION</span>
-          </button>
+  <button class="mbtn" id="menu-st-btn" onclick="G.openSkillTree()" style="border-color:rgba(255,200,0,.2);color:#666;">🔒 ÁRVORE DE HABILIDADES</button>
+<button class="mbtn" id="ws-menu-btn" onclick="G.showWorkStation();SFX.click()">
+  <div class="ws-btn-inner">
+    <div class="ws-train-row">
+      <span class="ws-train-emoji">🚃</span>
+      <span class="ws-label">WORK STATION</span>
+      <span class="ws-train-emoji" style="animation-delay:.4s;transform:scaleX(-1)">🚃</span>
+    </div>
+    <div class="ws-sub">● BULLET · MEDUSA · LESTER ●</div>
+  </div>
+  <div class="ws-sparks" id="ws-sparks"></div>
+</button>
   <button class="mbtn" onclick="G.showComputer()">💻 COMPUTADOR CENTRAL</button>
   <button class="mbtn" id="install-btn" onclick="installApp()" style="display:none;border-color:rgba(0,230,118,.4);margin-top:10px">⬇ INSTALAR COMO APP</button>
   </div>
@@ -985,6 +1381,36 @@ button{-webkit-appearance:none;touch-action:manipulation;}
 </div>
 
 <!-- COMPUTER -->
+<div id="s-cidade" class="scr">
+  <div class="ws-header" style="border-color:rgba(0,255,65,.1)">
+    <div class="ws-title" style="font-size:22px">🏙️ CIDADE — WORK STATION</div>
+    <div class="ws-sub">Construa. Fortaleça. Sobreviva.</div>
+    <div class="ws-scrap">🔩 Sucata: <span id="cidade-scrap">0</span></div>
+  </div>
+  <div id="cidade-mapa" style="position:relative;flex:1;overflow:hidden;"></div>
+  <div id="cidade-info" style="padding:12px;border-top:1px solid rgba(0,255,65,.08);min-height:80px;"></div>
+  <button class="flee-btn" onclick="G.showWorkStation();SFX.click()">← WORK STATION</button>
+</div>
+
+<div id="s-workstation" class="scr">
+  <div class="ws-header">
+    <div class="ws-title">WORK STATION</div>
+    <div class="ws-sub">Economia do Fim do Mundo</div>
+    <div class="ws-scrap">🔩 Sucata: <span id="ws-scrap-count">0</span></div>
+  </div>
+  <div id="ws-body" class="ws-body"></div>
+  <button class="fonclick="G.showScreen('s-menu');G._updateMenuButtons();SFX.click()">← VOLTAR</button>
+</div>
+
+<div id="s-auditorio" class="scr">
+  <div class="ws-header" style="border-color:rgba(255,100,0,.2)">
+    <div class="ws-title" style="color:#ff6600;font-size:26px">🎪 AUDITÓRIO</div>
+    <div class="ws-sub" style="color:rgba(255,100,0,.4)">O Palhaço te espera</div>
+  </div>
+  <div id="auditorio-body" style="padding:16px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:14px;"></div>
+  <button class="flee-btn" onclick="G.showWorkStation();SFX.click()">← VOLTAR</button>
+</div>
+
 <div id="s-computer" class="scr">
   <button class="back-btn" onclick="G.showScreen('s-menu')">◄ VOLTAR</button>
   <div class="comp-header">
@@ -1018,6 +1444,28 @@ button{-webkit-appearance:none;touch-action:manipulation;}
     <button class="vhs-skip" onclick="G.showScreen('s-menu')">PULAR ›</button>
   </div>
 </div>
+
+<!-- SKILL TREE -->
+<div id="s-skilltree" class="scr" style="position:relative;flex-direction:column;">
+  <button class="back-btn" onclick="G.closeSkillTree()" style="position:absolute;top:18px;left:16px;z-index:10">◄ VOLTAR</button>
+  <div class="st-header">
+    <div class="st-title" id="st-title">ÁRVORE DE HABILIDADES</div>
+    <div class="st-subtitle" id="st-subtitle">Escolha seu caminho</div>
+  </div>
+  <div class="st-tabs" id="st-tabs"></div>
+  <div class="st-tree-wrap">
+    <svg class="st-svg" id="st-svg" viewBox="0 0 320 420" preserveAspectRatio="xMidYMid meet"></svg>
+  </div>
+  <div class="st-node-info" id="st-node-info">
+    <div class="sni-name">Selecione uma habilidade</div>
+    <div class="sni-desc">Toque em um nó disponível para ver detalhes</div>
+  </div>
+  <div class="st-actions" id="st-actions">
+    <button class="st-btn primary" id="st-unlock-btn" onclick="G.unlockSkillNode()" disabled>DESBLOQUEAR</button>
+    <button class="st-btn" onclick="G.closeSkillTree()">FECHAR</button>
+  </div>
+</div>
+
 
 <script>
 // ============================================================
@@ -1068,11 +1516,13 @@ const DATA = {
     escopeta:{icon:'🔫',label:'ESCOPETA',crit:15,min:5,max:12,special:'cervo'},
     punhos:{icon:'👊',label:'PUNHOS',crit:20,min:2,max:8}
   },
+
   monsters:{
     urso:{name:'Urso',icon:'🐻',hp:30,spawn:35,scale:1.5,dmg:{sanidade:8,lucidez:5},weakness:'espada',class:'FORÇA'},
     coruja:{name:'Coruja',icon:'🦉',hp:15,spawn:35,scale:1.2,dmg:{esperanca:12},weakness:'arco',class:'PERCEPÇÃO'},
     cervo:{name:'Cervo',icon:'🦌',hp:20,spawn:30,scale:2.0,dmg:{radioatividade:8,lucidez:3},weakness:'escopeta',class:'RAPIDEZ'}
   },
+
   dialogs:{
     early:[
       'William ouve o som estático de rádios antigas...\n"Ainda há alguém lá fora?"',
@@ -1094,8 +1544,17 @@ const DATA = {
       'A radiação sussurra segredos que a lucidez tenta ignorar.',
       'O "Tenente Haimer" foi mencionado em um sinal de rádio captado por acaso.',
       'William vê seu próprio reflexo...\ne ele pisca depois dele.'
+    ],
+    endgame:[
+      'Dia ${day}.\nO bunker está diferente.\nComo se soubesse que você está prestes a sair.',
+      'William encontra uma mensagem gravada na parede com faca:\n\"Você chegou longe demais para desistir agora.\"',
+      'O rádio capta algo diferente hoje.\nNão estática. Não código.\nAlguém cantarolando.',
+      'A radiação está mais alta que ontem.\nMais alta que anteontem.\nO corpo de William não parece se importar.',
+      'Você sonhou com a Dra. Minshafer hoje.\nEla estava sorrindo.\nIsso foi mais assustador que qualquer pesadelo.',
+      'Dia final se aproxima.\nWilliam sente algo que não sentia há semanas:\nClareza.'
     ]
   },
+
   transmissions:[
     {title:'TRANSMISSÃO DO SISTEMA',body:'Anomalia temporal detectada.\nProtocolo de contenção: falhou.'},
     {title:'SINAL INTERCEPTADO',body:'...William... você não deveria estar acordado ainda...'},
@@ -1103,6 +1562,7 @@ const DATA = {
     {title:'AVISO DO SISTEMA',body:'Nível de radiação acima do esperado.\nHospedeiro... compatível.'},
     {title:'TRANSMISSÃO CODIFICADA',body:'Tenente Haimer reportou...\n[SINAL CORROMPIDO]'}
   ],
+
   day8Event:{
     narrative:'O oitavo dia. William não deveria estar aqui.\n\nNinguém sobrevivia tanto tempo neste mundo partido.\n\nO bunker revelou um compartimento oculto. Dentro: diários, fotos, uma carta lacrada.\nO remetente: William. A data: seis meses no futuro.\n\nEle abriu a carta com mãos trêmulas.\n\nHavia apenas uma linha escrita:\n"Você sobreviveu. Mas a que custo?"',
     transmission:{title:'TRANSMISSÃO DO SISTEMA',body:'Anomalia temporal detectada.\nProtocolo de contenção: falhou.'},
@@ -1112,40 +1572,41 @@ const DATA = {
       {label:'Guardar a carta — Driver resgatado',effects:{esperanca:+20,sanidade:+10,lucidez:+10},effectsLabel:'Esperança +20 | Sanidade +10 | Lucidez +10 | Driver +1',isDriver:true,driver:0}
     ]
   },
+
   finals:{
     'Final Bom':{icon:'😇',color:'#00FF41',subtitle:'A Esperança Renasce',
       text:'William manteve a chama acesa.\nMesmo sem armas, sem força bruta.\nApenas a esperança.\n\nE isso foi suficiente.',
-      req:(r,s)=>s.esperanca>=80&&!r.weapon},
+      req:(r,s)=>s.esperanca>=90&&!r.weapon&&r.day>=20},
     'Final Ruim':{icon:'🎲',color:'#FF4444',subtitle:'O Perdido',
       text:'Você sobreviveu.\n\nMas perdeu a si mesmo.\n\nAs sombras agora fazem parte de quem você é.\n\nO Andarilho desapareceu. Ele nunca mais voltará.',
-      req:(r,s)=>s.esperanca<=20||s.sanidade<=20},
+      req:(r,s)=>(s.esperanca<=15||s.sanidade<=15)&&r.day>=8},
     'Final Heroico':{icon:'🏹',color:'#00BFFF',subtitle:'Arqueiro da Esperança',
       text:'Com o arco em mãos e a esperança no peito,\nWilliam caminhou para o desconhecido.\n\nA resistência não havia terminado.\nEla havia apenas recomeçado.',
-      req:(r,s)=>r.weapon==='arco'&&s.esperanca>=60&&r.day>=10},
+      req:(r,s)=>r.weapon==='arco'&&s.esperanca>=75&&r.day>=18},
     'Final Cavalheiro':{icon:'⚔️',color:'#C0C0C0',subtitle:'Guardião da Honra',
       text:'A espada nunca mentiu.\nWilliam também não.\n\nMesmo no fim do mundo,\nalguém escolheu honra.',
-      req:(r,s)=>r.weapon==='espada'&&s.sanidade>=70&&r.day>=12},
+      req:(r,s)=>r.weapon==='espada'&&s.sanidade>=80&&r.day>=18},
     'Final Revelação':{icon:'🎭',color:'#9B59B6',subtitle:'Descobridor da Verdade',
       text:'A Matrix nunca esperou que alguém\npercebesse os padrões.\n\nWilliam percebeu.\nE o que ele viu mudou tudo.',
-      req:(r,s)=>s.lucidez>=90&&r.day>=15},
+      req:(r,s)=>s.lucidez>=90&&r.day>=20},
     'Final Desonra':{icon:'🔫',color:'#888',subtitle:'Mestre Matadouro',
       text:'A escopeta não conhece honra.\nApenas resultado.\n\nWilliam escolheu o massacre.\nO silêncio que restou era ensurdecedor.',
-      req:(r,s)=>r.weapon==='escopeta'&&r.monstersKilled>=6},
+      req:(r,s)=>r.weapon==='escopeta'&&r.monstersKilled>=8&&r.day>=16},
     'Final Honrado':{icon:'👊',color:'#FFD700',subtitle:'Apenas Punhos',
       text:'Sem armas. Apenas os punhos.\nE a vontade de não se dobrar.\n\nWilliam venceu como nasceu:\ncom as próprias mãos.',
-      req:(r,s)=>r.weapon==='punhos'&&r.day>=15},
+      req:(r,s)=>r.weapon==='punhos'&&r.day>=20},
     'Final Chernobyl':{icon:'☢️',color:'#FF8C00',subtitle:'Lenda',
       text:'A carne caiu.\nA mente ficou.\n\nWilliam não é mais humano.\nEle agora é lenda.\n\nO monstro de Chernobyl.',
-      req:(r,s)=>s.radioatividade>=85&&s.sanidade<=30},
+      req:(r,s)=>s.radioatividade>=90&&s.sanidade<=25&&r.day>=12},
     'Final Loucura':{icon:'🧠',color:'#9B59B6',subtitle:'A Mente Não Suportou',
       text:'A sanidade foi o primeiro preço.\nA lucidez, o segundo.\n\nWilliam saiu pelo corredor do bunker\nrindo de algo que ninguém mais via.',
       req:(r,s)=>s.sanidade<=0||s.lucidez<=0},
     'Final Domador de Feras':{icon:'👑',color:'#FFD700',subtitle:'O Caçador Supremo',
       text:'Urso. Coruja. Cervo.\nTodos caíram.\n\nWilliam dominou as feras da Matrix\ne revelou um segredo que ninguém esperava.',
-      req:(r,s)=>r.killedTypes&&r.killedTypes.urso&&r.killedTypes.coruja&&r.killedTypes.cervo,driver:1},
+      req:(r,s)=>r.killedTypes&&r.killedTypes.urso&&r.killedTypes.coruja&&r.killedTypes.cervo&&r.day>=15,driver:1},
     'Final Ascenção':{icon:'🔮',color:'#9B59B6',subtitle:'Super Soldado',
       text:'20 dias. Espada. Radiação alta.\n\nO sistema reconheceu William.\n\n"Registro de Acesso: William detectado.\nNível de radiação compatível com o hospedeiro.\nO projeto está em fase final."',
-      req:(r,s)=>r.day>=20&&s.radioatividade>=60&&r.weapon==='espada'&&r.monstersKilled>=2,driver:2},
+      req:(r,s)=>r.day>=22&&s.radioatividade>=65&&r.weapon==='espada'&&r.monstersKilled>=3,driver:2},
     'Fim do Acaso':{icon:'🎲',color:'#aaaaaa',subtitle:'O Acaso Matou',
       text:'Não foi a radiação.\nNão foi a loucura.\nNão foi um monstro.\n\nFoi o acaso.\n\nAlgumas histórias terminam sem motivo.',
       req:(r,s)=>false},
@@ -1161,7 +1622,16 @@ const DATA = {
     'Sobrevivente da Work Station':{icon:'🏭',color:'#ff9900',subtitle:'O Estrangeiro',
       text:'Você coletou todos os drivers.\nA Work Station estava esperando.\n\nBullet te reconheceu na entrada:\n"Ei. Você é aquele do Bunker Alfa?"\n\nWilliam não respondeu.\nMas sorriu pela primeira vez em semanas.',
       req:(r,s)=>r.driversFound&&r.driversFound.length>=4,driver:4}
-  },
+  ,
+    'Final Amigo da Vizinhanca':{icon:'🏘️',color:'#44ff88',subtitle:'Amigo da Vizinhança',
+      text:'Quatro pessoas. Quatro histórias. Quatro razões para continuar. Bullet forjou armaduras com as peles. Medusa curou o Collector perdido. Lester encheu os depósitos. Butcher finalmente sorriu sem a máscara. William olhou para a cidade que ajudou a reconstruir e entendeu: sobreviver sozinho não é nada. Sobreviver junto — isso é tudo.',
+      achievement:'Amigo da Vizinhança',
+      req:(r,s)=>{const done=G.save&&G.save.questsDone||[];return['bullet_quest','medusa_quest','lester_quest','butcher_quest'].every(q=>done.includes(q))&&r.day>=22;}},
+    'Final Piromaniaco':{icon:'🔥',color:'#ff4400',subtitle:'Piromaníaco',
+      text:'Eles construíram experimentos. Ele construiu um lança-chamas. William caminhou pelos corredores do bunker pela última vez, deixando cada sala em chamas. Não por raiva. Por limpeza. O Projeto Pragas termina aqui — em fogo e esperança.',
+      achievement:'Piromaníaco',
+      req:(r,s)=>r.weapon==='lancachamas'&&s.esperanca>=95&&r.day>=20}},
+
   workStation:{
     unlocked: false,
     // Moeda: sucata
@@ -1171,7 +1641,13 @@ const DATA = {
         '"Quer comprar? Traga sucata. Simples assim."',
         '"Não pergunto de onde veio. Só aceito sucata."',
         '"A katana? Cara... isso vai custar caro. Vale cada grama."',
-        '"Cano cortado. Minha obra-prima. Só pra quem aguenta o recuo."'
+        '"Cano cortado. Minha obra-prima. Só pra quem aguenta o recuo."',
+        '"0046. Esse era meu número lá dentro. Agora sou Butcher."',
+        '"Sirius e Moon não tiveram sorte. Eu tive Clara."',
+        '"Dr. Robert? Ele sabia o que era. Não foi pessoal... foi necessário."',
+        '"Essa máscara não é fantasia. É pra eles não me reconhecerem."',
+        '"Work Station não é esconderijo. É resistência."',
+        '"Você é o 0047, né? Eu te reconheceria em qualquer lugar."'
       ],
       temp:[
         {id:'molotov',name:'Molotov',icon:'🔥',cost:3,desc:'Queimadura: -5 HP/turno no monstro por 3 turnos.',effect:{type:'burn',val:5,turns:3}},
@@ -1182,9 +1658,278 @@ const DATA = {
         {id:'cano_cortado',name:'Cano Cortado',icon:'🔫',cost:6,desc:'Escopeta: +5 dano, -2 HP por tiro.',weapon:'escopeta',dmg:5,hpCost:2},
         {id:'espada_amolada',name:'Serviço Completo',icon:'⚔️',cost:7,desc:'Espada: +5 dano, +3 SAN ao matar monstro.',weapon:'espada',dmg:5,sanBonus:3},
         {id:'soco_ingles',name:'Soco Inglês',icon:'🤜',cost:4,desc:'Punhos: +3 dano permanente.',weapon:'punhos',dmg:3},
-        {id:'katana_compra',name:'Katana',icon:'🗡️',cost:10,desc:'Nova arma. Dano 14-22, Crítico 35%. Desbloqueia final especial.',giveWeapon:'katana'}
+        {id:'katana_compra',name:'Katana',icon:'🗡️',cost:10,desc:'Nova arma. Dano 14-22, Crítico 35%. Desbloqueia final especial.',giveWeapon:'katana'},
+        {id:'chave_auditorio',name:'Chave do Auditório',icon:'🗝️',cost:15,desc:'Uma chave enferrujada com um nariz de palhaço gravado. Abre algo na Work Station...',specialKey:'auditorio'},
+        {id:'licenca_coletores',name:'Licença dos Coletores',icon:'📋',cost:20,desc:'Autoriza a criação dos The Collectors. Necessário para melhorias da cidade.',specialKey:'coletores'}
+      ]
+    },
+    medusa:{
+      name:'Medusa', icon:'🐍', role:'Médica',
+      dialog:[
+        '"Não confunda cuidar com fraqueza."',
+        '"Tenho remédios. Tenho venenos. Depende de como você me trata."',
+        '"Um Collector foi perdido lá fora. Eu preciso dele de volta."',
+        '"Minha cobra não morde... na maioria das vezes."',
+        '"Eu sei coisas sobre o Projeto Pragas que fariam você chorar."',
+        '"Pague direito e eu curo o que você trouxer. Não pergunto o que é."',
+        '"O Butcher me salvou uma vez. Só uma."'
+      ],
+      temp:[
+        {id:'antirrad_m',name:'Antirradiação',icon:'💉',cost:3,desc:'-15 RAD imediato. Produção da Medusa.',effectKey:'radioatividade',effectVal:-15},
+        {id:'kit_cirurgico',name:'Kit Cirúrgico',icon:'🩺',cost:4,desc:'+40 HP. Tratamento de campo.',effectKey:'hp',effectVal:40},
+        {id:'veneno_m',name:'Veneno de Cobra',icon:'🐍',cost:5,desc:'Próximo ataque envenena o inimigo: -4HP/turno por 4 turnos.',special:'poison'}
+      ],
+      perma:[
+        {id:'escudo_rad',name:'Escudo de Radiação',icon:'🛡️',cost:12,desc:'RAD máxima aumenta para 120. Mais resistência.',specialKey:'rad_shield'},
+        {id:'regeneracao',name:'Regeneração Celular',icon:'🧬',cost:18,desc:'+3 HP por dia automaticamente. Modificação permanente.',specialKey:'regen'}
+      ]
+    },
+    lester:{
+      name:'Lester', icon:'🧑‍🍳', role:'Comerciante',
+      dialog:[
+        '"Molho de tomate. É tudo que importa no fim do mundo."',
+        '"Não, eu não sou louco. Você é louco por não guardar tomate enlatado."',
+        '"Aquela fábrica tem caixotes. Eu preciso deles. Simples."',
+        '"Pago bem por serviços bem feitos. Pergunta pro Bullet."',
+        '"Os Collectors são bons garotos. Bem treinados."',
+        '"Comida é moeda. Sempre foi. Sempre vai ser."',
+        '"Você tem cara de quem não comeu tomate faz dias."'
+      ],
+      temp:[
+        {id:'racao_l',name:'Ração de Campo',icon:'🥫',cost:2,desc:'+20 HP. Comida preservada por Lester.',effectKey:'hp',effectVal:20},
+        {id:'energetico_l',name:'Energético Pós-Colapso',icon:'⚡',cost:3,desc:'+10 Esperança +8 Sanidade. Receita secreta.',effectKey:'multi',effectVal:{esperanca:10,sanidade:8}},
+        {id:'molho_especial',name:'Molho Especial',icon:'🍅',cost:4,desc:'Misterioso. +15 Lucidez. "Não pergunte os ingredientes."',effectKey:'lucidez',effectVal:15}
+      ],
+      perma:[
+        {id:'mochila_l',name:'Mochila Reforçada',icon:'🎒',cost:8,desc:'Inventário: até 5 itens temporários (era 3).',specialKey:'bag_upgrade'},
+        {id:'mercado_l',name:'Acesso ao Mercado',icon:'🏪',cost:15,desc:'Desconto de 20% em todos os itens da Work Station.',specialKey:'discount'}
       ]
     }
+  },
+
+  rareDrivers:{
+    5:{
+      id:5, icon:'🔵', label:'Fragmento Azul — Sirius',
+      dialog:[
+        '"Sirius. 0044. Meu amigo mais próximo lá dentro."',
+        '"Eles o pegaram antes de chegar na saída. Eu ouvi os gritos."',
+        '"Sirius era mais forte que eu. Mais rápido. Eles sabiam disso."',
+        '"Às vezes me pergunto se ele ainda está lá. Reintegrado. Sem memória."',
+        '"Este driver... é tudo que sobrou dele. Guarda bem."'
+      ],
+      content:'[FRAGMENTO DE MEMÓRIA — SIRIUS 0044]\n\nNão é um documento.\nÉ uma gravação.\n\nVoz (rouca, masculina):\n"Se alguém encontrar isso... meu nome era Sirius.\nNão sei meu nome humano. Nunca soube.\n\nButcher me ensinou a sorrir mesmo com medo.\nClara nos ensinou que somos reais.\n\nEu não consegui fugir.\nMas espero que você consiga.\n\nAcabe com o Projeto Pragas.\nPor mim."\n\n[FIM DA GRAVAÇÃO]\n[Duração: 0:23]\n[Qualidade: corrompida]'
+    },
+    6:{
+      id:6, icon:'🔵', label:'Fragmento Azul — Moon',
+      dialog:[
+        '"Moon. 0040. A mais jovem de nós."',
+        '"Ela tinha uns 16 anos quando a capturaram. Talvez menos."',
+        '"Moon nunca perdeu a esperança. Nem depois de tudo."',
+        '"Ela foi reintegrada junto com Sirius. Dois de uma vez."',
+        '"Este driver tem os desenhos dela. Ela desenhava pelas paredes do recinto."'
+      ],
+      content:'[FRAGMENTO DE MEMÓRIA — MOON 0040]\n\nNão são palavras.\nSão desenhos digitalizados.\n\nUma criança desenhando nas paredes:\n— Uma casa com jardim\n— Três figuras de mãos dadas\n— Um sol (riscado com força)\n— Uma porta aberta\n\n[NOTA — Dra. Minshafer]\n"A anomalia Moon demonstra comportamento regressivo.\nDesafia a hipótese de supressão emocional completa.\nReiniciando protocolo de condicionamento."\n\n[Debaixo da nota, com letra de criança:]\n"Eu ouço vocês falando.\nEu entendo tudo.\nUm dia vou sair daqui."'
+    },
+    7:{
+      id:7, icon:'🔵', label:'Fragmento Azul — Dr. Robert',
+      dialog:[
+        '"Dr. Robert. A vítima que não foi só vítima."',
+        '"Ele sabia o que estava acontecendo. Concordava com tudo."',
+        '"Clara matou ele para pegar o cartão. Foi necessário."',
+        '"Mas eu encontrei o diário dele depois. Ele tinha dúvidas."',
+        '"Talvez no fim ele fosse tentar parar tudo. Nunca saberemos."'
+      ],
+      content:'[DIÁRIO PESSOAL — Dr. Robert Vance]\n\n[Entrada final — 11 de junho, 1910]\n\nAmanhã é o dia.\nMinshafer vai escalar o experimento para a fase 3.\n\nEu assinei todos os documentos.\nEu participei de tudo.\nMinhas mãos estão tão sujas quanto as dela.\n\nMas hoje à noite, vendo o sujeito 0044 dormir no recinto...\nVi um menino.\nApenas um menino.\n\nEstou pensando em falar com alguém.\nAnonymamente. Um jornalista. Qualquer coisa.\n\nAmanhã decido.\n\n— Robert\n\n[Nota: O Dr. Robert foi encontrado morto na manhã de 12 de junho.]\n[Causa oficial: Acidente de laboratório.]'
+    },
+    8:{
+      id:8, icon:'🔵', label:'Fragmento Azul — Protocolo NÉVOA',
+      dialog:[
+        '"NÉVOA. O protocolo que eles ativam quando você pensa demais."',
+        '"Lucidez acima de 90%? NÉVOA. Simples assim."',
+        '"Eu passei por NÉVOA três vezes. Cada vez perdi um pedaço."',
+        '"O que é NÉVOA exatamente? Nem eu sei. Só sei o que deixa."',
+        '"Cuida da sua lucidez, William. Não deixa chegar perto de 90%... ou chega."'
+      ],
+      content:'[PROTOCOLO NÉVOA — CLASSIFICAÇÃO: MÁXIMA]\n\nAtivação: Automática quando LUCIDEZ > 90%\nAlvo: Sujeitos com autoconsciência elevada\n\nEtapas:\n1. Isolamento do sujeito (72h)\n2. Administração do Composto-N\n3. Reinicialização de memórias recentes\n4. Reimplantação de narrativa padrão\n\nEfeitos colaterais conhecidos:\n— Perda parcial de memória de longo prazo\n— Desorientação temporária (3-7 dias)\n— Em 12% dos casos: perda permanente de identidade\n\n[NOTA — Diretoria]\n"Os 12% são aceitáveis.\nO projeto é maior que os indivíduos."\n\n[Rabiscado à mão, letra da Clara:]\n"Monstruosos."'
+    },
+    9:{
+      id:9, icon:'🔵', label:'Fragmento Azul — A Verdade Final',
+      dialog:[
+        '"Este é o último. O que eu não queria que você soubesse."',
+        '"Mas você chegou até aqui. Merece saber."',
+        '"William... o Projeto Pragas não foi um acidente."',
+        '"O colapso foi planejado. A praga foi planejada."',
+        '"Tudo para criar o ambiente perfeito para testar você."'
+      ],
+      content:'[DOCUMENTO ZERO — ANTERIOR A TODOS OS OUTROS]\n\nData: 30 anos antes do Colapso\n\nPROPOSTA: Criação de ambiente controlado de colapso civilizatório para fins de teste do HOSPEDEIRO ALFA.\n\nJustificativa: O hospedeiro só pode ser testado em condições extremas reais. Simulações são insuficientes.\n\nPlano:\n1. Desenvolver o Composto-7 (Praga)\n2. Liberação controlada em centros urbanos\n3. Monitorar resposta do hospedeiro\n4. Coletar dados por 20-25 dias\n5. Encerrar o experimento\n\n[O QUE SIGNIFICA "ENCERRAR"]\n[Arquivo corrompido]\n\n[Última linha, manuscrita:]\n"Desculpa, William.\nEu não sabia até ser tarde demais.\n— Clara"'
+    }
+  },
+
+  city:{
+    buildings:[
+      {id:'esgoto', name:'Sistema de Esgoto', icon:'🚿', cost:8,
+       desc:'Reduz radiação ambiental. +1 HP por dia.',
+       built:false, effect:{hpPerDay:1,radReduction:3},
+       visual:{type:'pipe', x:30, y:70}},
+      {id:'posto_coleta', name:'Posto de Coleta', icon:'📦', cost:12,
+       desc:'Os Collectors coletam +1 sucata extra por monstro.',
+       built:false, effect:{scrapBonus:1},
+       visual:{type:'warehouse', x:55, y:60}},
+      {id:'oficina', name:'Oficina Mecânica', icon:'🔩', cost:15,
+       desc:'Reduz custo de upgrades permanentes em 15%.',
+       built:false, effect:{upgradeDiscount:0.15},
+       visual:{type:'workshop', x:70, y:75}},
+      {id:'enfermaria', name:'Enfermaria', icon:'🏥', cost:18,
+       desc:'Medusa desbloqueia quest. +5 HP no início de cada run.',
+       built:false, effect:{startHpBonus:5,unlockQuest:'medusa'},
+       visual:{type:'hospital', x:20, y:45}},
+      {id:'mercado_central', name:'Mercado Central', icon:'🏪', cost:20,
+       desc:'Lester desbloqueia quest. Preços 10% mais baratos.',
+       built:false, effect:{discount:0.10,unlockQuest:'lester'},
+       visual:{type:'market', x:45, y:40}},
+      {id:'torre_vigia', name:'Torre de Vigia', icon:'🗼', cost:25,
+       desc:'Collectors aparecem nos dias 20+. Quest Medusa ativa.',
+       built:false, effect:{collectorDays:[20,21,22,23,24,25]},
+       visual:{type:'tower', x:80, y:30}},
+      {id:'quartel', name:'Quartel dos Collectors', icon:'🏚️', cost:30,
+       desc:'Bullet desbloqueia quest. +2 sucata por monstro morto.',
+       built:false, effect:{scrapBonus:2,unlockQuest:'bullet'},
+       visual:{type:'base', x:35, y:25}},
+      {id:'deposito', name:'Depósito Central', icon:'🏭', cost:35,
+       desc:'Desbloqueia missão da fábrica do Lester. Inventário +2.',
+       built:false, effect:{invBonus:2,unlockQuest:'lester_factory'},
+       visual:{type:'depot', x:60, y:20}}
+    ]
+  },
+
+  quests:{
+    bullet_quest:{
+      id:'bullet_quest', npc:'Bullet', icon:'🔧',
+      title:'Caçada aos Cervos',
+      desc:'Bullet precisa de peles de cervo para reforçar armaduras. Derrote 2 cervos usando apenas punhos em 1 run.',
+      req:{building:'quartel'},
+      progress:{deersKilledFists:0, needed:2},
+      reward:{scrap:15, item:'pele_cervo', achiev:'Caçador Urbano'},
+      complete:false, active:false
+    },
+    medusa_quest:{
+      id:'medusa_quest', npc:'Medusa', icon:'🐍',
+      title:'Collector Perdido',
+      desc:'Um Collector foi perdido nos setores externos. Encontre-o antes que seja tarde demais.',
+      req:{building:'enfermaria'},
+      progress:{collectorFound:false},
+      reward:{scrap:12, item:'antidoto_raro', achiev:'Sem Homem para Trás'},
+      complete:false, active:false
+    },
+    lester_quest:{
+      id:'lester_quest', npc:'Lester', icon:'🧑‍🍳',
+      title:'Invasão da Fábrica',
+      desc:'A fábrica de molho de tomate tem caixotes intactos. Invada, derrote os guardas e traga os caixotes.',
+      req:{building:'deposito'},
+      progress:{factoryCleared:false},
+      reward:{scrap:20, item:'caixote_tomate', achiev:'Chef do Apocalipse'},
+      complete:false, active:false
+    },
+    butcher_quest:{
+      id:'butcher_quest', npc:'Butcher', icon:'🎪',
+      title:'Fragmentos da Memória',
+      desc:'Butcher quer que você encontre os fragmentos azuis espalhados pela cidade.',
+      req:{building:'auditorio_key'},
+      progress:{rareDrivers:0, needed:5},
+      reward:{scrap:25, achiev:'Guardião da Memória'},
+      complete:false, active:false
+    }
+  },
+
+  skillTrees:{
+    bencao:{
+      id:'bencao',
+      label:'ABENÇOADO',
+      icon:'✨',
+      color:'#ffe066',
+      colorEdge:'rgba(255,220,100,.5)',
+      colorNode:'#fff4a0',
+      colorBg:'rgba(255,220,80,.08)',
+      theme:'Lado Humano — O Auge do Potencial',
+      passiveDesc:'AURA DIVINA — Toda vez que um stat chega a 100, todos os outros ganham +5.',
+      // Nós: id, nome, desc, custo(dias de run gasto/scrap), efeito, pos(x,y), pais
+      nodes:[
+        {id:'b0', name:'Resistência Inata',   icon:'💪', desc:'HP máximo +20. O experimento fortaleceu sua constituição além do humano.',     cost:3, effect:{maxHpBonus:20},               x:160, y:30,  parents:[]},
+        {id:'b1', name:'Mente Clara',          icon:'🧘', desc:'Sanidade não decai nos dias de combate.',                                        cost:3, effect:{noSanDecayOnCombat:true},      x:80,  y:110, parents:['b0']},
+        {id:'b2', name:'Fé Inabalável',        icon:'🕊️', desc:'Esperança mínima trava em 10 — nunca zera por decay.',                          cost:3, effect:{minEsperanca:10},              x:240, y:110, parents:['b0']},
+        {id:'b3', name:'Cura Acelerada',       icon:'💚', desc:'+8 HP recuperado ao vencer um combate.',                                         cost:4, effect:{healOnKill:8},                x:80,  y:200, parents:['b1']},
+        {id:'b4', name:'Lucidez Cristalina',   icon:'🔷', desc:'Lucidez acima de 70 garante +15% de dano em críticos.',                          cost:4, effect:{lucidezCritBonus:true},       x:240, y:200, parents:['b2']},
+        {id:'b5', name:'Aura Protetora',       icon:'🛡️', desc:'Recebe -3 de dano em cada ataque inimigo.',                                      cost:5, effect:{damageReduction:3},           x:80,  y:290, parents:['b3']},
+        {id:'b6', name:'Transcendência',       icon:'⚡', desc:'QTE bem-sucedido recupera 5 de sanidade e 5 de lucidez.',                        cost:5, effect:{qteStatRestore:true},          x:240, y:290, parents:['b4']},
+        {id:'b7', name:'AURA DIVINA',          icon:'👼', desc:'PASSIVA FINAL — Todo stat que chega a 100 impulsiona os outros +5.',             cost:6, effect:{passiveAuraDivina:true},      x:160, y:380, parents:['b5','b6'], isPassive:true}
+      ]
+    },
+    maldito:{
+      id:'maldito',
+      label:'AMALDIÇOADO',
+      icon:'☣️',
+      color:'#ff6633',
+      colorEdge:'rgba(255,80,20,.5)',
+      colorNode:'#ff8855',
+      colorBg:'rgba(255,60,0,.08)',
+      theme:'Lado Mutante — O Super Soldado',
+      passiveDesc:'INSTINTO PREDADOR — Cada monstro morto aumenta dano base em +1 permanente na run.',
+      nodes:[
+        {id:'m0', name:'Pele Radioativa',      icon:'☢️',  desc:'RAD alta vira vantagem — acima de 60, +20% de dano em todos ataques.',           cost:3, effect:{radDmgBonus:true},            x:160, y:30,  parents:[]},
+        {id:'m1', name:'Sede de Sangue',       icon:'🩸',  desc:'Acerto crítico restaura 5 HP.',                                                   cost:3, effect:{critHeal:5},                  x:80,  y:110, parents:['m0']},
+        {id:'m2', name:'Mutação Óssea',        icon:'🦴',  desc:'HP máximo +15. Ossos mais densos que aço.',                                        cost:3, effect:{maxHpBonus:15},               x:240, y:110, parents:['m0']},
+        {id:'m3', name:'Faro Animal',          icon:'👁️',  desc:'Sempre conhece a fraqueza do monstro antes do combate.',                          cost:4, effect:{revealWeakness:true},         x:80,  y:200, parents:['m1']},
+        {id:'m4', name:'Adrenalina Pura',      icon:'💉',  desc:'Abaixo de 30 HP, dano aumenta +50%.',                                             cost:4, effect:{lowHpDmgBoost:true},          x:240, y:200, parents:['m2']},
+        {id:'m5', name:'Regeneração Bestial',  icon:'🔄',  desc:'+3 HP no início de cada dia.',                                                    cost:5, effect:{dailyHpRegen:3},              x:80,  y:290, parents:['m3']},
+        {id:'m6', name:'Rugido de Guerra',     icon:'😤',  desc:'Ao entrar em combate, monstro perde -10 HP de intimidação.',                      cost:5, effect:{combatIntimidation:10},       x:240, y:290, parents:['m4']},
+        {id:'m7', name:'INSTINTO PREDADOR',    icon:'🐺',  desc:'PASSIVA FINAL — Cada monstro morto: +1 dano base permanente na run.',             cost:6, effect:{passivePredador:true},        x:160, y:380, parents:['m5','m6'], isPassive:true}
+      ]
+    },
+    peste:{
+      id:'peste',
+      label:'DOUTOR PESTE',
+      icon:'🐀',
+      color:'#aaaaaa',
+      colorEdge:'rgba(150,150,150,.4)',
+      colorNode:'#cccccc',
+      colorBg:'rgba(120,120,120,.06)',
+      theme:'A Praga — Dominar a Doença',
+      passiveDesc:'MÉDICO DA MORTE — Animantes não atacam você no primeiro turno de combate. Eles te reconhecem.',
+      nodes:[
+        {id:'p0', name:'Diagnóstico',          icon:'🩺',  desc:'Vê o HP exato de todo monstro antes de decidir lutar ou fugir.',                  cost:3, effect:{seeMonsterHP:true},           x:160, y:30,  parents:[]},
+        {id:'p1', name:'Ervas Medicinais',     icon:'🌿',  desc:'Fuga de combate não custa HP nem Esperança.',                                     cost:3, effect:{freeFlee:true},               x:80,  y:110, parents:['p0']},
+        {id:'p2', name:'Análise da Praga',     icon:'🔬',  desc:'RAD nunca aumenta mais que +8 por evento ou combate.',                            cost:3, effect:{radCap:8},                    x:240, y:110, parents:['p0']},
+        {id:'p3', name:'Doma Inicial',         icon:'🤝',  desc:'10% de chance de um animante virar aliado temporário (1 combate, ataca junto).',  cost:4, effect:{tameChance:0.10},             x:80,  y:200, parents:['p1']},
+        {id:'p4', name:'Veneno Controlado',    icon:'☠️',  desc:'Seus ataques envenenam: monstro perde -5 HP extra por turno.',                   cost:4, effect:{poisonDmg:5},                 x:240, y:200, parents:['p2']},
+        {id:'p5', name:'Pacto dos Animantes',  icon:'🐍',  desc:'Doma Inicial sobe para 25%. Aliados permanecem por 2 combates.',                  cost:5, effect:{improvedTame:true},           x:80,  y:290, parents:['p3']},
+        {id:'p6', name:'Imunidade Seletiva',   icon:'💊',  desc:'Sanidade não decai nunca (drenada por combate sim).',                             cost:5, effect:{noPassiveSanDecay:true},      x:240, y:290, parents:['p4']},
+        {id:'p7', name:'MÉDICO DA MORTE',      icon:'💀',  desc:'PASSIVA FINAL — Animantes não atacam no 1º turno. Eles te reconhecem.',           cost:6, effect:{passiveMedicoDaMorte:true},   x:160, y:380, parents:['p5','p6'], isPassive:true}
+      ]
+    }
+  },
+
+  // Status temporários que aparecem no HUD
+  statusDefs:{
+    envenenado:    {name:'ENVENENADO',    icon:'☠️', type:'deb', desc:'Perde 8 HP por dia',        effect:{hpPerDay:-8},     color:'#88ff44'},
+    amaldicoado_s: {name:'AMALDIÇOADO',  icon:'💀', type:'deb', desc:'Stats não recuperam (+0)',   effect:{noStatRecover:true}},
+    radiante:      {name:'RADIANTE',     icon:'✨', type:'buf', desc:'Crits causam +30% de dano',  effect:{critRadiantBonus:true}},
+    exausto:       {name:'EXAUSTO',      icon:'😮‍💨',type:'deb', desc:'-5 HP e -5 SAN por dia',    effect:{hpPerDay:-5,sanPerDay:-5}},
+    focado:        {name:'FOCADO',       icon:'🎯', type:'buf', desc:'Dano mínimo sempre máximo',  effect:{alwaysMaxDmg:true}},
+    contaminado:   {name:'CONTAMINADO',  icon:'☢️', type:'deb', desc:'RAD +5 extra por dia',       effect:{radPerDay:5}},
+    pilula_troca:  {name:'PÍLULA?',      icon:'💊', type:'neu', desc:'Item misterioso encontrado', effect:{}}
+  },
+
+
+  day5Event:{
+    narrative:'Dia 5.\n\nEntre os escombros do corredor leste você encontra\num arquivo caído. A capa está manchada de sangue seco.\n\nNo canto superior: CLASSIFICADO — ÁREA 12\nData: 1910, junho, quarta-feira, dia 12.',
+    transmission:{
+      title:'SINAL FRACO — ORIGEM DESCONHECIDA',
+      body:'"...Butcher fugiu. Clara o ajudou.\nEles não vão parar de procurar.\nSe você está lendo isso — corra."'
+    },
+    choices:[
+      {label:'Ler o arquivo — Driver 5 coletado',effects:{lucidez:+15,sanidade:-5},effectsLabel:'Lucidez +15 | Sanidade -5 | Driver 5 ✓',isDriver:true,driver:4},
+      {label:'Ignorar — parece armadilha',effects:{esperanca:-5},effectsLabel:'Esperança -5'}
+    ]
   },
 
   day18Event:{
@@ -1223,39 +1968,55 @@ const DATA = {
       content:'[DIA 1 DO EXPERIMENTO]\nO sujeito chegou desorientado. Perguntou onde estava.\nRespondemos: "Um lugar seguro."\n\nEle sorriu.\n\n[DIA 45]\nO sujeito está se adaptando à radiação mais rápido que os modelos previam.\nDra. Minshafer está animada.\nEu estou com medo.\n\n[DIA 89]\nO sujeito perguntou meu nome hoje.\nEu não deveria responder.\nRespondi mesmo assim.\n\nMeu nome é Clara.\n\n[DIA 90 — última entrada]\nEles descobriram que eu conversei com ele.\nEstou sendo transferida para o Setor C.\nNão sei o que é o Setor C.\n\nWilliam — se algum dia você ler isso:\nVocê é real.\nVocê é humano.\nNão deixe eles convencerem você do contrário.'},
 
     6:{title:'Relatório de Campo — Fauna Pós-Colapso',lore:'Os Animantes',
-      content:'[RELATÓRIO — Classificação: URGENTE]\n\nAs criaturas catalogadas apresentam comportamento anômalo.\n\nURSO-DELTA: Exposição prolongada ao Composto-7 resultou em agressividade extrema e regeneração celular acelerada. Os olhos — curiosamente — desenvolveram pigmentação vermelha.\n\nCORUJA-SIGMA: Visão noturna ampliada em 300%. Capacidade de comunicação entre indivíduos da espécie por frequências ultrassônicas. PERIGO: podem coordenar ataques.\n\nCERVO-OMEGA: O mais imprevisível. Testes de inteligência indicam QI equivalente a um primata adulto. Foram observados portando galhos como ferramentas.\n\n[NOTA ALARMANTE]\nTodos os três espécimes reagem de forma diferente à presença do sujeito ID-0047.\nReagem como se o reconhecessem.\nComo se ele fosse... um deles.'}
-  },
+      content:'[RELATÓRIO — Classificação: URGENTE]\n\nAs criaturas catalogadas apresentam comportamento anômalo.\n\nURSO-DELTA: Exposição prolongada ao Composto-7 resultou em agressividade extrema e regeneração celular acelerada. Os olhos — curiosamente — desenvolveram pigmentação vermelha.\n\nCORUJA-SIGMA: Visão noturna ampliada em 300%. Capacidade de comunicação entre indivíduos da espécie por frequências ultrassônicas. PERIGO: podem coordenar ataques.\n\nCERVO-OMEGA: O mais imprevisível. Testes de inteligência indicam QI equivalente a um primata adulto. Foram observados portando galhos como ferramentas.\n\n[NOTA ALARMANTE]\nTodos os três espécimes reagem de forma diferente à presença do sujeito ID-0047.\nReagem como se o reconhecessem.\nComo se ele fosse... um deles.'},
+
+    7:{title:'Arquivo Classificado — Incidente Clara Winter',lore:'A Fuga do Butcher',
+      content:'[CLASSIFICADO — ÁREA 12]\n(Ano 1910, junho, quarta-feira, dia 12)\n\nA anomalia BUTCHER quebrou o sistema de segurança da Área 12 e fugiu com mais 3 anomalias.\n\nAs anomalias "Sirius (0044)" e "Moon (0040)" foram detidas antes mesmo de chegarem nos refeitórios e foram reintegradas aos devidos recintos.\n(Sem comida por 3 dias para essas aberrações)\n\nNo entanto a anomalia BUTCHER fugiu — matando 3 dos nossos funcionários.\n\nTivemos uma cúmplice nessa quebra de segurança.\nAfinal, nenhum "humante" teria capacidade de fugir tão facilmente.\n\nELA liberou as celas dos detentos e forneceu o cartão de 1 dos funcionários que ela mesma assassinou.\nA vítima: Dr. Robert.\n\n[CARTAZ DE PROCURADO — DISTRIBUIR POR TODA A CIDADE]\n\nNome: DESCONHECIDO\nAlias: Clara Winter (suspeito)\n\nDescrição:\n— Olhos azuis\n— Cabelo estilo power black (vermelho)\n— Roupa de animador de festas\n— Aparência: cara de quem não dorme há semanas\n\nQualquer informação ligue para o —\n[Arquivo corrompido]\n\n[NOTA INTERNA]\n"Essa mulher sabia exatamente onde estava cada câmera.\nEla trabalhou aqui por anos.\nEla os conhecia.\nEla escolheu eles."'}  },
   choices:{
     early:[
-      [{label:'Sair do bunker',effects:{hp:-5,radioatividade:+3},effectsLabel:'HP -5 | RAD +3',combat:true},
-       {label:'Explorar o bunker',effects:{sanidade:+8,esperanca:+5},effectsLabel:'Sanidade +8 | Esperança +5',combat:false},
-       {label:'Descansar',effects:{hp:+15,sanidade:+5},effectsLabel:'HP +15 | Sanidade +5',combat:false}],
-      [{label:'Investigar o barulho',effects:{lucidez:+10,hp:-8},effectsLabel:'Lucidez +10 | HP -8',combat:true},
-       {label:'Ignorar e comer',effects:{hp:+10,sanidade:+5},effectsLabel:'HP +10 | Sanidade +5',combat:false},
-       {label:'Verificar as saídas',effects:{esperanca:+8,radioatividade:+5},effectsLabel:'Esperança +8 | RAD +5',combat:true}]
+      [{label:'Sair do bunker',effects:{hp:-8,radioatividade:+4},effectsLabel:'HP -8 | RAD +4',combat:true},
+       {label:'Explorar o bunker',effects:{sanidade:+4,esperanca:+5},effectsLabel:'Sanidade +4 | Esperança +5',combat:false},
+       {label:'Descansar',effects:{hp:+12,sanidade:+3},effectsLabel:'HP +12 | Sanidade +3',combat:false}],
+      [{label:'Investigar o barulho',effects:{lucidez:+8,hp:-10},effectsLabel:'Lucidez +8 | HP -10',combat:true},
+       {label:'Ignorar e comer',effects:{hp:+14,sanidade:+3},effectsLabel:'HP +14 | Sanidade +3',combat:false},
+       {label:'Verificar as saídas',effects:{esperanca:+6,radioatividade:+4},effectsLabel:'Esperança +6 | RAD +4',combat:true}]
     ],
     mid:[
-      [{label:'Avançar pelo corredor',effects:{radioatividade:+5,hp:-10},effectsLabel:'RAD +5 | HP -10',combat:true},
-       {label:'Voltar para o abrigo',effects:{sanidade:+5,esperanca:-8},effectsLabel:'Sanidade +5 | Esperança -8',combat:false},
-       {label:'Escalar para ver o horizonte',effects:{lucidez:+15,hp:-5,radioatividade:+8},effectsLabel:'Lucidez +15 | HP -5 | RAD +8',combat:true}],
-      [{label:'Entrar no setor proibido',effects:{lucidez:+20,sanidade:-15,radioatividade:+10},effectsLabel:'Lucidez +20 | Sanidade -15 | RAD +10',combat:true},
-       {label:'Contornar pelo exterior',effects:{hp:-8,radioatividade:+12},effectsLabel:'HP -8 | RAD +12',combat:true},
-       {label:'Esperar o amanhecer',effects:{hp:+8,esperanca:-5},effectsLabel:'HP +8 | Esperança -5',combat:false}]
+      [{label:'Avançar pelo corredor',effects:{radioatividade:+6,hp:-12},effectsLabel:'RAD +6 | HP -12',combat:true},
+       {label:'Voltar para o abrigo',effects:{hp:+8,esperanca:-6},effectsLabel:'HP +8 | Esperança -6',combat:false},
+       {label:'Escalar para ver o horizonte',effects:{lucidez:+12,hp:-8,radioatividade:+7},effectsLabel:'Lucidez +12 | HP -8 | RAD +7',combat:true}],
+      [{label:'Entrar no setor proibido',effects:{lucidez:+15,sanidade:-8,radioatividade:+10},effectsLabel:'Lucidez +15 | Sanidade -8 | RAD +10',combat:true},
+       {label:'Contornar pelo exterior',effects:{hp:-10,radioatividade:+10},effectsLabel:'HP -10 | RAD +10',combat:true},
+       {label:'Esperar o amanhecer',effects:{hp:+10,esperanca:-4},effectsLabel:'HP +10 | Esperança -4',combat:false}]
     ],
     late:[
-      [{label:'Enfrentar o que está lá fora',effects:{hp:-15,radioatividade:+15},effectsLabel:'HP -15 | RAD +15',combat:true},
-       {label:'Destruir os registros',effects:{lucidez:-20,sanidade:+10},effectsLabel:'Lucidez -20 | Sanidade +10',combat:false},
-       {label:'Aceitar o que você é',effects:{radioatividade:+20,esperanca:+15},effectsLabel:'RAD +20 | Esperança +15',combat:false}],
-      [{label:'Ativar o protocolo final',effects:{radioatividade:+25,lucidez:+15,hp:-20},effectsLabel:'RAD +25 | Lucidez +15 | HP -20',combat:true},
-       {label:'Fugir do bunker',effects:{hp:-10,esperanca:+10,radioatividade:+8},effectsLabel:'HP -10 | Esperança +10 | RAD +8',combat:true},
-       {label:'Escrever uma última mensagem',effects:{esperanca:+20,sanidade:+10},effectsLabel:'Esperança +20 | Sanidade +10',combat:false}]
+      [{label:'Enfrentar o que está lá fora',effects:{hp:-18,radioatividade:+12},effectsLabel:'HP -18 | RAD +12',combat:true},
+       {label:'Destruir os registros',effects:{lucidez:-15,sanidade:+5},effectsLabel:'Lucidez -15 | Sanidade +5',combat:false},
+       {label:'Aceitar o que você é',effects:{radioatividade:+15,esperanca:+12},effectsLabel:'RAD +15 | Esperança +12',combat:false}],
+      [{label:'Ativar o protocolo final',effects:{radioatividade:+20,lucidez:+12,hp:-22},effectsLabel:'RAD +20 | Lucidez +12 | HP -22',combat:true},
+       {label:'Fugir do bunker',effects:{hp:-12,esperanca:+8,radioatividade:+6},effectsLabel:'HP -12 | Esperança +8 | RAD +6',combat:true},
+       {label:'Escrever uma última mensagem',effects:{esperanca:+15,sanidade:+4},effectsLabel:'Esperança +15 | Sanidade +4',combat:false}]
+    ],
+    endgame:[
+      [
+        {label:'Explorar os túneis mais fundos',effects:{radioatividade:+9,lucidez:+10},effectsLabel:'Radiação +9 | Lucidez +10'},
+        {label:'Descansar e recuperar forças',effects:{hp:+18,sanidade:+4},effectsLabel:'HP +18 | Sanidade +4'},
+        {label:'Estudar os documentos do bunker',effects:{lucidez:+12,esperanca:+4},effectsLabel:'Lucidez +12 | Esperança +4'}
+      ],
+      [
+        {label:'Tentar consertar o gerador',effects:{esperanca:+14,hp:-10},effectsLabel:'Esperança +14 | HP -10'},
+        {label:'Vigiar a entrada por horas',effects:{sanidade:-4,lucidez:+8},effectsLabel:'Sanidade -4 | Lucidez +8'},
+        {label:'Registrar tudo no diário',effects:{sanidade:+4,esperanca:+6},effectsLabel:'Sanidade +4 | Esperança +6'}
+      ],
+      [
+        {label:'Ir ao encontro do sinal de rádio',effects:{radioatividade:+10,esperanca:+16},effectsLabel:'Radiação +10 | Esperança +16'},
+        {label:'Meditar nos corredores vazios',effects:{sanidade:+5,lucidez:+6},effectsLabel:'Sanidade +5 | Lucidez +6'},
+        {label:'Preparar o equipamento para o fim',effects:{hp:+14,esperanca:+8},effectsLabel:'HP +14 | Esperança +8'}
+      ]
     ]
   }
 };
 
-// ============================================================
-// SAVE SYSTEM
-// ============================================================
 const SAVE = {
   key:'matrix_tll_save',
   load(){
@@ -1263,7 +2024,7 @@ const SAVE = {
     catch{return this.default();}
   },
   save(data){try{localStorage.setItem(this.key,JSON.stringify(data));}catch{}},
-  default(){return{finals:[],drivers:[false,false,false],themes:['matrix'],achievements:[]};}
+  default(){return{finals:[],drivers:[false,false,false,false,false,false,false,false,false,false],themes:['matrix'],achievements:[]};}
 };
 
 // ============================================================
@@ -1479,6 +2240,14 @@ const CRIT_ANIM = {
     sb0:'#d8e8f0', sb1:'#a8c0d8', sb2:'#7098b0', sg:'#607080', sh:'#806040',
     // Efeito corte
     slash0:'#c8ffc8', slash1:'#80ff80', slash2:'#40c040',
+    // Espada crítico dourado
+    critGold0:'#fff0a0', critGold1:'#ffc840', critGold2:'#ff9000',
+    // Katana roxa
+    kat0:'#d8b0ff', kat1:'#a060e0', kat2:'#7030b0', katEdge:'#f0d8ff',
+    petal0:'#e080ff', petal1:'#c040e0', petal2:'#ff80ff', petalD:'#400060',
+    critPurp0:'#f0c0ff', critPurp1:'#c060ff', critPurp2:'#8020c0',
+    // Lança-chamas
+    fire0:'#ffffff', fire1:'#ffff40', fire2:'#ff8000', fire3:'#ff3000', fire4:'#800000',
     // Arco/flecha
     bw0:'#a07830', bw1:'#c09848', bw2:'#806020',
     arr0:'#d0b878', arr1:'#806020', arrT:'#e04010',
@@ -1501,19 +2270,20 @@ const CRIT_ANIM = {
   // ── ESPADA: corte diagonal da esquerda para direita ──────────
   drawSword(ctx, fr){
     const C=this.C, S=this.S;
-    const prog=Math.min(1, fr/38); // 0..1
-    const ox=Math.floor(prog*24); // espada avança
+    const prog=Math.min(1, fr/52); // 0..1 — mais tempo
+    const ox=Math.floor(prog*26); // espada avança
     const oy=Math.floor(prog*-10); // sobe levemente
 
-    // Rastro do corte (trail)
+    // Rastro do corte (trail multi-camada)
     if(fr>8){
-      ctx.globalAlpha=Math.max(0,(1-prog)*.6);
-      ctx.fillStyle=C.slash1;
-      // Linhas diagonais de slash
-      for(let i=0;i<4;i++){
-        const tx=ox-i*5, ty=oy+i*2;
-        ctx.fillRect((8+tx)*S,(2+ty)*S,(12-i)*S,S);
-        ctx.fillRect((9+tx)*S,(3+ty)*S,(10-i)*S,S);
+      for(let t=1;t<=5;t++){
+        const tp=Math.max(0,prog-t*.07);
+        const tax=Math.floor(tp*26), tay=tp*1.5;
+        ctx.globalAlpha=Math.max(0,(1-prog)*.65*(1-t/6));
+        ctx.fillStyle=t<2?'#ffffff':t<3?C.slash0:t<4?C.slash1:t<5?C.critGold0:C.critGold1;
+        for(let i=0;i<5;i++){
+          ctx.fillRect((8+tax-i*4)*S,(2+tay+i*2)*S,(10-i*1.5)*S,S);
+        }
       }
       ctx.globalAlpha=1;
     }
@@ -1541,29 +2311,53 @@ const CRIT_ANIM = {
     // Pommel
     this.r(ctx, 3+ox, 21+oy, 5, 2, C.sg);
 
-    // Flash de impacto no alvo
+    // Flash de impacto épico com aura dourada
     if(fr>30){
-      const fa=Math.max(0,1-(fr-30)/16);
-      ctx.globalAlpha=fa*.8;
-      ctx.fillStyle=C.slash0;
-      ctx.fillRect((28+ox)*S,(6+oy)*S,S*6,S*6);
-      ctx.fillStyle=C.slash1;
-      ctx.fillRect((29+ox)*S,(7+oy)*S,S*4,S*4);
-      // Asterisco de impacto
-      ctx.fillStyle=C.slash2;
-      ctx.fillRect((30+ox)*S,(5+oy)*S,S*2,S*8);
-      ctx.fillRect((28+ox)*S,(8+oy)*S,S*8,S*2);
+      const fa=Math.max(0,1-(fr-30)/26);
+      // Ondas de choque
+      ctx.globalAlpha=fa*.7;
+      for(let ring=0;ring<3;ring++){
+        const r=(fr-30)*1.0+ring*4;
+        ctx.strokeStyle=ring===0?'#ffffff':ring===1?C.critGold0:C.critGold1;
+        ctx.lineWidth=(3-ring)*.5*S;
+        ctx.beginPath();ctx.arc((32+ox)*S,(10+oy)*S,r*S,0,Math.PI*2);ctx.stroke();
+      }
       ctx.globalAlpha=1;
+      // Flash central dourado
+      ctx.globalAlpha=fa*.9;
+      ctx.fillStyle='#ffffff';ctx.fillRect((29+ox)*S,(6+oy)*S,S*6,S*8);
+      ctx.fillStyle=C.critGold0;ctx.fillRect((30+ox)*S,(7+oy)*S,S*4,S*6);
+      ctx.fillStyle=C.critGold1;ctx.fillRect((31+ox)*S,(8+oy)*S,S*2,S*4);
+      ctx.globalAlpha=1;
+      // Cruz de luz
+      ctx.globalAlpha=fa*.6;
+      ctx.fillStyle=C.critGold0;
+      ctx.fillRect((30+ox)*S,(4+oy)*S,S*2,S*14);
+      ctx.fillRect((25+ox)*S,(9+oy)*S,S*14,S*2);
+      ctx.globalAlpha=1;
+      // Faíscas douradas voando
+      if(fr>38){
+        ctx.globalAlpha=fa*.8;
+        const sparks=[[28,4],[34,4],[26,10],[38,10],[28,16],[34,16],[24,8],[38,8]];
+        sparks.forEach(([sx,sy],i)=>{
+          ctx.fillStyle=i%3===0?'#ffffff':i%3===1?C.critGold0:C.critGold1;
+          ctx.fillRect((sx+ox)*S,(sy+oy)*S,S*(1+i%2),S*(1+i%2));
+        });
+        ctx.globalAlpha=1;
+      }
     }
 
-    // Texto CRITICO! pixel
-    if(fr>46){
-      const ta=Math.min(1,(fr-46)/6);
-      ctx.globalAlpha=ta;
-      ctx.fillStyle=C.slash0;
-      ctx.font='bold '+(S*4)+'px monospace';
+    // Texto CRÍTICO! dourado com sombra
+    if(fr>62){
+      const ta=Math.min(1,(fr-62)/10);
+      ctx.globalAlpha=ta*.7;
+      ctx.fillStyle=C.critGold2;
+      ctx.font='bold '+(S*5)+'px monospace';
       ctx.textAlign='center';
-      ctx.fillText('CRITICO!',20*S,32*S);
+      ctx.fillText('⚔ CRÍTICO!',20*S+S,32*S+S);
+      ctx.globalAlpha=ta;
+      ctx.fillStyle=C.critGold0;
+      ctx.fillText('⚔ CRÍTICO!',20*S,32*S);
       ctx.globalAlpha=1;
     }
   },
@@ -1786,6 +2580,192 @@ const CRIT_ANIM = {
     }
   },
 
+  drawKatana(ctx, fr, total=95){
+    const C=this.C, S=this.S;
+    const prog=Math.min(1, fr/48);
+    const angle=prog*Math.PI*.7-0.3;
+    const ox=Math.floor(Math.cos(angle)*28);
+    const oy=Math.floor(Math.sin(angle)*-16);
+    const isCrit=fr>48;
+
+    // Pétalas caindo
+    const pcount=isCrit?14:5;
+    for(let i=0;i<pcount;i++){
+      const seed=i*137+fr;
+      const ppx=((seed*73)%48)+2;
+      const ppy=((seed*31+fr*2)%36);
+      ctx.globalAlpha=isCrit?(.4+Math.sin(fr*.12+i)*.35):.2;
+      ctx.save();
+      ctx.translate(ppx*S,ppy*S);
+      ctx.rotate(fr*.06+i*.9);
+      ctx.fillStyle=i%3===0?C.petal0:i%3===1?C.petal1:C.petal2;
+      ctx.beginPath();ctx.ellipse(0,0,S*2.5,S*1.2,0,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }
+    ctx.globalAlpha=1;
+
+    // Aura roxa orbitando
+    if(fr>8){
+      ctx.globalAlpha=Math.min(.6,fr/25)*.5;
+      for(let i=0;i<8;i++){
+        const a=i*(Math.PI/4)+fr*.09;
+        const r=7+Math.sin(fr*.18+i)*3;
+        ctx.fillStyle=i%2===0?C.kat1:C.kat2;
+        ctx.fillRect((18+ox+Math.cos(a)*r)*S,(10+oy+Math.sin(a)*r)*S,S*2,S*2);
+      }
+      ctx.globalAlpha=1;
+    }
+
+    // Rastro da katana
+    if(fr>4&&fr<68){
+      for(let t=1;t<=7;t++){
+        const tp=Math.max(0,prog-t*.05);
+        const ta2=tp*Math.PI*.7-0.3;
+        const tax=Math.floor(Math.cos(ta2)*28);
+        const tay=Math.floor(Math.sin(ta2)*-16);
+        ctx.globalAlpha=Math.max(0,.55-t*.07);
+        ctx.fillStyle=t<3?C.critPurp0:t<5?C.kat1:C.kat2;
+        for(let i=0;i<10;i++) ctx.fillRect((7+i+tax)*S,(15-i+tay)*S,S*(3-t*.25),S);
+      }
+      ctx.globalAlpha=1;
+    }
+
+    // Lâmina katana
+    for(let i=0;i<18;i++){
+      this.px(ctx,3+i+ox,17-i+oy,C.blk);
+      this.px(ctx,4+i+ox,17-i+oy,C.blk);
+      this.px(ctx,3+i+ox,18-i+oy,C.blk);
+    }
+    for(let i=0;i<16;i++) this.px(ctx,4+i+ox,17-i+oy,C.kat2);
+    for(let i=0;i<16;i++){
+      this.px(ctx,5+i+ox,16-i+oy,isCrit?C.critPurp0:C.katEdge);
+      if(i%3===0) this.px(ctx,6+i+ox,15-i+oy,'#ffffff');
+    }
+    for(let i=0;i<14;i++) this.px(ctx,5+i+ox,17-i+oy,i<7?C.kat1:C.kat0);
+    // Ponta
+    this.px(ctx,21+ox,2+oy,C.critPurp0);
+    this.px(ctx,22+ox,2+oy,'#ffffff');
+    // Tsuba
+    this.r(ctx,2+ox,15+oy,6,6,C.kat2);
+    this.r(ctx,3+ox,16+oy,4,4,C.kat1);
+    this.px(ctx,4+ox,17+oy,C.critPurp0);
+    // Cabo com enrolamento
+    this.r(ctx,1+ox,21+oy,4,10,C.petalD);
+    this.r(ctx,2+ox,22+oy,2,8,'#200040');
+    for(let i=0;i<5;i++){
+      this.px(ctx,1+ox,22+i*2+oy,C.kat2);
+      this.px(ctx,4+ox,23+i*2+oy,C.kat2);
+    }
+    this.r(ctx,0+ox,31+oy,6,3,C.kat2);
+    this.px(ctx,2+ox,31+oy,C.critPurp0);
+
+    // Explosão de pétalas no crítico
+    if(isCrit){
+      const blast=fr-48;
+      const bfa=Math.max(0,1-blast/40);
+      ctx.globalAlpha=bfa*.7;
+      for(let ring=0;ring<4;ring++){
+        const r=blast*1.4+ring*5;
+        ctx.strokeStyle=ring===0?'#ffffff':ring===1?C.critPurp0:ring===2?C.kat1:C.kat2;
+        ctx.lineWidth=(5-ring)*.4*S;
+        ctx.beginPath();ctx.arc((22+ox)*S,(9+oy)*S,r*S,0,Math.PI*2);ctx.stroke();
+      }
+      ctx.globalAlpha=1;
+      ctx.globalAlpha=bfa*.95;
+      for(let i=0;i<16;i++){
+        const pa=i*(Math.PI/8)+blast*.05;
+        const pd=blast*.9+i*1.2;
+        const ppx=22+ox+Math.cos(pa)*pd, ppy=9+oy+Math.sin(pa)*pd;
+        ctx.save();ctx.translate(ppx*S,ppy*S);ctx.rotate(pa+blast*.1);
+        ctx.fillStyle=i%4===0?C.petal0:i%4===1?C.petal1:i%4===2?C.petal2:C.critPurp0;
+        ctx.beginPath();ctx.ellipse(0,0,S*3,S*1.5,0,0,Math.PI*2);ctx.fill();
+        ctx.restore();
+      }
+      ctx.globalAlpha=1;
+      const flashA=Math.max(0,1-blast/12)*.9;
+      if(flashA>0){
+        ctx.globalAlpha=flashA;
+        ctx.fillStyle='#ffffff';ctx.fillRect((18+ox)*S,(5+oy)*S,S*8,S*8);
+        ctx.fillStyle=C.critPurp0;ctx.fillRect((19+ox)*S,(6+oy)*S,S*6,S*6);
+        ctx.globalAlpha=1;
+      }
+    }
+
+    if(fr>72){
+      const ta=Math.min(1,(fr-72)/10);
+      ctx.globalAlpha=ta*.7;
+      ctx.fillStyle=C.kat2;ctx.font='bold '+(S*5)+'px monospace';ctx.textAlign='center';
+      ctx.fillText('🌸 CRÍTICO!',22*S+S,33*S+S);
+      ctx.globalAlpha=ta;ctx.fillStyle=C.critPurp0;
+      ctx.fillText('🌸 CRÍTICO!',22*S,33*S);ctx.globalAlpha=1;
+    }
+  },
+
+  drawLancachamas(ctx, fr, total=88){
+    const C=this.C, S=this.S;
+    const prog=Math.min(1, fr/45);
+    const gx=1, gy=14;
+    const isCrit=fr>45;
+    // Tanque
+    this.r(ctx,gx,gy-4,6,14,C.gm0);this.r(ctx,gx+1,gy-3,4,12,C.gm1);
+    this.r(ctx,gx+5,gy-1,3,8,C.gm2);
+    // Corpo
+    this.r(ctx,gx+7,gy,12,5,C.gm0);this.r(ctx,gx+8,gy,10,4,C.gm1);
+    this.h(ctx,gx+7,gy,12,C.gm2);
+    // Cano
+    this.r(ctx,gx+17,gy+1,12,3,C.gm0);this.h(ctx,gx+17,gy+1,12,C.gm1);
+    // Bocal
+    this.r(ctx,gx+28,gy,4,5,C.gm2);this.r(ctx,gx+29,gy+1,3,3,C.gm0);
+    // Gatilho
+    this.px(ctx,gx+9,gy+4,C.gm2);this.px(ctx,gx+10,gy+5,C.gm2);
+
+    // Chama jato
+    if(fr>3){
+      const frog=Math.min(1,(fr-3)/22);
+      const flameLen=Math.floor(frog*22);
+      for(let fl=0;fl<flameLen;fl++){
+        const ft=fl/flameLen;
+        const fw=Math.max(1,Math.floor(6-ft*4.5));
+        const ffy=gy+1+Math.floor(Math.sin(fr*.15+fl*.3)*1.5);
+        ctx.globalAlpha=(.9-ft*.5);
+        ctx.fillStyle=ft<.15?C.fire0:ft<.3?C.fire1:ft<.55?C.fire2:ft<.8?C.fire3:C.fire4;
+        ctx.fillRect((gx+31+fl)*S,ffy*S,S,fw*S);
+        if(fl>2){ctx.globalAlpha*=.3;ctx.fillStyle=C.fire2;ctx.fillRect((gx+30+fl)*S,(ffy-1)*S,S*2,(fw+2)*S);}
+      }
+      ctx.globalAlpha=1;
+    }
+
+    // Explosão crítico
+    if(isCrit){
+      const blast=fr-45, bfa=Math.max(0,1-blast/36);
+      const ex=56, ey=gy+2;
+      ctx.globalAlpha=bfa;
+      const r1=(blast+4)*1.4;
+      [C.fire1,C.fire2,C.fire3,C.fire0].forEach((col,ri)=>{
+        ctx.fillStyle=col;ctx.beginPath();
+        ctx.arc(ex*S,ey*S,r1*(1-.25*ri)*S,0,Math.PI*2);ctx.fill();
+      });
+      ctx.globalAlpha=1;
+      ctx.globalAlpha=bfa*.8;
+      for(let i=0;i<12;i++){
+        const fa=i*(Math.PI*2/12)-blast*.08;
+        const fd=blast*.7+i*1.5;
+        ctx.fillStyle=i%3===0?C.fire1:i%3===1?C.fire2:C.fire3;
+        ctx.fillRect((ex+Math.cos(fa)*fd)*S,(ey+Math.sin(fa)*fd)*S,S*(2+i%3),S*(2+i%3));
+      }
+      ctx.globalAlpha=1;
+    }
+
+    if(fr>68){
+      const ta=Math.min(1,(fr-68)/10);
+      ctx.globalAlpha=ta*.7;ctx.fillStyle=C.fire4;
+      ctx.font='bold '+(S*5)+'px monospace';ctx.textAlign='center';
+      ctx.fillText('🔥 CRÍTICO!',26*S+S,34*S+S);
+      ctx.globalAlpha=ta;ctx.fillStyle=C.fire1;
+      ctx.fillText('🔥 CRÍTICO!',26*S,34*S);ctx.globalAlpha=1;
+    }
+  },
+
   show(weapon, onDone){
     this.weapon=weapon;
     this.fr=0;
@@ -1810,7 +2790,7 @@ const CRIT_ANIM = {
     qteBtn.style.cssText='display:none;position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,10,0,.85);border:2px solid #78ff88;color:#78ff88;font-family:monospace;font-weight:700;font-size:12px;letter-spacing:2px;padding:7px 20px;cursor:pointer;border-radius:4px;z-index:30;';
     stage.appendChild(qteBtn);
 
-    const maxFr={espada:60,arco:64,escopeta:62,punhos:58};
+    const maxFr={espada:90,arco:82,escopeta:80,punhos:75,katana:95,lancachamas:88};
     const totalFr=maxFr[weapon]||28;
     const qteShow=Math.floor(totalFr*.38); // quando aparece
     const qteHide=Math.floor(totalFr*.75); // quando fecha a janela
@@ -1843,10 +2823,12 @@ const CRIT_ANIM = {
       const cy=Math.floor(H/2/S)-14;
       ctx.save();
       ctx.translate(cx*S,cy*S);
-      if(weapon==='espada') self.drawSword(ctx,self.fr);
-      else if(weapon==='arco') self.drawArco(ctx,self.fr);
-      else if(weapon==='escopeta') self.drawEscopeta(ctx,self.fr);
-      else self.drawPunhos(ctx,self.fr);
+      if(weapon==='espada') self.drawSword(ctx,self.fr,totalFr);
+      else if(weapon==='arco') self.drawArco(ctx,self.fr,totalFr);
+      else if(weapon==='escopeta') self.drawEscopeta(ctx,self.fr,totalFr);
+      else if(weapon==='katana') self.drawKatana(ctx,self.fr,totalFr);
+      else if(weapon==='lancachamas') self.drawLancachamas(ctx,self.fr,totalFr);
+      else self.drawPunhos(ctx,self.fr,totalFr);
       ctx.restore();
 
       // QTE timing
@@ -1890,10 +2872,28 @@ const G = {
   typewriterTimer: null,
 
   // --- SCREEN MANAGEMENT com transição fluida ---
+  _updateMenuButtons(){
+    const stBtn=document.getElementById('menu-st-btn');
+    if(!stBtn) return;
+    const unlocked=this.isSkillTreeUnlocked();
+    if(unlocked){
+      stBtn.style.borderColor='rgba(255,200,0,.4)';
+      stBtn.style.color='#ffe066';
+      stBtn.textContent='⚡ ÁRVORE DE HABILIDADES';
+    } else {
+      // Contar drivers coletados
+      const d=this.save?this.save.drivers||[]:[false,false,false,false,false];
+      const count=d.filter(Boolean).length;
+      stBtn.style.borderColor='rgba(100,100,100,.2)';
+      stBtn.style.color='#444';
+      stBtn.textContent='🔒 HABILIDADES ('+count+'/5 drivers)';
+    }
+  },
+
   showScreen(id){
     const current=document.querySelector('.scr.on');
     const next=document.getElementById(id);
-    if(!current||current===next){next.classList.add('on');return;}
+    if(!current||current===next){next.classList.add('on');if(id==='s-menu')this._updateMenuButtons();return;}
     current.classList.add('fading-out');
     setTimeout(()=>{
       document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on','fading-out'));
@@ -1921,9 +2921,16 @@ const G = {
       alive:true,
       monstersKilled:0,
       killedTypes:{urso:false,coruja:false,cervo:false},
-      driversCollected:[...this.save.drivers]
+      driversCollected:[...this.save.drivers],
+      statuses:[],         // [{id, name, icon, type, duration, effect}]
+      skillTree:null,      // 'bencao'|'maldito'|'peste'
+      unlockedNodes:[],    // ids de nós desbloqueados
+      allyActive:false,    // animante aliado ativo
+      predatorKills:0,     // para passiva predador
+      pilulaUsed:false,    // pílula de troca já usada nessa run
     };
     this.save=SAVE.load();
+    this._updateMenuButtons();
     this.showDayTransition(()=>this.renderDay());
   },
 
@@ -1952,9 +2959,18 @@ const G = {
   renderHUD(){
     const s=this.run.stats;
     const w=DATA.weapons[this.run.weapon];
+    // Montar badges de status
+    const statuses=this.run.statuses||[];
+    const stBadges=statuses.map(st=>{
+      return '<span class="status-badge s-'+st.type+'">'+
+        '<span class="sb-plus">+</span>'+st.icon+' '+st.name+
+        (st.duration?' ('+st.duration+'d)':'')+'</span>';
+    }).join('');
+    // Ícone da árvore
+    const treeIcon=this.run.skillTree?DATA.skillTrees[this.run.skillTree].icon:'';
     document.getElementById('hud').innerHTML=
       '<div class="hud-top">'+
-      '<div class="hud-day-info">DIA '+this.run.day+'/20</div>'+
+      '<div class="hud-day-info">DIA '+this.run.day+'/25 '+treeIcon+'</div>'+
       '<div class="hud-weapon">'+w.icon+' '+w.label+'</div>'+
       '</div>'+
       '<div class="hud-bars">'+
@@ -1963,7 +2979,8 @@ const G = {
       this.stat('LUC',s.lucidez,'f-luc',s.lucidez<=25)+
       this.stat('ESP',s.esperanca,'f-esp',s.esperanca<=20)+
       this.stat('RAD',s.radioatividade,'f-rad',s.radioatividade>=80)+
-      '</div>';
+      '</div>'+
+      (stBadges?'<div class="hud-statuses">'+stBadges+'</div>':'');
   },
 
   stat(label,val,cls,isDanger){
@@ -1988,6 +3005,13 @@ const G = {
       return;
     }
 
+    // Special day 5 event — Arquivo Classificado
+    if(day===5&&!this.run.day5Done){
+      this.run.day5Done=true;
+      this.renderDay5Event();
+      return;
+    }
+
     // Special day 8 event
     if(day===8&&!this.run.day8Done){
       this.run.day8Done=true;
@@ -2002,7 +3026,19 @@ const G = {
       return;
     }
 
-    const phase=day<=7?'early':day<=14?'mid':'late';
+    // Dias 23 e 25 — chance 10% de driver raro azul
+    // (só se work station desbloqueada E quest do Butcher ativa)
+    if((day===23||day===25)&&this.save.butcherQuestActive){
+      const allRare=[5,6,7,8,9];
+      const collected=this.save.rareDriversCollected||[];
+      const available=allRare.filter(d=>!collected.includes(d));
+      if(available.length>0&&Math.random()<0.10){
+        const rd=DATA.rareDrivers[available[Math.floor(Math.random()*available.length)]];
+        this._pendingRareDriver=rd;
+      }
+    }
+
+    const phase=day<=7?'early':day<=14?'mid':day<=20?'late':'endgame';
     const dialogs=DATA.dialogs[phase];
     const dialogText=dialogs[Math.floor(Math.random()*dialogs.length)];
     const trans=DATA.transmissions[Math.floor(Math.random()*DATA.transmissions.length)];
@@ -2049,8 +3085,66 @@ const G = {
       ${alerts.map(a=>`<div class="alert-box">${a}</div>`).join('')}
     `;
     this._currentChoices=choices;
-    this.run._lastChoices=choices; // backup para segurança
-    this.setGameBody(html);
+    this.run._lastChoices=choices;
+
+    // Chance 15% de aparecer choice de driver não coletado
+    const uncollected=[];
+    for(let di=0;di<3;di++){
+      if(!this.save.drivers[di]) uncollected.push(di);
+    }
+    let driverBtnHTML='';
+    if(uncollected.length>0 && Math.random()<0.15){
+      const rd=uncollected[Math.floor(Math.random()*uncollected.length)];
+      const dlabels=['Carta da Resistência','Arquivo Perdido','Memória Fragmentada'];
+      driverBtnHTML=`<button class="choice-btn driver" onclick="G.collectRandomDriver(${rd})">
+        <span class="choice-title">💾 [DRIVER] ${dlabels[rd]} — Coletar</span>
+        <span class="choice-effects">Lucidez +8 | Esperança +5 | Driver ${rd+1} ✓</span>
+      </button>`;
+    }
+
+    // Adicionar driver raro azul se disponível
+    let rareBtnHTML='';
+    if(this._pendingRareDriver){
+      const rd=this._pendingRareDriver;
+      rareBtnHTML=`
+        <button class="choice-btn driver-rare" onclick="G.collectRareDriver(${rd.id})">
+          <span class="choice-title">${rd.icon} [FRAGMENTO AZUL] ${rd.label}</span>
+          <span class="choice-effects">Memória recuperada — Fragmento único</span>
+        </button>`;
+      this._pendingRareDriver=null;
+    }
+    // Checar pílula de troca
+    let pilulaBtnHTML='';
+    const pilula=this._checkPilulaDeTraca(choices);
+    if(pilula){
+      pilulaBtnHTML=`<button class="choice-btn pilula-troca" onclick="G.usarPilula()">
+        <span class="choice-title">💊 [ITEM RARO] Pílula de Troca</span>
+        <span class="choice-effects">Redefine sua Árvore de Habilidades — 1.5% de chance por dia</span>
+      </button>`;
+    }
+    this.setGameBody(html+driverBtnHTML+rareBtnHTML+pilulaBtnHTML);
+
+    // Botão Skill Tree sempre visível no jogo
+    setTimeout(()=>{
+      const gb=document.getElementById('game-body');
+      if(gb && !gb.querySelector('.st-access-btn')){
+        const btn=document.createElement('button');
+        btn.className='choice-btn st-access-btn';
+        const unlocked=this.isSkillTreeUnlocked();
+        if(unlocked){
+          const tree=this.run.skillTree?DATA.skillTrees[this.run.skillTree]:null;
+          btn.style.cssText='border-color:rgba(255,200,0,.35);margin-top:4px;';
+          btn.innerHTML='<span class="choice-title">⚡ ÁRVORE DE HABILIDADES</span><span class="choice-effects">'+(tree?tree.icon+' '+tree.label+' — '+(this.run.unlockedNodes||[]).length+' nós ativos':'Sem caminho — escolha sua árvore')+'</span>';
+        } else {
+          const d=this.save?this.save.drivers||[]:[false,false,false,false,false];
+          const count=d.filter(Boolean).length;
+          btn.style.cssText='border-color:rgba(80,80,80,.2);margin-top:4px;opacity:.45;';
+          btn.innerHTML='<span class="choice-title">🔒 ÁRVORE DE HABILIDADES</span><span class="choice-effects">Bloqueada — '+count+'/5 drivers coletados</span>';
+        }
+        btn.onclick=()=>this.openSkillTree();
+        gb.appendChild(btn);
+      }
+    },100);
   },
 
   // --- DAY 8 SPECIAL ---
@@ -2128,6 +3222,42 @@ const G = {
     setTimeout(()=>this.nextDay(), 1800);
   },
 
+  renderDay5Event(){
+    this.renderHUD();
+    const ev=DATA.day5Event;
+    const glitchChars='ソXノCセA▓クセ?⊕ナXケ▪XサS▪';
+    const html=`
+      <div class="dialog-box" style="border-color:rgba(180,0,0,.25)">
+        ${ev.narrative.replace(/\n/g,'<br>')}
+        <span class="glitch-text">${glitchChars+glitchChars}</span>
+      </div>
+      <div class="transmission" style="border-color:rgba(180,0,0,.15)">
+        <div class="transmission-title" style="color:#cc3333">📡 ${ev.transmission.title}</div>
+        <div class="transmission-body">${ev.transmission.body.replace(/\n/g,'<br>')}</div>
+      </div>
+      <div class="choose-label">► ESCOLHA SUA AÇÃO:</div>
+      ${ev.choices.map((c,i)=>`
+        <button class="choice-btn ${c.isDriver?'driver':''}" onclick="G.makeDay5Choice(${i})">
+          <span class="choice-title">[${i+1}] ${c.label}</span>
+          <span class="choice-effects">${c.effectsLabel}</span>
+        </button>`).join('')}
+    `;
+    this.setGameBody(html);
+  },
+
+  makeDay5Choice(i){
+    if(this._advancing) return;
+    const ev=DATA.day5Event;
+    const c=ev.choices[i];
+    document.querySelectorAll('.choice-btn').forEach(b=>{b.disabled=true;b.style.opacity='.4';b.onclick=null;});
+    SFX.click();
+    this.applyEffects(c.effects);
+    if(c.isDriver) this.collectDriver(c.driver);
+    this.renderHUD();
+    const dead=this.checkDeath();
+    if(!dead) this.nextDay();
+  },
+
   renderDay18Event(){
     this.renderHUD();
     const ev=DATA.day18Event;
@@ -2198,6 +3328,69 @@ const G = {
     this.renderHUD();
     const dead=this.checkDeath();
     if(!dead) this.nextDay();
+  },
+
+  collectRareDriver(driverIdx){
+    if(this._advancing) return;
+    SFX.click();
+    const rd=DATA.rareDrivers[driverIdx];
+    if(!rd) return;
+    const collected=this.save.rareDriversCollected||[];
+    if(collected.includes(driverIdx)) return;
+    collected.push(driverIdx);
+    this.save.rareDriversCollected=collected;
+    this.save.rareDriversFound=(this.save.rareDriversFound||0)+1;
+
+    // Desabilitar botão
+    document.querySelectorAll('.choice-btn.driver-rare').forEach(b=>{
+      b.disabled=true;b.style.opacity='.4';b.onclick=null;
+    });
+
+    // Diálogo do Butcher ao pegar
+    const dlg=rd.dialog[Math.floor(Math.random()*rd.dialog.length)];
+    const popup=document.createElement('div');
+    popup.style.cssText=`position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+      background:#000;border:1px solid rgba(0,150,255,.4);border-radius:8px;
+      padding:14px 18px;font-family:var(--font-ui);font-size:11px;
+      color:#44aaff;letter-spacing:1px;line-height:1.6;max-width:85%;
+      z-index:9999;animation:itemIn .3s ease forwards;text-align:center;`;
+    popup.innerHTML=`🎪 Butcher:<br><em>${dlg}</em>`;
+    document.body.appendChild(popup);
+    setTimeout(()=>popup.remove(),4000);
+
+    SAVE.save(this.save);
+
+    // Registrar no computador como driver raro
+    if(!this.save.drivers[4+collected.indexOf(driverIdx)]){
+      this.save.drivers[4+collected.indexOf(driverIdx)]=true;
+      SAVE.save(this.save);
+    }
+  },
+
+  checkAllQuestsDone(){
+    const done=this.save.questsDone||[];
+    const allQuests=['bullet_quest','medusa_quest','lester_quest','butcher_quest'];
+    if(allQuests.every(q=>done.includes(q))){
+      // Desbloquear lança-chamas
+      this.save.unlockedWeapons=this.save.unlockedWeapons||[];
+      if(!this.save.unlockedWeapons.includes('lancachamas')){
+        this.save.unlockedWeapons.push('lancachamas');
+        SAVE.save(this.save);
+        setTimeout(()=>this.popup('🔥 LANÇA-CHAMAS DESBLOQUEADO! Arma Lendária!','#ff4400'),2000);
+      }
+    }
+  },
+
+  collectRandomDriver(driverIdx){
+    if(this._advancing) return;
+    SFX.click();
+    this.applyEffects({lucidez:8,esperanca:5});
+    this.collectDriver(driverIdx);
+    this.renderHUD();
+    // Remover o botão após clicar
+    document.querySelectorAll('.choice-btn.driver').forEach(b=>{
+      if(b.textContent.includes('DRIVER')) {b.disabled=true;b.style.opacity='.4';}
+    });
   },
 
   changeWeapon(w){
@@ -2316,10 +3509,27 @@ const G = {
 
     const w=DATA.weapons[this.run.weapon];
     const c=this.combat;
-    let dmg=Math.floor(Math.random()*(w.max-w.min+1))+w.min;
+    // Calcular dano base
+    const alwaysMax=this._hasNode&&this._hasNode('b0')&&this._alwaysMaxDmg; // focado
+    let dmg=alwaysMax?w.max:Math.floor(Math.random()*(w.max-w.min+1))+w.min;
+    // Bônus predador (passiva maldito)
+    if(this._passivePredador) dmg+=this.run.predatorKills||0;
     let crit=false;
-    if(Math.random()*100<w.crit){dmg+=12;crit=true;}
+    const critChance=w.crit+(this._lucidezCritBonus&&this.run.stats.lucidez>=70?5:0);
+    if(Math.random()*100<critChance){
+      dmg+=12;crit=true;
+      // Maldito: crít restaura HP
+      if(this._critHeal){ this.run.stats.hp=Math.min(100+(this._maxHpBonus||0),this.run.stats.hp+this._critHeal); }
+    }
+    // RAD alta vira dano (Maldito m0)
+    if(this._radDmgActive&&this.run.stats.radioatividade>=60) dmg=Math.floor(dmg*1.2);
+    // HP baixo boost (Maldito m4)
+    if(this._lowHpDmgBoost&&this.run.stats.hp<=30) dmg=Math.floor(dmg*1.5);
+    // Veneno do Doutor Peste (aplicado separado)
+    if(this._poisonDmg&&!crit) dmg+=Math.floor(this._poisonDmg/2); // metade no acerto direto
     if(w.special===c.key) dmg=Math.floor(dmg*2);
+    // Intimidação pré-combate (Maldito m6) — aplicada antes
+    if(this._combatIntimidation&&!this._intimidationApplied){ c.hp=Math.max(0,c.hp-this._combatIntimidation); this._intimidationApplied=true; }
     c.hp=Math.max(0,c.hp-dmg);
     const log1='Voce atacou o '+c.name+' por '+dmg+' de dano'+(crit?' CRITICO!':'')+(w.special===c.key?' FRAQUEZA!':'')+'.';
     const self=this;
@@ -2341,6 +3551,11 @@ const G = {
         self.run.monstersKilled++;
         self.run.killedTypes[c.key]=true;
         SFX.victory();
+        // Skill tree kill rewards
+        self._intimidationApplied=false; // reset para próximo combate
+        self._lastCombatWon=true;
+        if(self._passivePredador) self.run.predatorKills=(self.run.predatorKills||0)+1;
+        if(self._healOnKill){ self.run.stats.hp=Math.min(100+(self._maxHpBonus||0),self.run.stats.hp+self._healOnKill); }
         // Sucata ao matar monstro
         const scrapGain=1+Math.floor(Math.random()*3);
         self.save.scrap=(self.save.scrap||0)+scrapGain;
@@ -2411,12 +3626,56 @@ const G = {
     SFX.stopGeiger();
     // Decay de stats 1x por dia
     const s=this.run.stats;
-    s.esperanca=Math.max(0,s.esperanca-2);
-    s.sanidade=Math.max(0,s.sanidade-1);
+    const nodes=this.run.unlockedNodes||[];
+    const hasNode=(id)=>nodes.includes(id);
+
+    // --- APLICAR EFEITOS DE STATUS ---
+    const aliveStatuses=[];
+    for(const st of (this.run.statuses||[])){
+      // Aplicar efeito
+      if(st.effect.hpPerDay)    s.hp=Math.max(0,s.hp+st.effect.hpPerDay);
+      if(st.effect.sanPerDay)   s.sanidade=Math.max(0,s.sanidade+st.effect.sanPerDay);
+      if(st.effect.radPerDay)   s.radioatividade=Math.min(100,s.radioatividade+st.effect.radPerDay);
+      // Decrementar duração
+      if(st.duration>0){
+        st.duration--;
+        if(st.duration>0) aliveStatuses.push(st);
+      } else {
+        aliveStatuses.push(st); // duração 0 = permanente na run
+      }
+    }
+    this.run.statuses=aliveStatuses;
+
+    // --- SKILL TREE PASSIVAS DIÁRIAS ---
+    // Bênção: regeneração de HP
+    if(hasNode('b3') && this._lastCombatWon){ s.hp=Math.min(100,s.hp+8); this._lastCombatWon=false; }
+    // Maldito: regen bestial
+    if(hasNode('m5')){ s.hp=Math.min(100+(hasNode('m2')?15:0)+(hasNode('b0')?20:0), s.hp+3); }
+    // Maldito: RAD vira dano
+    if(hasNode('m0') && s.radioatividade>=60){ this._radDmgActive=true; } else { this._radDmgActive=false; }
+    // Peste: cap de RAD
+    if(hasNode('p2')){ s.radioatividade=Math.min(s.radioatividade, s.radioatividade); } // aplicado no combate
+    // Aura divina: verificar se algum stat chegou a 100
+    if(hasNode('b7')){
+      const keys=['hp','sanidade','lucidez','esperanca'];
+      for(const k of keys){
+        if(s[k]>=100){
+          for(const k2 of keys){ if(k2!==k) s[k2]=Math.min(100,s[k2]+5); }
+          break;
+        }
+      }
+    }
+    // Peste: sanidade não decai passivamente
+    const noSanDecay = hasNode('p6') || this._hasStatus('amaldicoado_s');
+
+    // Decay padrão (com modificadores)
+    const minEsp = hasNode('b2') ? 10 : 0;
+    s.esperanca=Math.max(minEsp, s.esperanca-2);
+    if(!noSanDecay) s.sanidade=Math.max(0,s.sanidade-1);
     s.lucidez=Math.max(0,s.lucidez-1);
 
     this.run.day++;
-    if(this.run.day>20){
+    if(this.run.day>25){
       this._advancing=false;
       this.triggerFinal('Final Ascencao');
       return;
@@ -2435,16 +3694,33 @@ const G = {
 
   checkDeath(){
     const s=this.run.stats;
-    // Check finals first
-    for(const [name,f] of Object.entries(DATA.finals)){
-      if(f.req&&f.req(this.run,s)){
-        this.triggerFinal(name);
-        return true;
+    const day=this.run.day||1;
+
+    // Morte imediata — sempre verifica
+    if(s.hp<=0){this.triggerFinal('Fim do Acaso');return true;}
+    if(s.sanidade<=0||s.lucidez<=0){this.triggerFinal('Final Loucura');return true;}
+
+    // Finais ruins de sobrevivência — verifica a partir do dia 6
+    if(day>=6){
+      if(s.esperanca<=0){this.triggerFinal('Final Ruim');return true;}
+    }
+
+    // Finais por condições especiais — só verifica a partir do dia 8
+    // e NÃO verifica em dias de evento especial (5, 8, 12, 15, 18)
+    const eventDays=[5,8,12,15,18];
+    const isEventDay=eventDays.includes(day);
+    if(day>=8&&!isEventDay){
+      for(const [name,f] of Object.entries(DATA.finals)){
+        // Pular finais de morte (já tratados acima)
+        if(!name||name==='Final Loucura'||name==='Final Ruim'||name==='Fim do Acaso') continue;
+        try{
+          if(typeof f.req==='function'&&f.req(this.run,s)){
+            this.triggerFinal(name);
+            return true;
+          }
+        }catch(e){/* req inválido — ignorar */}
       }
     }
-    if(s.sanidade<=0||s.lucidez<=0){this.triggerFinal('Final Loucura');return true;}
-    if(s.hp<=0){this.triggerFinal('Fim do Acaso');return true;}
-    if(s.esperanca<=0){this.triggerFinal('Final Ruim');return true;}
     return false;
   },
 
@@ -2460,6 +3736,304 @@ const G = {
   },
 
   // --- FINALS ---
+
+  // =========================================================
+  // SKILL TREE SYSTEM
+  // =========================================================
+
+  _hasStatus(id){
+    return (this.run.statuses||[]).some(s=>s.id===id);
+  },
+
+  _hasNode(id){
+    return (this.run.unlockedNodes||[]).includes(id);
+  },
+
+  addStatus(id, duration=3){
+    if(!this.run.statuses) this.run.statuses=[];
+    // Não duplicar
+    if(this._hasStatus(id)) return;
+    const def=DATA.statusDefs[id];
+    if(!def) return;
+    this.run.statuses.push({
+      id, name:def.name, icon:def.icon, type:def.type,
+      duration, effect:def.effect
+    });
+    this.renderHUD();
+  },
+
+  removeStatus(id){
+    if(!this.run.statuses) return;
+    this.run.statuses=this.run.statuses.filter(s=>s.id!==id);
+    this.renderHUD();
+  },
+
+  isSkillTreeUnlocked(){
+    // Desbloqueado quando tem todos os 4 drivers comuns + driver especial Butcher (driver 4)
+    const d=this.save.drivers||[];
+    return d[0]&&d[1]&&d[2]&&d[3]&&d[4];
+  },
+
+  openSkillTree(){
+    if(!this.isSkillTreeUnlocked()){
+      const d=this.save?this.save.drivers||[]:[false,false,false,false,false];
+      const count=d.filter(Boolean).length;
+      const missing=5-count;
+      alert('🔒 ÁRVORE DE HABILIDADES BLOQUEADA\n\n'+count+'/5 drivers coletados.\nFaltam '+missing+' driver'+(missing>1?'s':'')+'.\n\nColecione todos os drivers comuns (4) e o driver especial do Butcher para desbloquear.');
+      return;
+    }
+    this._selectedNode=null;
+    this._stFromMenu=!this.run||!this.run.alive;
+    this._stActiveTree=(this.run&&this.run.skillTree)||'bencao';
+    this.showScreen('s-skilltree');
+    this.renderSkillTree();
+  },
+
+  openSkillTreeFromMenu(){
+    // Abre a skill tree a partir do menu (sem run ativa — modo visualização)
+    if(!this.isSkillTreeUnlocked()){
+      return;
+    }
+    this._stFromMenu=true;
+    if(!this.run||!this.run.alive){
+      // Criar run fake para visualizar
+      this._stViewOnly=true;
+    }
+    this._selectedNode=null;
+    this._stActiveTree=this.run&&this.run.skillTree||'bencao';
+    this.showScreen('s-skilltree');
+    this.renderSkillTree();
+  },
+
+  closeSkillTree(){
+    if(this._stFromMenu){
+      this._stFromMenu=false;
+      this.showScreen('s-menu');
+    } else {
+      this.showScreen('s-game');
+    }
+  },
+
+  renderSkillTree(){
+    const tree=DATA.skillTrees[this._stActiveTree];
+    const unlocked=this.run.unlockedNodes||[];
+    const hasTree=this.run.skillTree!==null;
+    const isThisTree=this.run.skillTree===this._stActiveTree;
+
+    // Header
+    document.getElementById('st-title').textContent='ÁRVORE DE HABILIDADES';
+    document.getElementById('st-subtitle').textContent=tree.theme;
+    document.getElementById('st-title').style.color=tree.color;
+
+    // Tabs
+    const tabs=document.getElementById('st-tabs');
+    tabs.innerHTML=Object.values(DATA.skillTrees).map(t=>`
+      <button class="st-tab ${t.id} ${this._stActiveTree===t.id?'active':''}"
+        onclick="G._stActiveTree='${t.id}';G.renderSkillTree()"
+        ${hasTree&&this.run.skillTree!==t.id?'disabled':''}>
+        ${t.icon} ${t.label}
+      </button>`).join('');
+
+    // Calcular nós disponíveis (pais todos desbloqueados)
+    const available=tree.nodes.filter(n=>{
+      if(unlocked.includes(n.id)) return false;
+      if(!isThisTree && hasTree) return false; // só pode desbloquear da árvore escolhida
+      return n.parents.every(p=>unlocked.includes(p));
+    }).map(n=>n.id);
+
+    // SVG da árvore
+    const svg=document.getElementById('st-svg');
+    let svgContent='';
+
+    // Desenhar arestas primeiro
+    for(const node of tree.nodes){
+      for(const pid of node.parents){
+        const parent=tree.nodes.find(n=>n.id===pid);
+        if(!parent) continue;
+        const isActive=unlocked.includes(pid)&&unlocked.includes(node.id);
+        const isPartial=unlocked.includes(pid)&&!unlocked.includes(node.id);
+        svgContent+=`<line class="st-edge ${isActive?'active':isPartial?'partial':''}"
+          x1="${parent.x}" y1="${parent.y}" x2="${node.x}" y2="${node.y}"
+          stroke="${isActive?tree.colorEdge:'rgba(40,60,40,.4)'}"
+          stroke-width="${isActive?2:1}" stroke-dasharray="${isActive?'':'4,4'}"/>`;
+      }
+    }
+
+    // Desenhar nós
+    for(const node of tree.nodes){
+      const isUnlocked=unlocked.includes(node.id);
+      const isAvail=available.includes(node.id);
+      const isSelected=this._selectedNode===node.id;
+      const state=isUnlocked?'unlocked':isAvail?'available':'locked';
+
+      const size=node.isPassive?34:26;
+      const half=size/2;
+      const rx=node.isPassive?6:4;
+
+      let fill='#050905', stroke='#1a2a1a', iconOp='.25', glow='';
+      if(isUnlocked){fill=tree.colorBg; stroke=tree.color; iconOp='1';}
+      else if(isAvail){fill='#030f03'; stroke=tree.color; iconOp='.8'; glow=`filter="url(#glow-${this._stActiveTree})"`;}
+      if(isSelected){stroke='#fff'; fill=tree.colorBg;}
+
+      svgContent+=`
+        <g class="sn-${state}" onclick="G._selectSkillNode('${node.id}')" style="cursor:${isAvail||isUnlocked?'pointer':'default'}">
+          <rect x="${node.x-half}" y="${node.y-half}" width="${size}" height="${size}" rx="${rx}"
+            fill="${fill}" stroke="${stroke}" stroke-width="${isSelected?2.5:isUnlocked?2:isAvail?1.5:1}"
+            ${glow}/>
+          <text x="${node.x}" y="${node.y+1}" text-anchor="middle" dominant-baseline="middle"
+            font-size="${node.isPassive?16:12}" opacity="${iconOp}">${node.icon}</text>
+          ${isUnlocked?`<circle cx="${node.x+half-4}" cy="${node.y-half+4}" r="3" fill="${tree.color}"/>`:
+            isAvail?`<circle cx="${node.x+half-4}" cy="${node.y-half+4}" r="3" fill="${tree.color}" opacity=".5"/>`:
+            ''}
+        </g>`;
+    }
+
+    // Defs para glow
+    svgContent=`<defs><filter id="glow-${this._stActiveTree}">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter></defs>` + svgContent;
+
+    svg.innerHTML=svgContent;
+
+    // Info do nó selecionado
+    this._updateSkillNodeInfo();
+  },
+
+  _selectSkillNode(id){
+    this._selectedNode=this._selectedNode===id?null:id;
+    this.renderSkillTree();
+    this._updateSkillNodeInfo();
+  },
+
+  _updateSkillNodeInfo(){
+    const tree=DATA.skillTrees[this._stActiveTree];
+    const unlocked=this.run.unlockedNodes||[];
+    const hasTree=this.run.skillTree!==null;
+    const isThisTree=this.run.skillTree===this._stActiveTree;
+    const info=document.getElementById('st-node-info');
+    const btn=document.getElementById('st-unlock-btn');
+
+    if(!this._selectedNode){
+      info.innerHTML='<div class="sni-name">Selecione uma habilidade</div><div class="sni-desc">Toque em um nó disponível para ver detalhes</div>';
+      btn.disabled=true; btn.textContent='DESBLOQUEAR';
+      return;
+    }
+    const node=tree.nodes.find(n=>n.id===this._selectedNode);
+    if(!node){ btn.disabled=true; return; }
+
+    const isUnlocked=unlocked.includes(node.id);
+    const isAvail=node.parents.every(p=>unlocked.includes(p)) && isThisTree;
+    const canUnlock=isAvail&&!isUnlocked&&this.run.alive;
+
+    info.innerHTML=`
+      <div class="sni-name" style="color:${tree.color}">${node.icon} ${node.name}</div>
+      <div class="sni-desc">${node.desc}</div>
+      <div class="sni-cost">Custo: ${node.cost} dias de run | ${isUnlocked?'✅ DESBLOQUEADO':isAvail?'🔓 DISPONÍVEL':'🔒 BLOQUEADO'}</div>`;
+
+    if(isUnlocked){ btn.disabled=true; btn.textContent='✅ JÁ DESBLOQUEADO'; }
+    else if(canUnlock){ btn.disabled=false; btn.textContent='🔓 DESBLOQUEAR — '+(node.isPassive?'PASSIVA FINAL':'HABILIDADE'); }
+    else if(!isThisTree && hasTree){ btn.disabled=true; btn.textContent='⚠️ ÁRVORE DIFERENTE'; }
+    else { btn.disabled=true; btn.textContent='🔒 BLOQUEADO'; }
+  },
+
+  unlockSkillNode(){
+    if(!this._selectedNode) return;
+    const tree=DATA.skillTrees[this._stActiveTree];
+    const node=tree.nodes.find(n=>n.id===this._selectedNode);
+    if(!node) return;
+    const unlocked=this.run.unlockedNodes||[];
+    if(unlocked.includes(node.id)) return;
+
+    // Primeira habilidade de uma árvore define a árvore
+    if(!this.run.skillTree){
+      this.run.skillTree=this._stActiveTree;
+    }
+
+    // Custo: adicionar status "exausto" por node.cost dias (punitivo!)
+    this.addStatus('exausto', Math.max(1, Math.floor(node.cost/2)));
+
+    // Desbloquear
+    if(!this.run.unlockedNodes) this.run.unlockedNodes=[];
+    this.run.unlockedNodes.push(node.id);
+
+    // Aplicar efeitos imediatos
+    this._applyNodeEffect(node);
+
+    // Feedback visual
+    this._selectedNode=null;
+    this.renderSkillTree();
+    this.renderHUD();
+
+    // Notificar
+    const oldInfo=document.getElementById('st-node-info');
+    if(oldInfo) oldInfo.innerHTML=`<div class="sni-name" style="color:${tree.color}">✅ ${node.icon} ${node.name} desbloqueado!</div><div class="sni-desc">${node.isPassive?'PASSIVA FINAL ATIVADA!':'Habilidade ativa nesta run.'}</div>`;
+  },
+
+  _applyNodeEffect(node){
+    const e=node.effect;
+    const s=this.run.stats;
+    if(e.maxHpBonus){ this._maxHpBonus=(this._maxHpBonus||0)+e.maxHpBonus; s.hp=Math.min(100+this._maxHpBonus, s.hp+e.maxHpBonus); }
+    if(e.dailyHpRegen) this._dailyHpRegen=(this._dailyHpRegen||0)+e.dailyHpRegen;
+    if(e.damageReduction) this._dmgReduction=(this._dmgReduction||0)+e.damageReduction;
+    if(e.healOnKill) this._healOnKill=(this._healOnKill||0)+e.healOnKill;
+    if(e.combatIntimidation) this._combatIntimidation=(this._combatIntimidation||0)+e.combatIntimidation;
+    if(e.poisonDmg) this._poisonDmg=(this._poisonDmg||0)+e.poisonDmg;
+    // Boolean flags
+    if(e.noSanDecayOnCombat) this._noSanDecayCombat=true;
+    if(e.minEsperanca) this._minEsperanca=Math.max(this._minEsperanca||0, e.minEsperanca);
+    if(e.freeFlee) this._freeFlee=true;
+    if(e.revealWeakness) this._revealWeakness=true;
+    if(e.lowHpDmgBoost) this._lowHpDmgBoost=true;
+    if(e.lucidezCritBonus) this._lucidezCritBonus=true;
+    if(e.radCap) this._radCap=e.radCap;
+    if(e.radDmgBonus) this._radDmgActive=true;
+    if(e.critHeal) this._critHeal=(this._critHeal||0)+e.critHeal;
+    if(e.tameChance) this._tameChance=e.tameChance;
+    if(e.improvedTame){ this._tameChance=0.25; this._tameduration=2; }
+    if(e.seeMonsterHP) this._seeMonsterHP=true;
+    if(e.noPassiveSanDecay) this._noPassiveSanDecay=true;
+    if(e.qteStatRestore) this._qteStatRestore=true;
+    if(e.passiveAuraDivina) this._passiveAuraDivina=true;
+    if(e.passivePredador) this._passivePredador=true;
+    if(e.passiveMedicoDaMorte) this._passiveMedicoDaMorte=true;
+  },
+
+  // Pílula de troca — aparece como choice piscante vermelha
+  _checkPilulaDeTraca(choices){
+    if(this.run.pilulaUsed) return null;
+    if(!this.run.skillTree) return null;
+    const day=this.run.day;
+    if(day<6||day>18) return null;
+    if(Math.random()<0.04){ // 4% por dia = ~50% de aparecer na janela
+      return {
+        label:'💊 PÍLULA DE TROCA — Item misterioso (pisca em vermelho)',
+        effects:{},
+        effectsLabel:'Troca sua árvore de habilidades — 1 uso na run',
+        isPilula:true
+      };
+    }
+    return null;
+  },
+
+  usarPilula(){
+    if(this.run.pilulaUsed) return;
+    this.run.pilulaUsed=true;
+    this.run.skillTree=null;
+    this.run.unlockedNodes=[];
+    this._stActiveTree='bencao';
+    // Resetar flags de efeito
+    this._maxHpBonus=0; this._dailyHpRegen=0; this._dmgReduction=0;
+    this._healOnKill=0; this._combatIntimidation=0; this._poisonDmg=0;
+    this._noSanDecayCombat=false; this._freeFlee=false; this._revealWeakness=false;
+    this._lowHpDmgBoost=false; this._lucidezCritBonus=false;
+    this._radDmgActive=false; this._critHeal=0; this._tameChance=0;
+    this._noPassiveSanDecay=false; this._qteStatRestore=false;
+    // Abrir skill tree para nova escolha
+    this.addStatus('radiante', 3); // bonus por trocar
+    this.openSkillTree();
+  },
+
   triggerFinal(name){
     this.run.alive=false;
     const f=DATA.finals[name]||{
@@ -2488,7 +4062,7 @@ const G = {
       pp.appendChild(p);
     }
     document.getElementById('final-title').style.color=f.color;
-    document.getElementById('final-title').textContent=name.replace('Final ','').toUpperCase();
+    document.getElementById('final-title').textContent=(name||'').replace('Final ','').toUpperCase();
     document.getElementById('final-subtitle').textContent=f.subtitle||'';
     document.getElementById('final-text').innerHTML='';
     document.getElementById('final-unlock').textContent='FINAL DESBLOQUEADO: '+name.toUpperCase();
@@ -2512,79 +4086,141 @@ const G = {
 
   // --- FINALS TREE ---
   showWorkStation(){
+    const d=this.save.drivers||[];
+    // Precisa dos 4 drivers comuns (indices 0-3) E do driver do Butcher (index 4)
+    const commonDone=d[0]&&d[1]&&d[2]&&d[3];
+    const butcherDone=d[4];
+    if(!commonDone||!butcherDone){
+      const count=d.filter(Boolean).length;
+      const falta=[];
+      if(!d[0]||!d[1]||!d[2]||!d[3]) falta.push('drivers de memória ('+[0,1,2,3].filter(i=>!d[i]).length+' faltando)');
+      if(!d[4]) falta.push('driver do Butcher');
+      this.popup('🔒 Falta: '+falta.join(' e ')+'\n'+count+'/5 coletados','#ff9900');
+      return;
+    }
     SFX.market();
-    if(!this.save.workstationUnlocked){
-      const drivers = this.save.driversFound||[];
-      if(drivers.length < 4){
-        this.popup('Encontre todos os 4 drivers para desbloquear a Work Station!','#ff9900');
-        return;
-      }
-      this.save.workstationUnlocked=true;
-      SAVE.save(this.save);
-    }
-    const scrap = this.save.scrap||0;
-    document.getElementById('ws-scrap-count').textContent=scrap;
-    const npc = DATA.workStation.bullet;
-    const dialog = npc.dialog[Math.floor(Math.random()*npc.dialog.length)];
-    const owned = this.save.permaItems||[];
-    const inv = this.save.inventory||[];
-
-    const tempHTML = npc.temp.map(item=>{
-      const inInv = inv.filter(i=>i.id===item.id).length;
-      const dis = scrap<item.cost||inInv>=1?'disabled':'';
-      return '<button class="ws-item '+dis+'" '+dis+' data-tid="'+item.id+'">'+
-        '<span class="ws-item-icon">'+item.icon+'</span>'+
-        '<div class="ws-item-body">'+
-          '<div class="ws-item-name">'+item.name+'</div>'+
-          '<div class="ws-item-desc">'+item.desc+'</div>'+
-        '</div>'+
-        '<span class="ws-item-cost">🔩'+item.cost+'</span>'+
-      '</button>';
-    }).join('');
-
-    const permaHTML = npc.perma.map(item=>{
-      const isOwned = owned.includes(item.id);
-      const dis = isOwned||scrap<item.cost?'disabled':'';
-      return '<button class="ws-item '+(isOwned?'owned':dis)+'" '+dis+' data-pid="'+item.id+'">'+
-        '<span class="ws-item-icon">'+item.icon+'</span>'+
-        '<div class="ws-item-body">'+
-          '<div class="ws-item-name">'+item.name+(isOwned?' ✓':' ')+'</div>'+
-          '<div class="ws-item-desc">'+item.desc+'</div>'+
-        '</div>'+
-        '<span class="ws-item-cost">'+(isOwned?'COMPRADO':'🔩'+item.cost)+'</span>'+
-      '</button>';
-    }).join('');
-
-    document.getElementById('ws-body').innerHTML=
-      '<div class="ws-npc">'+
-        '<div class="ws-npc-head">'+
-          '<span class="ws-npc-icon">'+npc.icon+'</span>'+
-          '<div><div class="ws-npc-name">'+npc.name+'</div><div class="ws-npc-role">'+npc.role+'</div></div>'+
-        '</div>'+
-        '<div class="ws-npc-dialog">'+dialog+'</div>'+
-        '<div class="ws-section">⏱ ITENS TEMPORÁRIOS (máx 3 por run)</div>'+
-        '<div class="ws-items">'+tempHTML+'</div>'+
-        '<div class="ws-section">♾ MELHORIAS PERMANENTES</div>'+
-        '<div class="ws-items">'+permaHTML+'</div>'+
-      '</div>'+
-      '<div style="font-family:var(--font-ui);font-size:10px;color:rgba(255,153,0,.25);text-align:center;padding:8px;letter-spacing:2px;">OUTROS BAZARES EM BREVE...</div>';
-
-    // Event delegation para compras
-    const wsBody=document.getElementById('ws-body');
-    if(wsBody){
-      wsBody.onclick=function(e){
-        const tb=e.target.closest('[data-tid]');
-        const pb=e.target.closest('[data-pid]');
-        if(tb&&!tb.disabled) G.buyTemp(tb.getAttribute('data-tid'));
-        if(pb&&!pb.disabled) G.buyPerma(pb.getAttribute('data-pid'));
-      };
-    }
     this.showScreen('s-workstation');
+    const sc=this.save.scrap||0;
+    document.getElementById('ws-scrap-count').textContent=sc;
+
+    const npcs=DATA.workStation;
+    const cityBuilt=(this.save.city||{built:[]}).built||[];
+    const questsUnlocked=this.save.questsUnlocked||[];
+
+    // Renderizar cada NPC
+    const renderNPC=(npc,key)=>{
+      const dlg=npc.dialog[Math.floor(Math.random()*npc.dialog.length)];
+      const questKey=key+'_quest';
+      const hasQuest=questsUnlocked.includes(key)&&DATA.quests[questKey];
+      const questDone=(this.save.questsDone||[]).includes(questKey);
+      return `<div class="ws-npc" style="cursor:pointer" onclick="G.showNPCShop('${key}')">
+        <div class="ws-npc-head">
+          <div class="ws-npc-icon">${npc.icon}</div>
+          <div>
+            <div class="ws-npc-name">${npc.name}</div>
+            <div class="ws-npc-role">${npc.role}</div>
+          </div>
+          ${hasQuest&&!questDone?'<div style="margin-left:auto;background:#ff9900;color:#000;font-family:var(--font-ui);font-size:9px;padding:3px 6px;border-radius:4px;letter-spacing:1px">QUEST!</div>':''}
+          ${questDone?'<div style="margin-left:auto;color:var(--g);font-family:var(--font-ui);font-size:9px">✓ QUEST</div>':''}
+        </div>
+        <div class="ws-npc-dialog">${dlg}</div>
+      </div>`;
+    };
+
+    document.getElementById('ws-body').innerHTML=`
+      <div style="display:flex;flex-direction:column;gap:8px;padding:12px">
+        ${renderNPC(npcs.bullet,'bullet')}
+        ${renderNPC(npcs.medusa,'medusa')}
+        ${renderNPC(npcs.lester,'lester')}
+        <div style="font-family:var(--font-ui);font-size:9px;color:rgba(255,153,0,.3);text-align:center;padding:6px;letter-spacing:2px">
+          ⚠️ Butcher — acesse pelo Auditório
+        </div>
+        <button class="auditorio-btn" onclick="G.showCidade()" style="border-color:rgba(0,255,65,.3);color:var(--g)">
+          🏙️ MAPA DA CIDADE — ${cityBuilt.length}/8 construções
+        </button>
+        ${this.renderAuditorioBtn()}
+      </div>
+    `;
   },
 
-  buyTemp(itemId){
+  showNPCShop(npcKey){
     SFX.click();
-    const npc=DATA.workStation.bullet;
+    const npc=DATA.workStation[npcKey];
+    if(!npc) return;
+    const sc=this.save.scrap||0;
+    const inv=this.save.inventory||[];
+    const perma=this.save.permaItems||[];
+    const maxInv=3+(this.save.invBonus||0);
+    const questKey=npcKey+'_quest';
+    const questUnlocked=(this.save.questsUnlocked||[]).includes(npcKey);
+    const questDone=(this.save.questsDone||[]).includes(questKey);
+    const quest=DATA.quests[questKey];
+
+    const tempHTML=npc.temp?npc.temp.map(item=>{
+      const owned=inv.filter(x=>x.id===item.id).length;
+      return `<div class="ws-item">
+        <div class="ws-item-icon">${item.icon}</div>
+        <div class="ws-item-body">
+          <div class="ws-item-name">${item.name}</div>
+          <div class="ws-item-desc">${item.desc}</div>
+          <div class="ws-item-cost">🔩${item.cost} ${inv.length>=maxInv?'<span style="color:#ff4444">Inv. cheio</span>':''}</div>
+        </div>
+        <button onclick="G.buyTemp('${item.id}','${npcKey}')" ${inv.length>=maxInv||sc<item.cost?'disabled':''}
+          style="padding:6px 10px;background:rgba(0,255,65,.06);border:1px solid rgba(0,255,65,.2);
+          border-radius:6px;color:var(--g);font-family:var(--font-ui);font-size:9px;cursor:pointer">
+          COMPRAR
+        </button>
+      </div>`;
+    }).join(''):'';
+
+    const permaHTML=npc.perma?npc.perma.map(item=>{
+      const owned=perma.includes(item.id);
+      return `<div class="ws-item ${owned?'ws-locked':''}">
+        <div class="ws-item-icon">${item.icon}</div>
+        <div class="ws-item-body">
+          <div class="ws-item-name">${item.name}</div>
+          <div class="ws-item-desc">${item.desc}</div>
+          <div class="ws-item-cost">${owned?'✓ ADQUIRIDO':'🔩'+item.cost}</div>
+        </div>
+        ${!owned?`<button onclick="G.buyPerma('${item.id}','${npcKey}')" ${sc<item.cost?'disabled':''}
+          style="padding:6px 10px;background:rgba(255,153,0,.06);border:1px solid rgba(255,153,0,.25);
+          border-radius:6px;color:#ff9900;font-family:var(--font-ui);font-size:9px;cursor:pointer">
+          COMPRAR
+        </button>`:''}
+      </div>`;
+    }).join(''):'';
+
+    const questHTML=questUnlocked&&quest&&!questDone?`
+      <div class="ws-section" style="border-color:rgba(255,153,0,.15)">
+        <div class="ws-section-title" style="color:#ff9900">⚡ QUEST — ${quest.title}</div>
+        <div style="font-family:var(--font-ui);font-size:10px;color:rgba(255,255,255,.4);padding:8px;letter-spacing:.5px;line-height:1.6">
+          ${quest.desc}
+        </div>
+        <div style="padding:0 8px 8px;font-family:var(--font-ui);font-size:9px;color:rgba(255,153,0,.5)">
+          Recompensa: 🔩${quest.reward.scrap} + Achievement "${quest.reward.achiev}"
+        </div>
+      </div>`:'';
+
+    document.getElementById('ws-body').innerHTML=`
+      <div style="padding:12px;display:flex;flex-direction:column;gap:8px">
+        <div class="ws-npc">
+          <div class="ws-npc-head">
+            <div class="ws-npc-icon">${npc.icon}</div>
+            <div><div class="ws-npc-name">${npc.name}</div><div class="ws-npc-role">${npc.role}</div></div>
+          </div>
+          <div class="ws-npc-dialog">${npc.dialog[Math.floor(Math.random()*npc.dialog.length)]}</div>
+        </div>
+        ${questHTML}
+        <div class="ws-section"><div class="ws-section-title">TEMPORÁRIOS</div>${tempHTML||'<div style="padding:8px;color:rgba(0,255,65,.2);font-size:10px;font-family:var(--font-ui)">Sem itens disponíveis</div>'}</div>
+        <div class="ws-section"><div class="ws-section-title" style="color:#ff9900">PERMANENTES</div>${permaHTML||''}</div>
+        <button class="flee-btn" onclick="G.showWorkStation()">← VOLTAR</button>
+      </div>
+    `;
+  },
+
+  buyTemp(itemId, npcKey='bullet'){
+    SFX.click();
+    const npc=DATA.workStation[npcKey]||DATA.workStation.bullet;
     const item=npc.temp.find(i=>i.id===itemId);
     if(!item) return;
     const inv=this.save.inventory||[];
@@ -2599,9 +4235,9 @@ const G = {
     this.showWorkStation();
   },
 
-  buyPerma(itemId){
+  buyPerma(itemId, npcKey='bullet'){
     SFX.click();
-    const npc=DATA.workStation.bullet;
+    const npc=DATA.workStation[npcKey]||DATA.workStation.bullet;
     const item=npc.perma.find(i=>i.id===itemId);
     if(!item) return;
     const owned=this.save.permaItems||[];
@@ -2616,9 +4252,1355 @@ const G = {
       if(!this.save.unlockedWeapons.includes(item.giveWeapon))
         this.save.unlockedWeapons.push(item.giveWeapon);
     }
+    if(item.specialKey==='auditorio'){
+      this.popup('🗝️ Chave do Auditório obtida! Acesse o Auditório na Work Station.','#ff9900');
+    } else {
+      this.popup(item.icon+' '+item.name+' adquirido permanentemente!','#ff9900');
+    }
     SAVE.save(this.save);
-    this.popup(item.icon+' '+item.name+' adquirido permanentemente!','#ff9900');
     this.showWorkStation();
+  },
+
+  renderAuditorioBtn(){
+    const hasKey=(this.save.permaItems||[]).includes('chave_auditorio');
+    const questDone=this.save.butcherQuestDone||false;
+    if(questDone){
+      return '<button class="auditorio-btn" onclick="G.showAuditorio()">🎪 AUDITÓRIO DO PALHAÇO — ENTRAR</button>';
+    } else if(hasKey){
+      return '<button class="auditorio-btn" style="animation:pulse 1.5s infinite" onclick="G.showAuditorio()">🗝️ AUDITÓRIO DO PALHAÇO — CHAVE OBTIDA!</button>';
+    } else {
+      const scrap=this.save.scrap||0;
+      return '<div class="auditorio-locked">🔒 AUDITÓRIO — Compre a Chave do Auditório (🔩15) para acessar</div>';
+    }
+  },
+
+  showAuditorio(){
+    SFX.market();
+    const hasKey=(this.save.permaItems||[]).includes('chave_auditorio');
+    if(!hasKey){
+      this.popup('Você precisa da Chave do Auditório!','#ff9900');
+      return;
+    }
+    const questDone=this.save.butcherQuestDone||false;
+    const body=document.getElementById('auditorio-body');
+
+    if(!questDone){
+      // Primeira visita — encontro com Butcher
+      this.save.butcherQuestDone=true;
+      this.save.butcherQuestActive=true;
+      const SAVE_MOD=window.SAVE||{save:()=>{}};
+      SAVE.save(this.save);
+      SFX.click();
+
+      body.innerHTML=`
+        <div style="font-family:var(--font-ui);color:#ff9900;font-size:11px;letter-spacing:1px;line-height:1.9;
+          background:rgba(255,100,0,.04);border:1px solid rgba(255,100,0,.15);border-radius:8px;padding:16px;">
+          <div style="font-size:20px;margin-bottom:10px">🎪</div>
+          O auditório está escuro.<br>
+          Cheira a tinta e ferrugem.<br><br>
+          Uma figura se levanta de uma cadeira no fundo.<br>
+          Roupa de animador de festas.<br>
+          Máscara pintada.<br>
+          Olhos que reconhecem você antes de você reconhecê-los.<br><br>
+          <span style="color:#ffcc44">"...0047."</span><br><br>
+          Ele anda em sua direção devagar.<br><br>
+          <span style="color:#ffcc44">"Eu sabia que você chegaria até aqui."<br>
+          "Você tem os olhos dela. Da Clara."<br>
+          "Ela falou muito de você antes de..."</span><br><br>
+          Ele para. Ajusta a máscara.<br><br>
+          <span style="color:#ffcc44">"Você quer saber a verdade? A verdade de verdade?"<br>
+          "Então vai precisar de mais do que force bruta."<br><br>
+          "Existe algo escondido por esse bunker todo."<br>
+          "Fragmentos. Memórias de quem esteve aqui antes."<br>
+          "Sirius. Moon. Robert. Clara. E outros que você não conhece."<br><br>
+          "Encontre esses fragmentos azuis."<br>
+          "Quando tiver todos... volte aqui."<br>
+          "Aí eu te conto o que realmente aconteceu com você."</span><br><br>
+          Ele volta para a cadeira sem dizer mais nada.<br>
+          A audiência vazia do auditório observa em silêncio.
+        </div>
+        <div style="font-family:var(--font-ui);font-size:10px;color:rgba(255,153,0,.3);
+          text-align:center;letter-spacing:2px;padding:8px;">
+          🔵 QUEST ATIVA: Encontre os Fragmentos Azuis (dias 23 e 25)
+        </div>`;
+    } else {
+      // Visitas seguintes
+      const rareCount=this.save.rareDriversFound||0;
+      const total=5;
+      body.innerHTML=`
+        <div style="font-family:var(--font-ui);color:rgba(255,153,0,.7);font-size:11px;letter-spacing:1px;
+          line-height:1.8;background:rgba(255,100,0,.04);border:1px solid rgba(255,100,0,.15);
+          border-radius:8px;padding:16px;">
+          <div style="font-size:20px;margin-bottom:8px">🎪</div>
+          Butcher está sentado na mesma cadeira.<br>
+          Ele te olha quando você entra.<br><br>
+          ${rareCount>=total
+            ? `<span style="color:#44aaff">"Você encontrou todos os fragmentos."<br>
+               "Agora você sabe."<br>
+               "A verdade é que... não existe saída desse experimento."<br>
+               "Só existe a escolha de como terminar."<br><br>
+               "Eu escolhi resistir."<br>
+               "E você?"</span>`
+            : `<span style="color:#ffcc44">"${rareCount} de ${total} fragmentos."<br>
+               "Continue."<br>
+               "Eles aparecem nos dias mais difíceis."<br>
+               "Quando você menos espera."</span>`}
+        </div>
+        <div style="font-family:var(--font-ui);font-size:11px;color:rgba(0,150,255,.5);
+          text-align:center;padding:8px;letter-spacing:2px;">
+          🔵 Fragmentos: ${rareCount}/${total}
+        </div>`;
+    }
+    this.showScreen('s-auditorio');
+  },
+
+  showCidade(){
+    SFX.click();
+    this.showScreen('s-cidade');
+    document.getElementById('cidade-scrap').textContent=this.save.scrap||0;
+    this.renderCidadeMapa();
+  },
+
+  renderCidadeMapa(){
+    const mapaEl=document.getElementById('cidade-mapa');
+    const info=document.getElementById('cidade-info');
+    const buildings=DATA.city.buildings;
+    const cityData=this.save.city||{built:[]};
+    const scrap=this.save.scrap||0;
+    const builtList=cityData.built||[];
+    const self=this;
+
+    // Parar animação anterior
+    if(window._mapRAF) cancelAnimationFrame(window._mapRAF);
+
+    mapaEl.innerHTML='';
+    mapaEl.style.background='#0e0a06';
+    mapaEl.style.position='relative';
+
+    // Criar canvas
+    const cv=document.createElement('canvas');
+    cv.width=320; cv.height=334;
+    cv.style.width='100%'; cv.style.display='block';
+    cv.style.imageRendering='pixelated'; cv.style.imageRendering='crisp-edges';
+    cv.id='cidade-canvas';
+    mapaEl.appendChild(cv);
+    const ct=cv.getContext('2d');
+    ct.imageSmoothingEnabled=false;
+
+    // CITY_LEVEL calculado pelos edifícios construídos
+    // Nível 1: 0-1 construções | Nível 2: 2-3 | Nível 3: 4-6 | Nível 4: 7-8
+    const built=builtList.length;
+    let CITY_LEVEL=1;
+    if(built>=7) CITY_LEVEL=4;
+    else if(built>=4) CITY_LEVEL=3;
+    else if(built>=2) CITY_LEVEL=2;
+
+// cv e ct são passados como parâmetro
+let T=0;
+// CITY_LEVEL calculado pelo jogo (passado por closure)
+
+// ── DIÁLOGOS POR NÍVEL ──
+const DIALOGUES={
+  1:["Fome...", "Saudade do sol", "Cansado...", "O trem...", "Que frio aqui", "Quando acaba?", "Medo...", "Escuro demais", "Sinto falta de casa", "Vai melhorar?"],
+  2:["Hoje melhorou!", "Obrigado Lester!", "Temos chance!", "Bullet nos protege", "Mais forte cada dia", "Juntos sobrevivemos", "A cantina ta otima", "Medusa me curou!", "Bom ter amigos", "Resistimos!"],
+  3:["Casa propria!!", "Luz eletrica!", "Que evolucao!", "Uma cidade real", "Orgulho de morar aqui", "Somos familia", "O Butcher organizou tudo", "Futuro promissor!", "Melhoramos muito", "Feliz aqui!"],
+  4:["O trem voltou!!", "Esgoto liberado!", "Collectors partiram!", "Recursos chegando!", "LIBERDADE!!", "Crescemos!", "Mapa expandido!", "Nova era!", "Collectors voltaram!", "Vitoria!"]
+};
+
+// ── DRAW PRIMITIVES ──
+const $ = {
+  r:(x,y,w,h,c)=>{ct.fillStyle=c;ct.fillRect(x|0,y|0,w,h);},
+  p:(x,y,c)=>{ct.fillStyle=c;ct.fillRect(x|0,y|0,1,1);},
+  h:(x,y,w,c)=>{ct.fillStyle=c;ct.fillRect(x|0,y|0,w,1);},
+  v:(x,y,h,c)=>{ct.fillStyle=c;ct.fillRect(x|0,y|0,1,h);},
+  o:(x,y,w,h,c)=>{ct.strokeStyle=c;ct.lineWidth=1;ct.strokeRect((x|0)+.5,(y|0)+.5,w-1,h-1);}
+};
+// Aliases globais para evitar ReferenceError
+const r=(x,y,w,h,c)=>$.r(x,y,w,h,c);
+const p=(x,y,c)=>$.p(x,y,c);
+const px=(x,y,c)=>$.p(x,y,c);
+const hl=(x,y,w,c)=>$.h(x,y,w,c);
+const vl=(x,y,h,c)=>$.v(x,y,h,c);
+const ol=(x,y,w,h,c)=>$.o(x,y,w,h,c);
+
+// ═══════════════════════════════════════════
+//  PALETA — RICH 32-BIT UNDERGROUND
+// ═══════════════════════════════════════════
+
+// Pedra — muito mais rica em tons
+const STONE = {
+  // Piso — vários tons para profundidade
+  f0:'#3e3830', f1:'#4a4438', f2:'#565048', f3:'#625c50',
+  f4:'#6e685c', f5:'#7a7468', fgrout:'#2e2820', fhi:'#86807a',
+  // Paredes — tijolos ricos
+  w0:'#4a3828', w1:'#5e4a36', w2:'#724e38', w3:'#866054',
+  w4:'#9a7262', w5:'#ae8474', wdark:'#2e2018', whi:'#c29680',
+  wmortar:'#2e2820', wcrack:'#261e14',
+  // Paredes top-face (iluminada, 3D)
+  top0:'#8a7a64', top1:'#9e8e78', top2:'#b2a28c', top3:'#c6b6a0',
+  // Sombras
+  shadow:'rgba(0,0,0,0.45)', shadow2:'rgba(0,0,0,0.25)',
+};
+
+// Torre Butcher — concreto militar verde-escuro rico
+const CMD = {
+  w0:'#2a3818', w1:'#364828', w2:'#425838', w3:'#4e6844',
+  w4:'#5a7850', w5:'#66885c', whi:'#82a478',
+  top0:'#4e6040', top1:'#5a7050', top2:'#66805e',
+  panel:'#1e2c14', panellit:'#2a3e1e',
+  screen:'#0a1408', screenA:'#122010', screenB:'#1a3018', screenC:'#22400e',
+  screenGlow:'#2e5010', ledR:'#d02010', ledG:'#20c030', ledA:'#d09010',
+  metal:'#384530', metal2:'#48553e', metal3:'#586550',
+  elev:'#2a361e', elev2:'#38462c', elevD:'#141e0c',
+  accent:'#7ab040', red:'#c03010', amber:'#c88018',
+  cable:'#48503a',
+};
+
+// BULLET — verde oliva militar saturado
+const BUL = {
+  d0:'#384020', d1:'#485030', d2:'#586040', d3:'#687050',
+  l0:'#788060', l1:'#8a9270', l2:'#9ca482', hi:'#b8c098',
+  top0:'#607050', top1:'#708060', top2:'#809070',
+  crate0:'#5a3c18', crate1:'#7a5428', crate2:'#9a6c38', crateHi:'#ba8448',
+  gun:'#303828', gunM:'#404830', gunHi:'#505840',
+  blood:'#881818', target:'#d4c060', flag:'#c02818',
+};
+
+// LESTER — madeira + laranja quente
+const LES = {
+  d0:'#5a2c0c', d1:'#6e3c18', d2:'#824c24', d3:'#965c30',
+  l0:'#aa6c3c', l1:'#be7c4c', l2:'#d28c5c', hi:'#e69c6c',
+  top0:'#7a4c28', top1:'#8e5c38', top2:'#a26c48',
+  wood0:'#6a4020', wood1:'#7e5030', wood2:'#926040',
+  fire0:'#ff3000', fire1:'#ff6800', fire2:'#ff9800', fire3:'#ffcc00',
+  pot0:'#4a5428', pot1:'#5e6838', pot2:'#727c48',
+  steam:'#9a9488',
+};
+
+// MEDUSA — roxo profundo + mistura de verdes tóxicos
+const MED = {
+  d0:'#200640', d1:'#300c58', d2:'#401270', d3:'#501888',
+  l0:'#6020a0', l1:'#7428b8', l2:'#8830d0', hi:'#9c38e8',
+  top0:'#3c1060', top1:'#501870', top2:'#642080',
+  // Poções — 6 cores vivas
+  p0:'#a030c0', p1:'#20c068', p2:'#c0a008', p3:'#c02868', p4:'#2070c0', p5:'#20c0a8',
+  skull:'#d8c8b0', skullS:'#b0a090', skullD:'#100808',
+  crystal0:'#2848a0', crystal1:'#4870c8', crystal2:'#6898e8',
+  mist:'rgba(90,20,140,',
+  candle:'#e8d880', flame0:'#ff8800', flame1:'#ffcc00',
+};
+
+// TENDAS PEQUENAS — paleta variada
+const TENTS = [
+  ['#5a3810','#784e28','#966438','#b47a48'],  // marrom quente
+  ['#1a4030','#285848','#367060','#448878'],  // verde-água
+  ['#401828','#582438','#703048','#883c58'],  // bordô
+  ['#303418','#444830','#585c44','#6c7058'],  // caqui
+  ['#182840','#243c58','#305070','#3c6488'],  // azul noturno
+];
+
+// Esgoto
+const SEW = {
+  frame0:'#2a1e0c', frame1:'#3e3018', frame2:'#52421e',
+  dark:'#100c06', wall:'#1c1810',
+  gate0:'#0e0c06', gate1:'#1a1810',
+  bar0:'#2c2810', bar1:'#403c20', barHi:'#544e2c',
+  lock0:'#6a2c0c', lock1:'#8a3c18', lockHi:'#aa4c28',
+  chain0:'#7e5c20', chain1:'#a07830',
+  water:'#142814', waterL:'#1e3820',
+  moss0:'#1c2c0c', moss1:'#283e18',
+};
+
+// Trilhos
+const RAIL = {
+  bed:'#3c3428', tie0:'#524030', tie1:'#6a5440', tie2:'#826848',
+  rail0:'#7a7858', rail1:'#9a9878', rail2:'#c0be98', railHi:'#d8d6b0',
+  rust0:'#6a3010', rust1:'#8a4020', rust2:'#aa5030',
+  ballast:'#484038',
+};
+
+// Fogo
+const FIRE = {
+  c0:'#ff2800', c1:'#ff5800', c2:'#ff8800', c3:'#ffac00', c4:'#ffd000',
+  ember:'#c02800', glow:(a)=>`rgba(255,130,0,${a})`
+};
+
+// NPCs
+const NPC_COLORS = [
+  {body:'#8a3c1c',skin:'#c8955e',hair:'#200e08',acc:'#6a2c14'},
+  {body:'#1e3c5a',skin:'#b88048',hair:'#140808',acc:'#152844'},
+  {body:'#402048',skin:'#c8a060',hair:'#1c0e10',acc:'#2e1438'},
+  {body:'#2a3818',skin:'#b8905a',hair:'#281808',acc:'#1e2a10'},
+  {body:'#583020',skin:'#d0a068',hair:'#100808',acc:'#3e2018'},
+];
+
+// ═══════════════════════════════════════════
+//  NPC SYSTEM — zonas bem definidas
+// ═══════════════════════════════════════════
+const NPCS = [];
+
+function mkNPC(x,y,x1,y1,x2,y2,pid,pass=false,cmd=false){
+  return {x,y,dx:(Math.random()-.5)*(pass?.35:.38),dy:pass?0:(Math.random()-.5)*.22,
+    pid:pid%5,z1:x1,z2:x2,zy1:y1,zy2:y2,
+    pause:30+Math.floor(Math.random()*60),pauseT:Math.floor(Math.random()*50),
+    step:Math.floor(Math.random()*16),facing:1,pass,cmd,
+    speech:null,speechT:0,speechCD:Math.floor(Math.random()*300+200)};
+}
+
+// ── Zonas SEGURAS (Medusa = x:118-202, y:158-244, telhado até y:145)
+// Zona A: corredor esquerdo (x:36-110, y:148-232)
+// Zona B: corredor direito  (x:212-278, y:148-232)
+// Zona C: fundo esquerdo   (x:36-110, y:236-275)
+// Zona D: fundo direito    (x:212-278, y:236-275)
+// Zona E: corredor fundo   (x:110-212, y:250-275) — ABAIXO da Medusa
+// Zona CMD: dentro da torre (x:122-196, y:20-66)
+const SAFE_ZONES = [
+  {x1:38,y1:150,x2:108,y2:228},{x1:38,y1:150,x2:108,y2:228},
+  {x1:214,y1:150,x2:276,y2:228},{x1:214,y1:150,x2:276,y2:228},
+  {x1:38,y1:236,x2:108,y2:272},{x1:214,y1:236,x2:276,y2:272},
+  {x1:112,y1:252,x2:210,y2:274},
+];
+
+function initNPCs(){
+  // 14 NPCs no chão — todos em zonas seguras
+  for(let i=0;i<14;i++){
+    const z=SAFE_ZONES[i%SAFE_ZONES.length];
+    const x=z.x1+Math.random()*(z.x2-z.x1);
+    const y=z.y1+Math.random()*(z.y2-z.y1);
+    NPCS.push(mkNPC(x,y,z.x1,z.y1,z.x2,z.y2,i));
+  }
+  // 5 NPCs na área central (entre CMD e Medusa — ponto azul)
+  [{x:130,y:100},{x:152,y:118},{x:168,y:96},{x:178,y:128},{x:142,y:110}].forEach((p,i)=>{
+    NPCS.push(mkNPC(p.x,p.y,115,80,205,152,i,false,false));
+  });
+  // 3 NPCs passarela esquerda
+  [{x:22,y:64},{x:56,y:62},{x:86,y:64}].forEach((p,i)=>{
+    NPCS.push(mkNPC(p.x,p.y,12,58,106,70,i,true));
+  });
+  // 3 NPCs passarela direita
+  [{x:220,y:64},{x:246,y:62},{x:274,y:64}].forEach((p,i)=>{
+    NPCS.push(mkNPC(p.x,p.y,212,58,306,70,i+2,true));
+  });
+}
+initNPCs();
+
+function updateNPCs(){
+  NPCS.forEach(n=>{
+    if(n.pauseT>0){n.pauseT--;return;}
+    n.x+=n.dx; n.y+=n.dy; n.step++;
+    n.facing=n.dx>0?1:-1;
+    // bounce nas bordas
+    if(n.x<n.z1){n.dx=Math.abs(n.dx);n.x=n.z1;}
+    if(n.x>n.z2-4){n.dx=-Math.abs(n.dx);n.x=n.z2-4;}
+    if(!n.pass){
+      if(n.y<n.zy1){n.dy=Math.abs(n.dy);n.y=n.zy1;}
+      if(n.y>n.zy2-8){n.dy=-Math.abs(n.dy);n.y=n.zy2-8;}
+    }
+    if(Math.random()<.004){
+      n.pauseT=n.pause+Math.floor(Math.random()*80);
+      n.dx=(Math.random()-.5)*(n.pass?.35:.38);
+      if(!n.pass) n.dy=(Math.random()-.5)*.22;
+    }
+    // Balão de fala
+    if(n.speechT>0){n.speechT--; if(n.speechT===0) n.speech=null;}
+    n.speechCD--;
+    if(n.speechCD<=0 && !n.speech){
+      const dl=DIALOGUES[CITY_LEVEL];
+      n.speech=dl[Math.floor(Math.random()*dl.length)];
+      n.speechT=110+Math.floor(Math.random()*60);
+      n.speechCD=250+Math.floor(Math.random()*350);
+    }
+  });
+}
+
+function drawNPC(n){
+  const x=n.x|0,y=n.y|0;
+  const c=NPC_COLORS[n.pid]; const bob=Math.round(Math.sin(n.step*.35)*.8);
+  const walk=n.pauseT===0;
+  // Sombra suave
+  ct.fillStyle='rgba(0,0,0,.3)'; ct.fillRect(x-1,y+10,5,2);
+  // Pernas
+  if(walk){
+    const sw=Math.sin(n.step*.5);
+    r(x,y+6+bob,1,3,Math.round(sw)>0?c.body:c.acc);
+    r(x+2,y+6+bob,1,3,Math.round(sw)>0?c.acc:c.body);
+  } else {r(x,y+6+bob,1,3,c.body);r(x+2,y+6+bob,1,3,c.body);}
+  // Corpo
+  r(x,y+1+bob,3,6,c.body);
+  // Braços
+  if(walk){
+    const aw=Math.sin(n.step*.5)*1.2;
+    r(x-1,y+2+bob+Math.round(aw),1,3,c.skin);
+    r(x+3,y+2+bob-Math.round(aw),1,3,c.skin);
+  } else {r(x-1,y+3+bob,1,2,c.skin);r(x+3,y+3+bob,1,2,c.skin);}
+  // Cabeça
+  r(x,y-3+bob,3,5,c.skin);
+  r(x,y-4+bob,3,2,c.hair);
+  // Olho (só quando não está de costas)
+  p(n.facing>0?x+2:x,y-2+bob,c.hair);
+  // Balão de fala
+  if(n.speech && n.speechT>0){
+    const fade=n.speechT<20?n.speechT/20:1;
+    const bw=Math.min(n.speech.length*4+4,80);
+    const bx2=Math.max(1,Math.min(x-bw/2+2,318-bw));
+    const by2=y-18+bob;
+    // Sombra do balão
+    ct.fillStyle=`rgba(0,0,0,${.4*fade})`; ct.fillRect(bx2+2,by2+2,bw,12);
+    // Balão
+    ct.fillStyle=`rgba(240,230,200,${.92*fade})`; ct.fillRect(bx2,by2,bw,12);
+    ct.strokeStyle=`rgba(120,90,30,${fade})`; ct.lineWidth=1; ct.strokeRect(bx2+.5,by2+.5,bw-1,11);
+    // Ponteiro do balão
+    ct.fillStyle=`rgba(240,230,200,${.92*fade})`;
+    ct.beginPath(); ct.moveTo(x+1,by2+12); ct.lineTo(x+1,y-3+bob); ct.lineTo(x+5,by2+12); ct.fill();
+    // Texto
+    ct.fillStyle=`rgba(40,20,0,${fade})`;
+    ct.font='5px monospace'; ct.fillText(n.speech,bx2+2,by2+9);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  PIXEL TEXT
+// ═══════════════════════════════════════════
+function txt(s,x,y,col,sc=1){
+  const F={' ':[],'A':[[1,0],[0,1],[2,1],[0,2],[1,2],[2,2],[0,3],[2,3]],'B':[[0,0],[1,0],[0,1],[2,1],[0,2],[1,2],[0,3],[1,3]],'C':[[1,0],[2,0],[0,1],[0,2],[1,3],[2,3]],'D':[[0,0],[1,0],[2,1],[0,1],[2,2],[0,2],[0,3],[1,3]],'E':[[0,0],[1,0],[2,0],[0,1],[1,1],[0,2],[0,3],[1,3],[2,3]],'F':[[0,0],[1,0],[2,0],[0,1],[1,1],[0,2],[0,3]],'G':[[1,0],[2,0],[0,1],[0,2],[1,2],[2,2],[1,3],[2,3]],'H':[[0,0],[2,0],[0,1],[1,1],[2,1],[0,2],[2,2],[0,3],[2,3]],'I':[[0,0],[1,0],[2,0],[1,1],[1,2],[0,3],[1,3],[2,3]],'K':[[0,0],[2,0],[0,1],[1,1],[0,2],[1,2],[0,3],[2,3]],'L':[[0,0],[0,1],[0,2],[0,3],[1,3],[2,3]],'M':[[0,0],[2,0],[0,1],[1,1],[2,1],[0,2],[2,2],[0,3],[2,3]],'N':[[0,0],[0,1],[0,2],[0,3],[1,1],[2,0],[2,1],[2,2],[2,3]],'O':[[1,0],[0,1],[2,1],[0,2],[2,2],[1,3]],'P':[[0,0],[1,0],[0,1],[2,1],[0,2],[1,2],[0,3]],'R':[[0,0],[1,0],[0,1],[2,1],[0,2],[1,2],[0,3],[2,3]],'S':[[1,0],[2,0],[0,1],[1,2],[2,3],[0,3]],'T':[[0,0],[1,0],[2,0],[1,1],[1,2],[1,3]],'U':[[0,0],[2,0],[0,1],[2,1],[0,2],[2,2],[1,3]],'W':[[0,0],[2,0],[0,1],[2,1],[0,2],[1,2],[2,2],[0,3],[2,3]],'X':[[0,0],[2,0],[1,1],[0,2],[2,2],[0,3],[2,3]],'Y':[[0,0],[2,0],[1,1],[1,2],[1,3]],'Z':[[0,0],[1,0],[2,0],[2,1],[1,2],[0,3],[1,3],[2,3]],'0':[[1,0],[0,1],[2,1],[0,2],[2,2],[1,3]],'1':[[1,0],[1,1],[1,2],[1,3]],'2':[[0,0],[1,0],[2,1],[1,2],[0,3],[1,3],[2,3]],'3':[[0,0],[1,0],[2,1],[1,2],[2,3],[0,3]],'!':[[1,0],[1,1],[1,2],[1,4]],'-':[[0,2],[1,2],[2,2]],'?':[[0,0],[1,0],[2,1],[1,2],[1,4]]};
+  let ox=0;
+  for(const ch of s.toUpperCase()){
+    (F[ch]||[]).forEach(([dx,dy])=>{ct.fillStyle=col;ct.fillRect(x+ox+dx*sc,y+dy*sc,sc,sc);});
+    ox+=4*sc;
+  }
+}
+
+// ═══════════════════════════════════════════
+//  ELEMENTOS GRÁFICOS
+// ═══════════════════════════════════════════
+
+// Piso de pedra RICO — múltiplos tons, chanfros, grout
+function richFloor(x,y,w,h){
+  const {r,p,h:hl,v:vl}=$;
+  r(x,y,w,h,STONE.f0);
+  for(let ty=y;ty<y+h;ty+=10){
+    for(let tx=x;tx<x+w;tx+=14){
+      // Tile base com gradiente manual
+      const bx=tx,by=ty,tw=Math.min(13,x+w-tx),th=Math.min(9,y+h-ty);
+      r(bx,by,tw,th,STONE.f1);
+      r(bx+1,by+1,tw-2,th-2,STONE.f2);
+      r(bx+2,by+2,tw-4,th-4,STONE.f3);
+      // Top-left highlight
+      hl(bx+1,by+1,tw-2,STONE.f4);
+      p(bx+1,by+1,STONE.fhi);
+      // Bottom-right shadow
+      hl(bx+1,by+th-2,tw-2,STONE.fgrout);
+      vl(bx+tw-2,by+1,th-2,STONE.fgrout);
+      // Grout
+      hl(bx,by,tw,STONE.fgrout);
+      vl(bx,by,th,STONE.fgrout);
+    }
+  }
+  // Manchas de uso (piso desgastado)
+  const marks=[[x+40,y+80],[x+120,y+40],[x+200,y+100],[x+80,y+160],[x+240,y+60]];
+  marks.forEach(([mx,my])=>{
+    if(mx>x&&mx<x+w&&my>y&&my<y+h){
+      r(mx,my,8,5,STONE.f0); r(mx+1,my+1,6,3,STONE.f1);
+    }
+  });
+}
+
+// Parede de tijolo 3D — face frontal + topo + lateral
+function brickWall3D(x,y,w,h,showTop=true,showSide=false){
+  const {r,h:hl,v:vl,p}=$;
+  // Face frontal com tijolos ricos
+  r(x,y,w,h,STONE.w0);
+  for(let by=y;by<y+h;by+=7){
+    const row=Math.floor((by-y)/7);
+    const off=(row%2)*5;
+    for(let bx=x-off;bx<x+w;bx+=10){
+      const rx=Math.max(x,bx), rw=Math.min(10,x+w-rx)-(bx<x?x-bx:0);
+      if(rw<=0) continue;
+      // Tijolo com 3 tons
+      r(rx,by,rw,6,STONE.w2);
+      r(rx+1,by+1,rw-1,4,STONE.w3);
+      // Highlight topo
+      hl(rx,by,rw,STONE.w4);
+      p(rx,by,STONE.w5);
+      // Sombra base
+      hl(rx,by+5,rw,STONE.wdark);
+      // Brilho canto
+      p(rx+1,by+1,STONE.whi);
+    }
+    // Argamassa
+    hl(x,by+6,w,STONE.wmortar);
+  }
+  // Rachaduras ocasionais
+  if(w>30){
+    vl(x+w/3,y,h/2,STONE.wcrack);
+    vl(x+2*w/3,y+h/3,h/3,STONE.wcrack);
+  }
+  // Face superior (topo 3D)
+  if(showTop){
+    const td=6;
+    r(x,y-td,w,td,STONE.top0);
+    hl(x,y-td,w,STONE.top3);
+    for(let tx=x;tx<x+w;tx+=14){
+      r(tx+1,y-td+2,11,td-3,STONE.top1);
+      hl(tx+1,y-td+2,11,STONE.top2);
+    }
+    // Sombra da borda entre topo e frente
+    hl(x,y-1,w,STONE.top0);
+    hl(x,y,w,STONE.wdark);
+  }
+  // Face lateral (perspectiva direita)
+  if(showSide){
+    const sd=5;
+    r(x+w,y-3,sd,h+3,STONE.w1);
+    vl(x+w,y-3,h+3,STONE.w0);
+    vl(x+w+sd-1,y-3,h+3,STONE.wdark);
+    for(let sy=y;sy<y+h;sy+=7) hl(x+w,sy,sd,STONE.wdark);
+  }
+}
+
+// Tocha na parede — versão rica
+function torch(x,y){
+  // Suporte de ferro forjado
+  r(x+1,y+5,2,7,CMD.metal); p(x+1,y+4,CMD.metal2); p(x+2,y+4,CMD.metal2);
+  // Vasilha de metal
+  r(x,y+2,5,4,CMD.metal2); r(x+1,y+3,3,2,CMD.metal3);
+  hl(x,y+2,5,CMD.metal3);
+  r(x+1,y+1,3,2,'#704018');
+  // Chama multicamada
+  const f=Math.sin(T*.38+x)*.5+.5;
+  const f2=Math.sin(T*.52+x+1)*.5+.5;
+  r(x+1,y-1,3,3,f>.5?FIRE.c1:FIRE.c0);
+  r(x+1,y-3,3,3,f>.6?FIRE.c2:FIRE.c1);
+  r(x+2,y-5,1,3,f>.7?FIRE.c3:FIRE.c2);
+  p(x+1,y-5,f2>.6?FIRE.c3:FIRE.c2);
+  p(x+2,y-6,f>.75?FIRE.c4:FIRE.c3);
+  // Glow na parede
+  ct.fillStyle=FIRE.glow(.14+f*.08); ct.fillRect(x-6,y-6,16,14);
+  // Fuligem acima
+  p(x+2,y-7,`rgba(80,60,40,${.3+f*.2})`);
+}
+
+// Fogueira no chão — versão rica
+function campfire(x,y){
+  // Anel de pedras
+  [[-5,3],[-3,5],[0,6],[4,5],[6,3],[5,0],[2,-1],[-2,-1],[-5,1]].forEach(([dx,dy])=>{
+    r(x+dx,y+dy,3,2,STONE.w2); p(x+dx,y+dy,STONE.w4);
+  });
+  // Brasa e cinza
+  r(x-2,y+1,7,3,'#301408'); r(x-1,y+2,5,1,'#5a2c10');
+  // Lenha cruzada
+  r(x-4,y,9,2,LES.wood0); r(x-3,y+1,7,1,LES.wood1);
+  ct.save(); ct.translate(x,y+1); ct.rotate(.4);
+  r(-4,0,8,2,LES.wood2); ct.restore();
+  // Chamas em camadas
+  const f=Math.sin(T*.4+x)*.5+.5, f2=Math.sin(T*.55+x+2)*.5+.5;
+  r(x-2,y-4,5,5,f>.4?FIRE.c1:FIRE.c0);
+  r(x-1,y-6,4,5,f>.55?FIRE.c2:FIRE.c1);
+  r(x,y-8,2,4,f>.65?FIRE.c3:FIRE.c2);
+  r(x-2,y-2,2,3,f2>.5?FIRE.c0:FIRE.ember);
+  r(x+2,y-2,2,3,f>.45?FIRE.c1:FIRE.c0);
+  p(x+1,y-9,f>.72?FIRE.c4:'#ffaa00');
+  if(Math.floor(T*.5+x)%7<3) p(x+Math.round(f*3)-1,y-10,FIRE.c4);
+  // Glow
+  ct.fillStyle=FIRE.glow(.1+f*.07); ct.fillRect(x-9,y-8,20,16);
+}
+
+// Fumaça animada
+function smoke(x,y){
+  const o=Math.round(Math.sin(T*.1+x*.2)*2);
+  $.r(x+o,y,3,2,'#7a7460'); $.r(x+o-1,y-3,4,3,'#5c5848'); $.r(x+o,y-6,3,2,'#403e2e');
+}
+
+// TENT 3D RICO — melhor perspectiva e textura
+function tent3D(x,y,w,h,pal,label,labelCol){
+  const {r,p,h:hl,v:vl}=$;
+  const [c0,c1,c2,c3]=pal; const dep=7;
+  // Sombra projetada
+  ct.fillStyle='rgba(0,0,0,.35)'; ct.fillRect(x+dep+2,y+h+1,w+4,5);
+  // Face lateral direita (perspectiva)
+  r(x+w,y,dep,h,c0); vl(x+w,y,h,c1); vl(x+w+dep-1,y,h,c0);
+  for(let sy=y;sy<y+h;sy+=8) hl(x+w+1,sy,dep-2,c0);
+  // Face frontal
+  r(x,y,w,h,c1); r(x+1,y+1,w-2,h-2,c1);
+  // Textura de lona (listras com profundidade)
+  for(let ly=y+3;ly<y+h;ly+=5){
+    hl(x+1,ly,w-2,c0);
+    hl(x+1,ly+1,w-2,c2);
+  }
+  // Reforços verticais da lona
+  for(let lx=x+12;lx<x+w-8;lx+=18) vl(lx,y+1,h-2,c0);
+  // Face lateral topo (perspectiva telhado)
+  for(let i=0;i<dep;i++){
+    const frac=i/dep;
+    const c=i<dep/2?c2:c1;
+    hl(x+w+i,y-i,1,c);
+  }
+  // Telhado — pirâmide com profundidade
+  for(let i=0;i<=14;i++){
+    const tw=Math.round(w+dep*2-i*((w+dep*2-2)/14));
+    const rx=Math.round(x+i*(w+dep*2-2)/28)-dep+i;
+    hl(rx,y-dep-i,tw, i===0?c3:i<3?c3:i<7?c2:i<11?c1:c0);
+    p(rx,y-dep-i,c0); // borda esquerda sombra
+    // Linha de cumeeira lateral
+    if(i<dep) p(x+w+i,y-i,c2);
+  }
+  // Ponta do telhado
+  p(x+w/2+1,y-dep-15,c3); p(x+w/2+2,y-dep-14,c2);
+  // Contorno base
+  hl(x,y,w,c0); hl(x,y+h-1,w,c0);
+  vl(x,y,h,c0); vl(x+w-1,y,h,c0);
+  // Entrada (arco com moldura)
+  const dw=w/3|0, dx2=x+(w-dw)/2|0;
+  r(dx2-1,y+h/2|0,dw+2,h/2,c0); // moldura
+  r(dx2,y+h/2+1|0,dw,h/2-1,'#0a0806');
+  // Cortina na entrada
+  for(let ci=0;ci<3;ci++) r(dx2+1+ci*(dw/3|0),(y+h/2+1)|0,((dw/3)|0)-1,h/2-1,ci%2?c0:c1);
+  // Placa do nome
+  const lw=w-8;
+  r(x+4,y+2,lw,8,c0); $.o(x+4,y+2,lw,8,c2);
+  hl(x+5,y+3,lw-2,c1);
+  txt(label,x+6,y+3,labelCol);
+}
+
+// Tenda pequena dos sobreviventes — mais detalhada
+function tentSmall(x,y,pal){
+  const {r,p,h:hl,v:vl}=$;
+  const [c0,c1,c2,c3]=pal; const dep=4;
+  // Sombra
+  ct.fillStyle='rgba(0,0,0,.3)'; ct.fillRect(x+dep,y+17,20,3);
+  // Face lateral direita
+  r(x+20,y+4,dep,13,c0); vl(x+20,y+4,13,c1);
+  // Corpo
+  r(x,y+4,20,13,c1);
+  for(let ly=y+5;ly<y+17;ly+=4){hl(x+1,ly,18,c0); hl(x+1,ly+1,18,c2);}
+  // Telhado
+  for(let i=0;i<=6;i++){
+    const tw=22+dep-i*4, rx=x+i*2-1;
+    hl(rx,y+i,tw,i===0?c3:i<3?c2:c1);
+    p(rx,y+i,c0);
+  }
+  // Janelinha
+  r(x+2,y+6,4,4,'#1a1410'); hl(x+2,y+6,4,c2); p(x+3,y+7,c3);
+  // Entrada
+  r(x+8,y+10,5,7,'#0a0806');
+  // Estacas e corda
+  vl(x+2,y+17,3,c0); vl(x+17,y+17,3,c0);
+  hl(x-2,y+3,26,c0);
+}
+
+// ═══════════════════════════════════════════
+//  NIVEL 3+: PREDIO PEQUENO (substitui tenda)
+// ═══════════════════════════════════════════
+function drawBuilding(x,y,pal){
+  const [c0,c1,c2,c3]=pal; const dep=5;
+  // Sombra
+  ct.fillStyle='rgba(0,0,0,.35)'; ct.fillRect(x+dep+1,y+22,22,4);
+  // Face superior (telhado plano 3D)
+  r(x+dep,y-dep,22,dep,c3); hl(x+dep,y-dep,22,c3); hl(x+dep,y-1,22,c2);
+  // Face lateral direita
+  r(x+22,y-dep,dep,26+dep,c1); vl(x+22,y-dep,26+dep,c2); vl(x+22+dep-1,y-dep,26+dep,c0);
+  // Corpo frontal
+  r(x,y,22,22,c1); r(x+1,y+1,20,20,c2);
+  // Textura da parede (tijolos pequenos)
+  for(let by2=y+1;by2<y+22;by2+=5){
+    const off=(Math.floor((by2-y)/5)%2)*3;
+    for(let bx2=x+1;bx2<x+21;bx2+=7){
+      r(bx2+off,by2,6,4,c1); hl(bx2+off,by2,6,c2);
+    }
+    hl(x+1,by2+4,20,c0);
+  }
+  // Janela com luz
+  r(x+2,y+3,8,7,c0); r(x+3,y+4,6,5,'#ffd080');
+  hl(x+3,y+4,6,'#ffee90'); vl(x+6,y+4,5,c0); hl(x+3,y+7,6,c0);
+  r(x+13,y+3,7,7,c0); r(x+14,y+4,5,5,'#ffd080');
+  hl(x+14,y+4,5,'#ffee90'); hl(x+14,y+7,5,c0);
+  // Porta
+  r(x+8,y+13,6,9,c0); r(x+9,y+14,4,8,'#6a3810'); hl(x+9,y+14,4,'#8a5020');
+  r(x+12,y+18,1,2,'#d0a040'); // maçaneta
+  // Glow janela
+  ct.fillStyle='rgba(255,210,80,.08)'; ct.fillRect(x,y,22,22);
+  // Borda iluminada topo
+  hl(x,y,22,c3);
+}
+
+// ─── LUZ ELÉTRICA (substitui fogueira no nível 3+) ───
+function electricLight(x,y){
+  // Poste
+  vl(x+2,y-14,18,'#606050'); r(x,y+3,6,2,'#606050'); hl(x,y+3,6,'#808070');
+  // Luminária
+  r(x-2,y-16,10,4,'#707060'); r(x-1,y-15,8,3,'#909080'); hl(x-1,y-15,8,'#b0b098');
+  // Luz pulsante suave
+  const pulse=Math.sin(T*.05+x)*.5+.5;
+  r(x-1,y-12,8,2,'#ffeea0');
+  ct.fillStyle=`rgba(255,240,140,${.18+pulse*.08})`; ct.fillRect(x-6,y-18,18,12);
+  ct.fillStyle=`rgba(255,240,140,${.06+pulse*.04})`; ct.fillRect(x-10,y-20,26,18);
+}
+
+// ═══════════════════════════════════════════
+//  TORRE BUTCHER — completa
+// ═══════════════════════════════════════════
+function drawCMD(){
+  const {r,p,h:hl,v:vl}=$;
+  const TX=115,TY=2,TW=90,TH=72;
+  // Sombra base
+  ct.fillStyle='rgba(0,0,0,.4)'; ct.fillRect(TX+6,TY+TH+2,TW+10,6);
+  // Topo 3D (face superior vista de cima)
+  r(TX-7,TY-9,TW+16,11,CMD.top1);
+  hl(TX-7,TY-9,TW+16,CMD.top2);
+  for(let tx=TX-7;tx<TX+TW+9;tx+=12){r(tx+1,TY-7,9,7,CMD.top0); hl(tx+1,TY-7,9,CMD.top1);}
+  hl(TX-7,TY-1,TW+16,CMD.w2);
+  // Face lateral esquerda
+  r(TX-9,TY,9,TH,CMD.w0); vl(TX-9,TY,TH,CMD.w1); vl(TX-1,TY,TH,CMD.w2);
+  // Face lateral direita
+  r(TX+TW,TY,9,TH,CMD.w0); vl(TX+TW+8,TY,TH,CMD.w0);
+  for(let sy=TY;sy<TY+TH;sy+=6) hl(TX+TW,sy,9,CMD.w1);
+  // Corpo principal
+  r(TX,TY,TW,TH,CMD.w0);
+  // Painéis de concreto
+  for(let py=TY+4;py<TY+TH;py+=14){
+    for(let px=TX+4;px<TX+TW-4;px+=22){
+      r(px,py,20,12,CMD.w1); r(px+1,py+1,18,10,CMD.w2);
+      hl(px+1,py+1,18,CMD.w3); vl(px+1,py+1,10,CMD.w3);
+      hl(px+1,py+10,18,CMD.w0); vl(px+18,py+1,10,CMD.w0);
+    }
+  }
+  // Janelas-periscópio (3)
+  [[TX+6,TY+8],[TX+36,TY+8],[TX+66,TY+8]].forEach(([wx,wy])=>{
+    r(wx-1,wy-1,18,12,CMD.w0); r(wx,wy,16,10,CMD.screen);
+    r(wx+1,wy+1,14,8,CMD.screenA); r(wx+2,wy+2,12,6,CMD.screenB);
+    hl(wx+1,wy+1,14,CMD.screenC); // scanline highlight
+    const g=Math.sin(T*.07+wx)*.5+.5;
+    ct.fillStyle=`rgba(30,80,10,${.18+g*.15})`; ct.fillRect(wx+1,wy+1,14,8);
+    vl(wx+8,wy,10,CMD.screen); hl(wx,wy+4,16,CMD.screen); // cruz divisória
+    r(wx+2,wy+2,4,3,CMD.screenGlow); p(wx+3,wy+3,CMD.whi); // radar blip
+  });
+  // Monitor principal
+  r(TX+4,TY+22,34,20,CMD.screen); r(TX+5,TY+23,32,18,CMD.screenA);
+  hl(TX+5,TY+23,32,CMD.screenC);
+  for(let mi=0;mi<4;mi++) for(let mj=0;mj<3;mj++)
+    r(TX+6+mi*8,TY+25+mj*5,7,4,CMD.screenB);
+  // LEDs piscando
+  [[TX+8,TY+26,0],[TX+18,TY+31,1],[TX+26,TY+26,2],[TX+34,TY+31,0]].forEach(([lx2,ly2,t])=>{
+    const on=(T+t*4)%10<5;
+    r(lx2,ly2,2,2,on?CMD.ledR:CMD.w1); if(on) $.p(lx2,ly2,CMD.amber);
+  });
+  // Monitor secundário
+  r(TX+44,TY+22,26,16,CMD.screen); r(TX+45,TY+23,24,14,CMD.screenA);
+  for(let li=0;li<4;li++) hl(TX+46,TY+25+li*3,22,CMD.screenB);
+  txt('CMD',TX+47,TY+29,CMD.red);
+  txt('1',TX+64,TY+29,CMD.ledG);
+  // Painel de controle
+  r(TX+4,TY+46,82,18,CMD.metal); r(TX+5,TY+47,80,16,CMD.metal2);
+  hl(TX+5,TY+47,80,CMD.metal3);
+  // Botões coloridos
+  [[CMD.red,'#ff4020'],[CMD.w4,CMD.accent],[CMD.amber,'#ffd828'],
+   [CMD.w4,CMD.accent],[CMD.red,'#ff4020'],[CMD.ledG,'#40e040']].forEach(([c1,c2],i)=>{
+    r(TX+7+i*13,TY+50,9,7,c1); r(TX+8+i*13,TY+51,7,5,c2);
+    r(TX+8+i*13,TY+51,7,2,c2);
+    if((T+i*3)%12<4) p(TX+11+i*13,TY+52,'#ffffff');
+  });
+  // Alavancas
+  [[TX+83,TY+48],[TX+87,TY+46]].forEach(([lx,ly])=>{
+    r(lx,ly+3,4,10,CMD.metal); r(lx+1,ly,2,5,CMD.accent); p(lx+2,ly,'#ffffff');
+  });
+  // ── ELEVADOR ──
+  const EX=(TX+TW/2-7)|0;
+  r(EX,TY+6,15,TH-6,'#0c1008'); r(EX+1,TY+6,13,TH-6,'#10140a');
+  vl(EX,TY+6,TH-6,CMD.metal); vl(EX+14,TY+6,TH-6,CMD.metal);
+  // Trilhos do elevador
+  r(EX+3,TY+6,2,TH-6,CMD.metal2); r(EX+10,TY+6,2,TH-6,CMD.metal2);
+  // Cabos
+  vl(EX+5,TY+6,TH-6,CMD.cable); vl(EX+9,TY+6,TH-6,CMD.cable);
+  for(let cy=TY+6;cy<TY+TH;cy+=6) hl(EX+5,cy,5,CMD.metal);
+  // Cabine animada
+  const ep=(Math.abs(Math.sin(T*.01))*26)|0;
+  r(EX+1,TY+8+ep,13,18,CMD.elev); r(EX+2,TY+9+ep,11,16,CMD.elev2);
+  $.o(EX+1,TY+8+ep,13,18,CMD.metal2);
+  // Porta da cabine
+  r(EX+2,TY+15+ep,11,11,CMD.elevD);
+  vl(EX+7,TY+15+ep,11,CMD.elev2);
+  r(EX+2,TY+15+ep,4,11,CMD.elev); r(EX+8,TY+15+ep,5,11,CMD.elev);
+  r(EX+10,TY+20+ep,2,3,CMD.amber); // botão
+  txt('UP',EX+3,TY+11+ep,CMD.accent);
+  // ── AMEIAS ──
+  for(let ax=TX-7;ax<TX+TW+9;ax+=12){
+    r(ax,TY-15,8,7,CMD.metal2); hl(ax,TY-15,8,CMD.metal3);
+    r(ax+1,TY-17,6,3,CMD.metal3);
+  }
+  // ── ANTENAS ──
+  vl(TX+7,TY-24,18,'#909870'); r(TX+5,TY-25,4,2,CMD.metal3);
+  vl(TX+17,TY-19,13,'#808860'); r(TX+15,TY-20,4,2,CMD.metal2);
+  vl(TX+TW-7,TY-26,20,'#909870'); r(TX+TW-9,TY-27,4,2,CMD.metal3);
+  vl(TX+TW-17,TY-19,13,'#808860');
+  r(TX+5,TY-25,3,3,CMD.red); if(T%12<6) p(TX+6,TY-25,'#ffff00');
+  r(TX+TW-9,TY-27,3,3,CMD.red); if(T%12>=6) p(TX+TW-8,TY-27,'#ffff00');
+  // ── FIOS ──
+  for(let wi=0;wi<7;wi++){p(TX-10-wi*6,TY+28,CMD.cable);p(TX+TW+10+wi*6,TY+28,CMD.cable);}
+  // ── PLACA ──
+  r(TX+5,TY+TH-13,80,10,CMD.metal2); $.o(TX+5,TY+TH-13,80,10,CMD.metal3);
+  txt('SALA DE COMANDO',TX+7,TY+TH-11,CMD.accent);
+  // Borda superior iluminada
+  hl(TX,TY,TW,CMD.w3); hl(TX,TY+1,TW,CMD.w4);
+}
+
+// ═══════════════════════════════════════════
+//  TENDA BULLET
+// ═══════════════════════════════════════════
+function drawBullet(){
+  const {r,p,h:hl,v:vl}=$;
+  const bx=8,by=90;
+  tent3D(bx,by,84,58,[BUL.d0,BUL.d2,BUL.d3,BUL.l2],'POSTO DE ARMAS',BUL.hi);
+  // Alvo de tiro (círculos pixelados)
+  const ax=bx+48,ay=by+28;
+  [[BUL.blood,11],[BUL.target,8],['#f0f0e0',5],[BUL.blood,2]].forEach(([c,rad])=>{
+    for(let a=0;a<40;a++){const ag=a*Math.PI*2/40;p(ax+Math.round(Math.cos(ag)*rad),ay+Math.round(Math.sin(ag)*rad*.6),c);}
+  });
+  r(ax-1,ay-1,3,2,BUL.blood); // furo central
+  // Rifles cruzados
+  const cross=[[bx+28,by+10,bx+50,by+30],[bx+56,by+10,bx+34,by+30]];
+  cross.forEach(([x0,y0,x1,y1])=>{
+    const dx=x1-x0,dy=y1-y0,steps=Math.max(Math.abs(dx),Math.abs(dy));
+    for(let s=0;s<=steps;s++) p(x0+(dx*s/steps)|0,y0+(dy*s/steps)|0,s<steps*.3||s>steps*.7?BUL.gun:BUL.gunHi);
+    // Coronha e cano
+    r(x0-1,y0,4,3,BUL.gun);r(x1-1,y1-1,14,3,BUL.gunM);hl(x1-1,y1-1,14,BUL.gunHi);
+  });
+  // Colete à esquerda
+  r(bx+3,by+14,20,24,BUL.d0); r(bx+4,by+15,18,22,BUL.d2);
+  r(bx+5,by+16,8,16,BUL.d1); r(bx+14,by+16,8,16,BUL.d1);
+  hl(bx+4,by+15,18,BUL.l0); hl(bx+4,by+20,18,BUL.d0); hl(bx+4,by+25,18,BUL.d0);
+  r(bx+8,by+19,6,4,BUL.d0); txt('COLETE',bx+5,by+17,BUL.l0); // etiqueta
+  // Faca tática
+  r(bx+3,by+32,2,12,BUL.gun); r(bx+4,by+30,1,14,BUL.l1); p(bx+3,by+30,BUL.hi);
+  r(bx+2,by+38,4,3,BUL.d2); // cabo
+  // Caixas de munição (direita)
+  [[bx+65,by+14,'9MM'],[bx+65,by+28,'AK47']].forEach(([cx,cy,lb])=>{
+    r(cx,cy,15,12,BUL.crate0); r(cx+1,cy+1,13,10,BUL.crate1); hl(cx+1,cy+1,13,BUL.crate2);
+    hl(cx,cy+4,15,BUL.crate0); hl(cx,cy+8,15,BUL.crate0);
+    txt(lb,cx+2,cy+3,BUL.crateHi);
+  });
+  // Granadas (3)
+  [bx+63,bx+69,bx+75].forEach(gx=>{
+    r(gx,by+42,5,7,BUL.d3); r(gx+1,by+43,3,5,BUL.l0);
+    hl(gx,by+42,5,BUL.l1); r(gx+2,by+40,1,3,BUL.gun);
+  });
+  // Bandeira
+  const fw=Math.sin(T*.2)*.8;
+  vl(bx+42,by-20,22,'#7a5c28');
+  r(bx+43,by-20,14,9,BUL.flag); hl(bx+43,by-20,14,'#e04030');
+  r(bx+43,by-14,14,1,BUL.d0); p((bx+56)|0,(by-20+Math.round(fw))|0,'#ff6040');
+  campfire(bx+42,by+63);
+}
+
+// ═══════════════════════════════════════════
+//  TENDA LESTER
+// ═══════════════════════════════════════════
+function drawLester(){
+  const {r,p,h:hl,v:vl}=$;
+  const lx=228,ly=90;
+  tent3D(lx,ly,84,58,[LES.d0,LES.d2,LES.d3,LES.l2],'CANTINA',LES.hi);
+  // Fogão grande
+  r(lx+22,ly+18,40,20,LES.d0); r(lx+23,ly+19,38,18,'#3a1808');
+  r(lx+23,ly+19,38,5,Math.sin(T*.35)>.2?LES.fire1:LES.fire0);
+  r(lx+23,ly+19,16,5,Math.sin(T*.35+1)>.2?LES.fire2:LES.fire1);
+  hl(lx+23,ly+19,38,LES.fire2);
+  // Panelão com detalhes
+  r(lx+28,ly+11,28,9,LES.pot0); r(lx+29,ly+12,26,7,LES.pot1); hl(lx+29,ly+12,26,LES.pot2);
+  hl(lx+29,ly+13,26,'#9aac60'); // reflexo metálico
+  r(lx+33,ly+9,18,3,LES.pot0); r(lx+38,ly+7,8,3,LES.pot1); // tampa+alça
+  smoke(lx+42,ly+5); smoke(lx+36,ly+6);
+  // Prateleira de latas (organizada)
+  r(lx+4,ly+38,14,2,LES.wood0); hl(lx+4,ly+38,14,LES.wood2); // prateleira
+  [[lx+4,ly+28,'#4a6820'],[lx+4,ly+34,'#6a3010'],[lx+12,ly+28,'#4a5430'],[lx+12,ly+34,'#5a4010']].forEach(([cx,cy,cc])=>{
+    r(cx,cy,8,7,cc); r(cx+1,cy+1,6,5,LES.wood1); hl(cx+1,cy+1,6,LES.wood2);
+    r(cx+2,cy-1,4,2,cc); // tampa da lata
+  });
+  // Direita também
+  r(lx+70,ly+38,14,2,LES.wood0); hl(lx+70,ly+38,14,LES.wood2);
+  [[lx+70,ly+28,'#4a7020'],[lx+70,ly+34,'#3a5010'],[lx+78,ly+28,'#5a4820'],[lx+78,ly+34,'#4a3818']].forEach(([cx,cy,cc])=>{
+    r(cx,cy,8,7,cc); r(cx+1,cy+1,6,5,LES.wood1); hl(cx+1,cy+1,6,LES.wood2);
+    r(cx+2,cy-1,4,2,cc);
+  });
+  // Tábua de cozinha
+  r(lx+14,ly+40,56,5,LES.wood0); r(lx+15,ly+41,54,3,LES.wood1); hl(lx+15,ly+41,54,LES.wood2);
+  // Bandeira
+  vl(lx+42,ly-20,22,'#7a5028');
+  r(lx+43,ly-20,14,9,LES.d3); hl(lx+43,ly-20,14,LES.l2);
+  r(lx+43,ly-14,14,1,LES.d0);
+  campfire(lx+42,ly+63);
+}
+
+// ═══════════════════════════════════════════
+//  TENDA MEDUSA
+// ═══════════════════════════════════════════
+function drawMedusa(){
+  const {r,p,h:hl,v:vl}=$;
+  const mx=118,my=172;
+  tent3D(mx,my,84,58,[MED.d0,MED.d2,MED.d3,MED.l2],'TENDA DA MEDUSA',MED.hi);
+  // Névoa mística
+  for(let fi=0;fi<6;fi++){
+    const mist=Math.sin(T*.06+fi*.9)*.5+.5;
+    ct.fillStyle=`rgba(80,10,130,${.06+mist*.05})`;
+    ct.fillRect(mx+4+fi*13,my+44,12,14);
+  }
+  // Prateleira com as 6 poções
+  r(mx+4,my+30,76,3,MED.d1); hl(mx+4,my+30,76,MED.l0); // prateleira
+  const pCols=[MED.p0,MED.p1,MED.p2,MED.p3,MED.p4,MED.p5];
+  for(let i=0;i<6;i++){
+    const px2=mx+6+i*12,py2=my+14,pc=pCols[i];
+    // Frasco
+    r(px2,py2+4,6,14,MED.d1); r(px2+1,py2+5,4,12,pc);
+    r(px2+1,py2+5,1,3,'#ffffff'); // brilho
+    r(px2+1,py2+2,4,4,MED.d2); r(px2+2,py2+1,2,3,'#c0a050'); // gargalo
+    // Glow pulsante
+    const gl=Math.sin(T*.12+i*.9)*.5+.5;
+    const pr=parseInt(pc.slice(1,3),16),pg=parseInt(pc.slice(3,5),16),pb=parseInt(pc.slice(5,7),16);
+    ct.fillStyle=`rgba(${pr},${pg},${pb},${.1+gl*.08})`; ct.fillRect(px2-2,py2,9,20);
+  }
+  // Mesa de ritual
+  r(mx+20,my+34,44,12,MED.d1); r(mx+21,my+35,42,10,MED.d2); hl(mx+21,my+35,42,MED.d3);
+  // Livro (centro da mesa)
+  r(mx+30,my+35,24,9,MED.d0); r(mx+31,my+36,11,7,'#42183c'); r(mx+42,my+36,12,7,'#42183c');
+  vl(mx+42,my+36,7,MED.d1);
+  for(let li=0;li<3;li++){hl(mx+32,my+37+li*2,9,'#6a2858'); hl(mx+43,my+37+li*2,9,'#6a2858');}
+  // Crânio (esquerda da mesa)
+  r(mx+8,my+34,14,12,MED.skull); r(mx+9,my+35,12,10,'#e8d8c0');
+  hl(mx+9,my+35,12,MED.skull); p(mx+10,my+35,MED.skull);
+  r(mx+9,my+38,3,4,MED.skullD); r(mx+14,my+38,3,4,MED.skullD);
+  p(mx+10,my+39,'#2a0a0a'); p(mx+15,my+39,'#2a0a0a'); // pupilas
+  for(let t=0;t<4;t++) vl(mx+9+t*2,my+43,2,MED.skullS); // dentes
+  // Cristais (direita da mesa)
+  [[mx+68,my+32,MED.crystal1],[mx+74,my+30,MED.crystal2],[mx+79,my+33,MED.crystal0]].forEach(([cx,cy,cc])=>{
+    r(cx,cy+2,5,12,MED.d2); r(cx+1,cy,3,14,cc); p(cx+1,cy,MED.crystal2); p(cx+2,cy+1,MED.crystal2);
+  });
+  // Vela (borda da mesa)
+  r(mx+22,my+30,4,8,'#e8d878'); r(mx+23,my+27,2,4,'#c8b860');
+  const cv2=Math.sin(T*.28)*.5+.5;
+  p(mx+24,my+26,cv2>.5?MED.flame1:MED.flame0); p(mx+23,my+25,cv2>.65?MED.flame0:FIRE.c2);
+  ct.fillStyle=`rgba(200,160,0,${.07+cv2*.06})`; ct.fillRect(mx+19,my+21,10,10);
+  // Cobra em frasco (prateleira, extrema direita)
+  r(mx+76,my+16,8,14,MED.d1); r(mx+77,my+17,6,12,MED.d2);
+  r(mx+78,my+19,4,8,`rgba(20,180,80,.7)`);
+  p(mx+79,my+21,MED.p1); p(mx+79,my+25,'#10a030');
+  // Pentágono místico animado no chão
+  const sy2=my+53;
+  const symAlpha=Math.sin(T*.08)*.5+.5;
+  const symC=symAlpha>.5?MED.hi:MED.l1;
+  for(let a=0;a<5;a++){
+    const ag=a*Math.PI*2/5-Math.PI/2,r2=9;
+    const ag2=(a+1)*Math.PI*2/5-Math.PI/2;
+    const nx=(mx+42+Math.cos(ag)*r2)|0,ny=(sy2+Math.sin(ag)*r2*.5)|0;
+    const nx2=(mx+42+Math.cos(ag2)*r2)|0,ny2=(sy2+Math.sin(ag2)*r2*.5)|0;
+    const steps=Math.max(Math.abs(nx2-nx),Math.abs(ny2-ny));
+    for(let s=0;s<=steps;s++) p(nx+((nx2-nx)*s/steps)|0,ny+((ny2-ny)*s/steps)|0,symC);
+  }
+  p(mx+42,sy2,MED.accent);
+  // Bandeira roxa
+  vl(mx+42,my-20,22,'#580a88');
+  r(mx+43,my-20,14,9,MED.d3); hl(mx+43,my-20,14,MED.l1);
+  r(mx+43,my-14,14,1,MED.d0);
+  campfire(mx+42,my+63);
+}
+
+// ═══════════════════════════════════════════
+//  PASSARELAS
+// ═══════════════════════════════════════════
+function drawWalkways(){
+  const {r,p,h:hl,v:vl}=$;
+  // Pilares
+  [38,100,220,282].forEach(px2=>{
+    r(px2-2,18,6,65,CMD.metal); r(px2-1,18,4,65,CMD.metal2);
+    hl(px2-2,18,6,CMD.metal3); hl(px2-2,82,6,CMD.metal);
+    [26,42,58,74].forEach(ry=>{r(px2-3,ry,2,3,CMD.metal2);r(px2+4,ry,2,3,CMD.metal2);});
+  });
+  // Passarela esquerda
+  r(10,57,112,14,CMD.metal); r(10,58,112,12,CMD.metal2);
+  hl(10,57,112,CMD.metal3); hl(10,70,112,CMD.metal);
+  // Tacos do piso da passarela
+  for(let gx=10;gx<122;gx+=8){r(gx,57,7,14,CMD.metal2);hl(gx,57,7,CMD.metal3);}
+  // Corrimão esquerda
+  r(10,52,112,5,CMD.w3); hl(10,52,112,CMD.w4);
+  for(let gx=10;gx<122;gx+=14){vl(gx,52,19,CMD.metal);r(gx-1,51,3,3,CMD.metal2);}
+  // Passarela direita
+  r(208,57,104,14,CMD.metal); r(208,58,104,12,CMD.metal2);
+  hl(208,57,104,CMD.metal3); hl(208,70,104,CMD.metal);
+  for(let gx=208;gx<312;gx+=8){r(gx,57,7,14,CMD.metal2);hl(gx,57,7,CMD.metal3);}
+  // Corrimão direita
+  r(208,52,104,5,CMD.w3); hl(208,52,104,CMD.w4);
+  for(let gx=208;gx<312;gx+=14){vl(gx,52,19,CMD.metal);r(gx-1,51,3,3,CMD.metal2);}
+}
+
+// ═══════════════════════════════════════════
+//  ESGOTO
+// ═══════════════════════════════════════════
+function sewerGate(x,y,locked=true){
+  const {r,p,h:hl}=$;
+  // Moldura de pedra em camadas
+  r(x-4,y-4,48,48,STONE.w1); r(x-3,y-3,46,46,STONE.w2); r(x-2,y-2,44,44,STONE.w3);
+  hl(x-4,y-4,48,STONE.w4); // topo iluminado
+  // Interior
+  r(x,y,40,40,SEW.dark); r(x+1,y+1,38,38,SEW.wall);
+  // Musgo nas bordas
+  r(x+1,y+1,10,2,SEW.moss1); r(x+28,y+1,10,2,SEW.moss0);
+  r(x+1,y+36,8,2,SEW.moss1); r(x+30,y+37,8,1,SEW.moss0);
+  // Água escorrendo
+  vl(x+16,y+28,12,SEW.water); vl(x+22,y+32,8,SEW.waterL);
+  // Grades verticais (barras 3D)
+  for(let g=0;g<6;g++){
+    const gx2=x+2+g*6;
+    r(gx2,y+2,3,36,SEW.bar0); r(gx2+1,y+2,1,36,SEW.barHi);
+    hl(gx2,y+2,3,SEW.barHi);
+  }
+  // Barras horizontais
+  [y+8,y+18,y+28].forEach(gy=>{r(x+2,gy,36,3,SEW.bar0);hl(x+2,gy,36,SEW.barHi);});
+  if(locked){
+    // Corrente
+    r(x+4,y+15,32,5,SEW.chain0); r(x+5,y+16,30,3,SEW.chain1); hl(x+4,y+15,32,'#c09038');
+    for(let ci=0;ci<6;ci++) r(x+5+ci*5,y+16,3,3,SEW.chain0);
+    // Cadeado 3D
+    r(x+12,y+10,16,12,SEW.lock0); r(x+13,y+11,14,10,SEW.lock1); hl(x+13,y+11,14,SEW.lockHi);
+    r(x+16,y+7,10,5,SEW.lock0); r(x+17,y+8,8,3,'#7a2010');
+    r(x+18,y+14,4,4,SEW.dark); p(x+19,y+15,'#ffaa00'); p(x+20,y+16,'#ff8800');
+    r(x,y,40,8,SEW.lock0); $.o(x,y,40,8,SEW.lockHi);
+    txt('ESGOTO',x+3,y+1,'#ff9040');
+    const pulse=Math.sin(T*.15)*.5+.5;
+    ct.fillStyle=`rgba(180,50,0,${.08+pulse*.08})`; ct.fillRect(x,y,40,40);
+  } else {
+    // ABERTO nível 4 — grades levantadas
+    for(let g=0;g<6;g++){const gx2=x+2+g*6; r(gx2,y+2,3,8,SEW.bar0); r(gx2+1,y+2,1,8,SEW.barHi);}
+    // Água fluindo animada
+    for(let wy=y+12;wy<y+40;wy+=4){
+      const woff=Math.round(Math.sin((T*.15+wy)*.8)*3);
+      r(x+2,wy,36,3,SEW.water); r(x+2+woff,wy,12,2,SEW.waterL);
+    }
+    // Placa ABERTO
+    r(x,y,40,8,'#0e2010'); $.o(x,y,40,8,'#30a840');
+    txt('ABERTO',x+4,y+1,'#50e060');
+    const gp=Math.sin(T*.1)*.5+.5;
+    ct.fillStyle=`rgba(20,160,40,${.06+gp*.06})`; ct.fillRect(x,y,40,40);
+    // Mini collector saindo animado
+    const co=(T*.8+x)%70|0;
+    if(co<35){r(x+co,y+22,3,6,'#303820');r(x+co,y+18,3,4,'#b08050');r(x+co,y+17,3,2,'#281808');}
+  }
+}
+
+// ═══════════════════════════════════════════
+//  TREM DESCARRILHADO
+// ═══════════════════════════════════════════
+function derailedTrain(){
+  const {r,p,h:hl,v:vl}=$;
+  const RY=286;
+  // Leito de brita
+  r(0,RY-5,320,22,RAIL.ballast);
+  for(let tx=0;tx<320;tx+=5){r(tx,RY-4,3,2,RAIL.bed);}
+  // Dormentes
+  for(let tx=0;tx<320;tx+=7){r(tx,RY,5,4,RAIL.tie0);r(tx+1,RY+1,3,2,RAIL.tie1);hl(tx,RY,5,RAIL.tie2);}
+  // Trilhos (3D)
+  r(0,RY+1,320,3,RAIL.rail0); hl(0,RY+1,320,RAIL.rail1); hl(0,RY+2,320,RAIL.rail2);
+  r(0,RY+5,320,3,RAIL.rail0); hl(0,RY+5,320,RAIL.rail1); hl(0,RY+6,320,RAIL.rail2);
+  for(let tx=0;tx<320;tx+=16){p(tx,RY+2,RAIL.railHi);p(tx,RY+6,RAIL.railHi);}
+  // Trilhos dobrados na zona do trem
+  for(let tx=60;tx<160;tx++){
+    const bend=Math.sin((tx-60)*.05)*3.5;
+    p(tx,RY+1+bend,RAIL.rust1); p(tx,RY+5+bend*.7,RAIL.rust1);
+  }
+  // Vagão 1 (tombado, inclinado)
+  const VX=28,VY=RY-22;
+  for(let vy=0;vy<20;vy++){
+    const sh=(vy*.12)|0;
+    hl(VX+sh,VY+vy,94,vy===0?RAIL.rust1:vy<3?RAIL.rust0:'#504840');
+  }
+  // Topo enferrujado
+  r(VX,VY,94,3,RAIL.rust2); hl(VX,VY,94,RAIL.rust1);
+  // Janelas quebradas
+  for(let i=0;i<6;i++){
+    const wx=VX+4+i*14, wy=VY+5;
+    r(wx,wy,11,9,'#1c2018'); $.o(wx,wy,11,9,'#484038');
+    p(wx+3,wy+4,'#383a30'); // reflexo
+    if(i===2||i===4){r(wx,wy,11,9,'#141610'); hl(wx,wy,6,'#585048');}
+  }
+  // Buracos de ferrugem
+  [[VX+8,VY+11],[VX+34,VY+6],[VX+60,VY+9],[VX+82,VY+13]].forEach(([rx,ry])=>{
+    r(rx,ry,9,6,RAIL.rust2); r(rx+1,ry+1,7,4,'#b06030'); hl(rx+1,ry+1,7,'#c87040');
+  });
+  // Rodas descarrilhadas
+  [[VX+10,VY+20,4],[VX+32,VY+19,3],[VX+60,VY+20,4],[VX+82,VY+20,3]].forEach(([wx,wy,off])=>{
+    r(wx-2+off,wy,9,7,'#282420'); r(wx-1+off,wy+1,7,5,'#3c3830'); p(wx+2+off,wy+3,'#686460');
+  });
+  // Escombros ao redor
+  [[VX+3,VY+21],[VX+22,VY+22],[VX+48,VY+21],[VX+74,VY+22]].forEach(([ex,ey])=>{
+    r(ex,ey,9,5,STONE.w1); hl(ex,ey,9,STONE.w3);
+  });
+  // Fumaça e faíscas
+  smoke(VX+8,VY-1); smoke(VX+46,VY-2);
+  if(T%6<2){p(VX+22,VY+2,FIRE.c4);p(VX+23,VY+1,FIRE.c3);}
+  if(T%9<3){p(VX+64,VY+3,FIRE.c4);p(VX+65,VY+2,FIRE.c3);}
+  // Vagão 2 (mais destruído)
+  const V2X=128,V2Y=RY-15;
+  r(V2X,V2Y,72,15,'#484038'); r(V2X,V2Y,72,2,RAIL.rust1);
+  for(let i=0;i<4;i++){r(V2X+3+i*17,V2Y+3,13,7,'#1c2018'); $.o(V2X+3+i*17,V2Y+3,13,7,'#383828');}
+  r(V2X+10,V2Y,8,2,'#383028');
+  [[V2X+8,V2Y+12],[V2X+30,V2Y+11],[V2X+56,V2Y+12]].forEach(([wx,wy])=>{r(wx-2,wy,7,5,'#282420');r(wx-1,wy+1,5,3,'#3c3830');});
+  // Placa
+  r(205,277,107,10,CMD.metal); $.o(205,277,107,10,CMD.metal3);
+  hl(206,278,105,CMD.metal3); txt('WORK STATION',207,279,CMD.accent);
+
+  // NÍVEL 4: trem funcionando animado
+  if(CITY_LEVEL>=4){
+    const TX2=(T*1.2)%440-60|0; // trem se move da esquerda para direita
+    // Locomotiva
+    const LX=TX2, LY=RY-20;
+    r(LX,LY,55,20,'#303828'); r(LX+1,LY+1,53,18,'#404838'); // corpo
+    hl(LX,LY,55,RAIL.rail2); // topo iluminado
+    // Cabine do maquinista
+    r(LX+35,LY-10,18,11,'#2a3420'); r(LX+36,LY-9,16,9,'#3a4430');
+    r(LX+37,LY-8,6,6,'#a0d0ff'); r(LX+45,LY-8,6,6,'#a0d0ff'); // janelas azuis
+    hl(LX+37,LY-8,6,'#c0e8ff'); hl(LX+45,LY-8,6,'#c0e8ff');
+    // Chaminé com fumaça animada
+    r(LX+8,LY-10,6,10,'#282e20'); r(LX+9,LY-11,4,11,'#383e28');
+    const sf=Math.sin(T*.3+LX)*.5+.5;
+    r(LX+8+Math.round(sf),LY-16,4,7,'#6a6858');
+    r(LX+7+Math.round(sf*.5),LY-20,5,5,'#4a4840');
+    r(LX+8,LY-23,4,4,'#3a3830');
+    // Faróis
+    r(LX,LY+4,3,6,'#f0e060'); hl(LX,LY+4,3,'#ffff80');
+    ct.fillStyle='rgba(240,220,80,.2)'; ct.fillRect(LX-15,LY+2,16,10);
+    // Rodas (animadas)
+    const ws=Math.round(Math.sin(T*.5)*1);
+    [[LX+6,LY+18],[LX+20,LY+18],[LX+36,LY+18],[LX+50,LY+18]].forEach(([wx,wy])=>{
+      r(wx-3,wy,8,4,'#282420'); r(wx-2,wy+1,6,2,'#3c3830'); p(wx+1,wy+1,'#686460');
+      p(wx-1+ws,wy,'#909080'); // raio girando
+    });
+    // Vagão 1 (atrás da loco)
+    r(LX-62,LY+1,58,17,'#484038'); r(LX-61,LY+2,56,15,'#585048');
+    hl(LX-62,LY+1,58,RAIL.rail1);
+    for(let wi=0;wi<3;wi++){r(LX-58+wi*18,LY+3,14,8,'#2a2820'); $.o(LX-58+wi*18,LY+3,14,8,'#686858');}
+    [[LX-54,LY+17],[LX-38,LY+17],[LX-22,LY+17]].forEach(([wx,wy])=>{
+      r(wx-2,wy,7,4,'#282420');r(wx-1,wy+1,5,2,'#3c3830');
+    });
+    // Vagão 2 (mais atrás)
+    r(LX-125,LY+3,56,15,'#403830'); r(LX-124,LY+4,54,13,'#504840');
+    hl(LX-125,LY+3,56,'#706858');
+    // Trilhos iluminados pelo trem
+    ct.fillStyle='rgba(180,160,80,.12)'; ct.fillRect(Math.max(0,LX-130),RY-1,200,8);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  MAIN DRAW LOOP
+// ═══════════════════════════════════════════
+function draw(){
+  ct.clearRect(0,0,320,320);
+  const {r,p,h:hl,v:vl}=$;
+
+  // Fundo base
+  r(0,0,320,320,'#100c08');
+
+  // Piso rico
+  richFloor(8,18,304,266);
+
+  // Paredes
+  brickWall3D(0,-4,320,24,false);   // norte
+  brickWall3D(0,276,320,24,false);  // sul
+  brickWall3D(-5,0,14,320,false);   // oeste
+  brickWall3D(311,0,14,320,false);  // leste
+
+  // Goteiras
+  [40,120,200,278].forEach(gx=>{
+    const gv=((T*.25+gx*.08)|0)%10;
+    if(gv<7) vl(gx,24,gv+1,SEW.waterL);
+    else p(gx,31,SEW.water);
+  });
+
+  // Passarelas
+  drawWalkways();
+
+  // Torre Butcher
+  drawCMD();
+
+  // Tenda Bullet
+  drawBullet();
+
+  // Tenda Lester
+  drawLester();
+
+  // Tenda Medusa
+  drawMedusa();
+
+  // Tendas/casas — nível 1-2: tendas; nível 3+: prédios com luz elétrica
+  const lvl3 = CITY_LEVEL>=3;
+  const smallL = [[10,38,0],[34,36,1],[58,38,2]];       // passarela esq
+  const smallR = [[208,38,3],[232,36,4],[256,38,0]];     // passarela dir
+  const floorL = [[12,155,1],[12,185,2],[12,218,3]];     // chão esq
+  const floorR = [[288,155,4],[288,185,0],[288,218,1]];  // chão dir
+  const floorC = [[108,250,2],[198,250,3]];              // fundo central
+
+  smallL.forEach(([tx,ty,ti])=>{
+    if(lvl3){drawBuilding(tx,ty,TENTS[ti]);electricLight(tx+10,ty+18);}
+    else{tentSmall(tx,ty,TENTS[ti]);campfire(tx+10,ty+18);}
+  });
+  smallR.forEach(([tx,ty,ti])=>{
+    if(lvl3){drawBuilding(tx,ty,TENTS[ti]);electricLight(tx+10,ty+18);}
+    else{tentSmall(tx,ty,TENTS[ti]);campfire(tx+10,ty+18);}
+  });
+  floorL.forEach(([tx,ty,ti])=>{
+    if(lvl3){drawBuilding(tx,ty,TENTS[ti]);electricLight(tx+10,ty+20);}
+    else{tentSmall(tx,ty,TENTS[ti]);campfire(tx+10,ty+20);}
+  });
+  floorR.forEach(([tx,ty,ti])=>{
+    if(lvl3){drawBuilding(tx,ty,TENTS[ti]);electricLight(tx+10,ty+20);}
+    else{tentSmall(tx,ty,TENTS[ti]);campfire(tx+10,ty+20);}
+  });
+  floorC.forEach(([tx,ty,ti])=>{
+    if(lvl3){drawBuilding(tx,ty,TENTS[ti]);electricLight(tx+10,ty+20);}
+    else{tentSmall(tx,ty,TENTS[ti]);campfire(tx+10,ty+20);}
+  });
+
+  // Barris — espalhados
+  [[76,170,LES.d0],[90,174,BUL.crate0],[236,170,LES.wood0],[252,174,BUL.d0],[80,244,LES.d1],[240,248,BUL.crate1]].forEach(([bx,by,bc])=>{
+    // Barril 3D
+    r(bx,by,11,14,bc); r(bx+1,by+1,9,12,LES.d2); hl(bx,by,11,LES.hi);
+    for(let bi=0;bi<3;bi++) hl(bx,by+3+bi*4,11,bc);
+    r(bx+1,by,9,2,LES.l0); vl(bx,by,14,bc); vl(bx+10,by,14,bc);
+  });
+
+  // Esgoto — nível 4 abre
+  sewerGate(8,240, CITY_LEVEL<4); sewerGate(272,240, CITY_LEVEL<4);
+
+  // Trem
+  derailedTrain();
+
+  // Tochas
+  [[18,12],[60,12],[122,12],[198,12],[260,12],[302,12],
+   [9,100],[9,165],[9,228],[311,100],[311,165],[311,228]].forEach(([tx,ty])=>torch(tx,ty));
+
+  // Fogueiras centrais (só nível 1-2)
+  if(!lvl3){campfire(148,238); campfire(170,244);}
+  else{electricLight(148,235); electricLight(170,241);}
+
+  // NPCs
+  updateNPCs(); NPCS.forEach(n=>drawNPC(n));
+
+  // Indicador de nível no canvas (canto inferior esquerdo)
+  const lvlColors=['','#c04020','#c08020','#6090c0','#40c060'];
+  const lvlC=lvlColors[CITY_LEVEL];
+  r(2,304,74,14,'rgba(0,0,0,.6)'); $.o(2,304,74,14,lvlC);
+  txt('NIVEL '+CITY_LEVEL,4,307,lvlC);
+
+  // Vinheta
+  const vig=ct.createRadialGradient(160,160,65,160,160,210);
+  vig.addColorStop(0,'rgba(0,0,0,0)'); vig.addColorStop(1,'rgba(0,0,0,.55)');
+  ct.fillStyle=vig; ct.fillRect(0,0,320,334);
+
+  // Borda
+  $.o(0,0,320,334,'#2a2018');
+  ct.strokeStyle='#3e3020'; ct.lineWidth=2; ct.strokeRect(1,1,318,332);
+
+  T++;
+  window._mapRAF=requestAnimationFrame(draw);
+}
+
+    if(window._mapRAF) cancelAnimationFrame(window._mapRAF);
+    window._mapRAF=requestAnimationFrame(draw);
+
+    // Overlay de botões para construções
+    // Posições dos edifícios no canvas underground (320×334)
+    // Mapeamento visual: onde cada edifício aparece no mapa
+    const buildingPositions={
+      'torre_vigia':{x:0.36,y:0.01},    // Torre CMD - topo centro
+      'esgoto':{x:0.01,y:0.73},         // Esgoto esquerdo
+      'posto_coleta':{x:0.82,y:0.73},   // Esgoto direito
+      'oficina':{x:0.02,y:0.27},        // Posto de Armas (Bullet) - esquerda
+      'enfermaria':{x:0.37,y:0.52},     // Medusa - centro
+      'mercado_central':{x:0.71,y:0.27},// Cantina (Lester) - direita
+      'quartel':{x:0.36,y:0.01},        // Sala de Comando
+      'deposito':{x:0.36,y:0.01},       // Sala de Comando (compartilha)
+    };
+
+    buildings.forEach(b=>{
+      const pos=buildingPositions[b.id];
+      if(!pos) return;
+      const isBuilt=builtList.includes(b.id);
+      const canAfford=scrap>=b.cost;
+      const btn=document.createElement('button');
+      btn.style.cssText='position:absolute;background:transparent;border:none;cursor:pointer;padding:0;z-index:10;';
+      btn.style.left=(pos.x*100)+'%';
+      btn.style.top=(pos.y*100)+'%';
+      btn.style.width='14%'; btn.style.height='10%';
+      if(isBuilt){
+        btn.style.border='2px solid rgba(0,255,65,.4)';
+        btn.style.borderRadius='3px';
+        btn.style.boxShadow='0 0 8px rgba(0,255,65,.2)';
+      } else if(canAfford){
+        btn.style.border='2px solid rgba(255,153,0,.6)';
+        btn.style.borderRadius='3px';
+        btn.style.animation='pulse-orange 1s infinite';
+      }
+      btn.title=b.name+(isBuilt?' ✓':' — '+b.cost+' sucata');
+      btn.onclick=()=>self.showBuildingInfo(b,isBuilt,canAfford);
+      mapaEl.appendChild(btn);
+    });
+
+    // Info inicial
+    info.innerHTML='<div style="font-family:var(--font-ui);font-size:10px;color:rgba(0,255,65,.5);letter-spacing:1px;text-align:center;padding:8px">'+
+      '🏙️ '+built+'/8 CONSTRUÇÕES — NÍVEL '+CITY_LEVEL+
+      (built>=4?'<br><span style="color:#ff9900">⚡ Quests desbloqueadas!</span>':'')+
+      (built===0?'<br><span style="color:rgba(255,100,0,.5);font-size:9px">Toque em um edifício para construir</span>':'')+
+      '</div>';
+  },
+  showBuildingInfo(b, isBuilt, canAfford){
+    SFX.click();
+    const info=document.getElementById('cidade-info');
+    const cityData=this.save.city||{built:[]};
+    const scrap=this.save.scrap||0;
+
+    if(isBuilt){
+      info.innerHTML=`<div style="font-family:var(--font-ui);font-size:10px;letter-spacing:1px;padding:4px">
+        <span style="color:var(--g)">${b.icon} ${b.name}</span>
+        <span style="color:rgba(0,255,65,.4);margin-left:8px">✓ CONSTRUÍDO</span><br>
+        <span style="color:rgba(255,255,255,.4);font-size:9px">${b.desc}</span>
+        ${b.effect.unlockQuest?`<br><span style="color:#ff9900;font-size:9px">⚡ Quest "${b.effect.unlockQuest}" desbloqueada!</span>`:''}
+      </div>`;
+    } else if(canAfford){
+      info.innerHTML=`<div style="font-family:var(--font-ui);font-size:10px;letter-spacing:1px;padding:4px">
+        <span style="color:#ff9900">${b.icon} ${b.name}</span>
+        <span style="color:rgba(255,153,0,.5);margin-left:8px">🔩 ${b.cost} sucata</span><br>
+        <span style="color:rgba(255,255,255,.4);font-size:9px">${b.desc}</span><br>
+        <button onclick="G.buildBuilding('${b.id}')" style="margin-top:8px;padding:6px 16px;
+          background:rgba(255,153,0,.1);border:1px solid rgba(255,153,0,.4);
+          border-radius:6px;color:#ff9900;font-family:var(--font-ui);font-size:10px;
+          letter-spacing:2px;cursor:pointer">⚒️ CONSTRUIR</button>
+      </div>`;
+    } else {
+      info.innerHTML=`<div style="font-family:var(--font-ui);font-size:10px;letter-spacing:1px;padding:4px">
+        <span style="color:rgba(255,255,255,.3)">${b.icon} ${b.name}</span>
+        <span style="color:rgba(255,0,0,.4);margin-left:8px">🔩 ${b.cost} (falta ${b.cost-scrap})</span><br>
+        <span style="color:rgba(255,255,255,.3);font-size:9px">${b.desc}</span>
+      </div>`;
+    }
+  },
+
+  buildBuilding(id){
+    SFX.click();
+    const b=DATA.city.buildings.find(x=>x.id===id);
+    if(!b) return;
+    const scrap=this.save.scrap||0;
+    if(scrap<b.cost){this.popup('Sucata insuficiente!','#ff4444');return;}
+    this.save.scrap=scrap-b.cost;
+    this.save.city=this.save.city||{built:[]};
+    if(!this.save.city.built.includes(id)) this.save.city.built.push(id);
+
+    // Aplicar efeitos permanentes do edifício
+    if(b.effect.unlockQuest){
+      this.save.questsUnlocked=this.save.questsUnlocked||[];
+      if(!this.save.questsUnlocked.includes(b.effect.unlockQuest))
+        this.save.questsUnlocked.push(b.effect.unlockQuest);
+    }
+    if(b.effect.invBonus) this.save.invBonus=(this.save.invBonus||0)+b.effect.invBonus;
+
+    SAVE.save(this.save);
+    this.popup(b.icon+' '+b.name+' construído!','#00ff41');
+    document.getElementById('cidade-scrap').textContent=this.save.scrap;
+    this.renderCidadeMapa();
   },
 
   showFinals(){
@@ -2683,10 +5665,10 @@ const G = {
 
   // --- COMPUTER ---
   showComputer(){
-    // Garantir que save.drivers tem 4 slots
-    if(!this.save.drivers||this.save.drivers.length<4){
+    // Garantir que save.drivers tem 10 slots
+    if(!this.save.drivers||this.save.drivers.length<10){
       this.save.drivers=(this.save.drivers||[]);
-      while(this.save.drivers.length<4) this.save.drivers.push(false);
+      while(this.save.drivers.length<10) this.save.drivers.push(false);
     }
 
     // Glitch text
@@ -2696,11 +5678,24 @@ const G = {
     // Drivers — 4 slots
     const drivers=this.save.drivers;
     const labels=['Driver 1','Driver 2','Driver 3','Driver 4 — Butcher'];
-    document.getElementById('drivers-row').innerHTML=drivers.map((d,i)=>`
-      <div class="driver-slot ${d?'collected':'locked'}">
-        ${d?'✓':'🔒'} DRIVER_0${i+1}
-        ${i===3?'<div style="font-size:8px;margin-top:2px;color:rgba(255,153,0,.6)">🎪 PALHAÇO</div>':''}
-      </div>`).join('');
+    document.getElementById('drivers-row').innerHTML=(()=>{
+      const rareC=this.save.rareDriversCollected||[];
+      const slot=(d,i)=>{
+        const isRare=i>=5;
+        const rareGot=isRare&&rareC.includes(i);
+        const cls=rareGot?'collected-rare':d?'collected':'locked';
+        const icon=rareGot?'🔵':d?'✓':'🔒';
+        const sub=i===3?'🎪':isRare?'●':'';
+        return `<div class="driver-slot ${cls}">
+          <div style="font-size:12px">${icon}</div>
+          <div>D${String(i+1).padStart(2,'0')}</div>
+          ${sub?`<div style="font-size:8px;opacity:.5">${sub}</div>`:''}
+        </div>`;
+      };
+      const l1=drivers.slice(0,5).map((d,i)=>slot(d,i)).join('');
+      const l2=drivers.slice(5,10).map((d,i)=>slot(d,i+5)).join('');
+      return `<div class="drivers-line">${l1}</div><div class="drivers-line" style="margin-top:4px;opacity:.65">${l2}</div>`;
+    })();
     const collected=drivers.filter(Boolean).length;
     document.getElementById('drivers-hint').textContent=
       collected===4?'✓ Todos os 4 drivers coletados! Work Station e VHS desbloqueados.':
@@ -2722,7 +5717,7 @@ const G = {
         +'</div>';
     });
     if(drivers[3]){
-      [4,5,6].forEach(function(di){
+      [4,5,6,7].forEach(function(di){
         const doc=DATA.docs[di];
         if(!doc) return;
         docsHTML.push('<div class="doc-file unlocked" onclick="G.readDoc('+di+')">'
