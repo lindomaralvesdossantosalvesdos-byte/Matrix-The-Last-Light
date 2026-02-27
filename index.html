@@ -5843,73 +5843,25 @@ G.showScreen('s-menu');
 </script>
 
 <script>
-if('serviceWorker' in navigator){
-  const swCode=`const CACHE='mtll-v1';self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./'])))});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))});`;
-  const blob=new Blob([swCode],{type:'application/javascript'});
-  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
-}
+// ── OFFLINE: Cache API direto (sem SW blob) ──
+// O jogo já é um único arquivo self-contained.
+// Ao abrir, cacheia a si mesmo para funcionar offline.
+(async function(){
+  if(!('caches' in window)) return;
+  try{
+    const cache = await caches.open('mtll-v2');
+    // Cacheia a página atual
+    await cache.add(location.href);
+    console.log('[Cache] Jogo disponível offline!');
+  }catch(e){
+    // Silencioso se falhar (ex: extensões bloqueando)
+  }
+})();
 let _dPrmt=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dPrmt=e;const b=document.getElementById('install-btn');if(b)b.style.display='flex';});
 function installApp(){if(!_dPrmt){G.popup('Abra no Chrome → Menu → Adicionar à tela inicial','#00E676');return;}_dPrmt.prompt();_dPrmt.userChoice.then(()=>{_dPrmt=null;});}
 window.addEventListener('appinstalled',()=>{G.popup('✓ Matrix TLL instalado como app!','#00E676');const b=document.getElementById('install-btn');if(b)b.style.display='none';});
 </script>
 
-<script>
-// ── SERVICE WORKER OFFLINE ──
-(function(){
-  if(!('serviceWorker' in navigator)) return;
-
-  const SW_CODE = `
-const CACHE = 'matrix-tll-v1';
-const SHELL = ['./'];
-
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())
-  );
-});
-
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(cached => {
-      if(cached) return cached;
-      return fetch(e.request).then(resp => {
-        if(!resp || resp.status !== 200 || resp.type === 'opaque') return resp;
-        const clone = resp.clone();
-        caches.open(CACHE).then(c => c.put(e.request, clone));
-        return resp;
-      }).catch(() => caches.match('./'));
-    })
-  );
-});
-`;
-
-  const blob = new Blob([SW_CODE], {type:'application/javascript'});
-  const swUrl = URL.createObjectURL(blob);
-
-  navigator.serviceWorker.register(swUrl, {scope: './'})
-    .then(reg => {
-      console.log('[SW] Registrado — jogo disponível offline!');
-      // Mostrar banner de offline disponível
-      reg.addEventListener('updatefound', () => {
-        const nw = reg.installing;
-        nw.addEventListener('statechange', () => {
-          if(nw.state === 'installed' && navigator.serviceWorker.controller){
-            console.log('[SW] Atualizado!');
-          }
-        });
-      });
-    })
-    .catch(e => console.log('[SW] Erro:', e));
-})();
-</script>
 </body>
 </html>
