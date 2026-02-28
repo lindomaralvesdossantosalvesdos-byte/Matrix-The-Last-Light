@@ -1341,6 +1341,371 @@ body::after{
 *{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;}
 canvas{display:block;}
 button{-webkit-appearance:none;touch-action:manipulation;}
+
+
+
+
+/* ══════════════════════════════════════════════
+   DIÁRIO DO WILLIAM — VISUAL PERGAMINHO
+══════════════════════════════════════════════ */
+#s-diary{
+  background:#100c08;
+  justify-content:flex-start;
+  padding:0;
+  overflow:hidden;
+  flex-direction:column;
+}
+.diary-header{
+  width:100%;padding:14px 16px 10px;
+  border-bottom:1px solid rgba(160,100,30,.2);
+  flex-shrink:0;
+  background:rgba(14,10,6,.95);
+}
+.diary-title{
+  font-family:var(--title);font-size:24px;
+  color:#c8901a;letter-spacing:3px;
+  text-shadow:0 0 20px rgba(200,140,26,.3);
+}
+.diary-sub{
+  font-family:var(--font-ui);font-size:8px;
+  color:rgba(200,140,26,.35);letter-spacing:3px;margin-top:2px;
+}
+.diary-tabs{
+  display:flex;border-bottom:1px solid rgba(160,100,30,.2);flex-shrink:0;
+}
+.diary-tab{
+  flex:1;padding:9px 4px;
+  font-family:var(--font-ui);font-size:9px;letter-spacing:2px;
+  color:rgba(200,140,26,.35);background:transparent;border:none;
+  border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;
+}
+.diary-tab.active{color:#c8901a;border-bottom-color:#c8901a;background:rgba(200,140,26,.05);}
+.diary-body{flex:1;overflow-y:auto;padding:0;scroll-behavior:smooth;}
+
+/* ── Grid de seleção das páginas ── */
+.diary-pages-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px;
+}
+.diary-page-card{
+  background:rgba(20,14,8,.7);
+  border:1px solid rgba(160,100,30,.25);
+  border-radius:5px;padding:12px 10px;
+  cursor:pointer;transition:all .2s;
+  position:relative;min-height:90px;
+  display:flex;flex-direction:column;gap:3px;
+  overflow:hidden;
+}
+.diary-page-card::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='60' height='60' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  opacity:.4;pointer-events:none;
+}
+.diary-page-card:hover:not(.locked){
+  border-color:rgba(200,140,26,.5);
+  background:rgba(28,18,8,.9);
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+}
+.diary-page-card.locked{opacity:.35;cursor:default;}
+.diary-page-card.locked::after{
+  content:'🔒';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:20px;opacity:.4;
+}
+.diary-pg-num{font-family:var(--font-ui);font-size:7px;color:rgba(200,140,26,.35);letter-spacing:2px;}
+.diary-pg-date{font-family:var(--font);font-size:8px;color:rgba(200,160,100,.4);font-style:italic;}
+.diary-pg-title{font-family:var(--font-ui);font-size:11px;color:#c8901a;letter-spacing:.5px;margin-top:3px;}
+.diary-pg-preview{
+  font-family:var(--font);font-size:9px;color:rgba(200,180,140,.45);
+  line-height:1.5;margin-top:3px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.diary-pg-lock{font-family:var(--font-ui);font-size:8px;color:rgba(160,100,30,.5);letter-spacing:1px;margin-top:auto;}
+.diary-pg-new{
+  position:absolute;top:5px;right:5px;
+  background:#c8901a;color:#000;
+  font-size:6px;font-family:var(--font-ui);
+  letter-spacing:1px;padding:1px 4px;border-radius:2px;
+}
+
+/* ══════════════════════════════════════
+   OVERLAY DE LEITURA — PERGAMINHO
+══════════════════════════════════════ */
+.parchment-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.88);
+  z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  padding:12px;
+  animation:parchFadeIn .3s ease;
+}
+@keyframes parchFadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.parchment-wrap{
+  position:relative;
+  width:100%;max-width:400px;
+  max-height:88vh;
+  display:flex;flex-direction:column;
+}
+/* Canvas de fundo do pergaminho */
+.parchment-canvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  border-radius:4px;
+}
+.parchment-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;
+  max-height:88vh;
+  overflow:hidden;
+  border-radius:4px;
+}
+.parchment-scroll{
+  overflow-y:auto;
+  padding:28px 26px 20px;
+  flex:1;
+  /* Scrollbar discreta */
+  scrollbar-width:thin;
+  scrollbar-color:rgba(160,100,30,.3) transparent;
+}
+.parchment-pg-number{
+  font-family:'Courier New',monospace;
+  font-size:9px;letter-spacing:3px;
+  color:rgba(80,50,20,.6);
+  text-align:center;margin-bottom:6px;
+}
+.parchment-pg-date{
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  color:rgba(60,35,10,.65);
+  text-align:center;font-style:italic;
+  margin-bottom:8px;
+}
+.parchment-pg-title{
+  font-family:'Courier New',monospace;
+  font-size:14px;font-weight:bold;
+  color:rgba(50,25,5,.85);
+  text-align:center;
+  letter-spacing:1px;
+  margin-bottom:16px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(80,50,20,.2);
+}
+.parchment-text{
+  font-family:'Courier New',Courier,monospace;
+  font-size:12.5px;
+  line-height:2.05;
+  color:rgba(28,12,3,.86);
+  white-space:pre-wrap;
+  text-align:justify;
+  position:relative;
+  /* Leve irregularidade na fonte, como tinta em papel poroso */
+  text-shadow:
+    0.4px 0.4px 0px rgba(20,8,2,.15),
+    -0.2px 0.2px 0px rgba(40,18,4,.08);
+  letter-spacing:0.2px;
+  word-spacing:1px;
+}
+.parchment-text .ink-red{
+  /* Tinta vermelha — como nas iluminuras medievais */
+  color:rgba(110,12,8,.92);
+  font-weight:bold;
+  letter-spacing:2px;
+  text-shadow:
+    0.5px 0.5px 0 rgba(80,5,3,.2),
+    0 0 8px rgba(120,10,5,.08);
+}
+.parchment-text .ink-faded{
+  /* Tinta desbotada — partes mais antigas do texto */
+  color:rgba(55,35,15,.48);
+  font-style:italic;
+  text-shadow:none;
+}
+.parchment-text .ink-voice{
+  /* A "voz" — quase invisível, como escrita a lápis fraco */
+  color:rgba(25,14,6,.35);
+  font-size:10px;
+  font-style:italic;
+  letter-spacing:0.5px;
+  text-shadow:none;
+  border-left:1.5px solid rgba(60,30,10,.15);
+  padding-left:8px;
+  display:block;
+  margin-top:8px;
+}
+/* Título da página — estilo inicial iluminado */
+.parchment-pg-title{
+  font-family:'Courier New',Courier,monospace;
+  font-size:15px;font-weight:bold;
+  color:rgba(42,18,4,.88);
+  text-align:center;
+  letter-spacing:1.5px;
+  margin-bottom:16px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(70,40,12,.2);
+  text-shadow:0.5px 0.5px 0 rgba(20,8,2,.2);
+}
+/* Data e número — como anotação lateral */
+.parchment-pg-number{
+  font-family:'Courier New',Courier,monospace;
+  font-size:9px;letter-spacing:3px;
+  color:rgba(70,40,12,.5);
+  text-align:center;margin-bottom:4px;
+}
+.parchment-pg-date{
+  font-family:'Courier New',Courier,monospace;
+  font-size:10px;
+  color:rgba(50,28,8,.55);
+  text-align:center;font-style:italic;
+  margin-bottom:10px;
+}
+.parchment-close{
+  position:relative;z-index:3;
+  padding:10px 20px 14px;
+  display:flex;justify-content:center;
+  flex-shrink:0;
+}
+.parchment-close-btn{
+  background:rgba(50,30,10,.15);
+  border:1px solid rgba(100,60,20,.35);
+  color:rgba(60,35,10,.75);
+  font-family:'Courier New',monospace;
+  font-size:10px;letter-spacing:2px;
+  padding:8px 28px;cursor:pointer;
+  border-radius:2px;transition:all .2s;
+}
+.parchment-close-btn:hover{background:rgba(80,50,20,.2);}
+
+/* ── Catálogo / Dicas ── */
+.diary-catalog{padding:12px;display:flex;flex-direction:column;gap:10px;}
+.catalog-section{
+  background:rgba(12,8,4,.7);
+  border:1px solid rgba(160,100,30,.18);
+  border-radius:5px;overflow:hidden;
+}
+.catalog-sec-title{
+  padding:9px 14px;background:rgba(20,12,4,.6);
+  font-family:var(--font-ui);font-size:8px;
+  color:#c8901a;letter-spacing:3px;
+  border-bottom:1px solid rgba(160,100,30,.1);
+}
+.catalog-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;
+  border-bottom:1px solid rgba(160,100,30,.06);
+}
+.catalog-row:last-child{border-bottom:none;}
+.cat-icon{font-size:18px;flex-shrink:0;}
+.cat-body{flex:1;}
+.cat-name{font-family:var(--font-ui);font-size:11px;color:rgba(220,200,160,.8);letter-spacing:.5px;}
+.cat-hint{font-family:var(--font);font-size:10px;color:rgba(180,150,100,.5);margin-top:2px;line-height:1.5;}
+.cat-status{font-size:9px;font-family:var(--font-ui);letter-spacing:1px;flex-shrink:0;}
+.cat-known{color:#20c060;}.cat-partial{color:#c8901a;}.cat-unknown{color:rgba(160,100,30,.25);}
+.cat-blur{filter:blur(4px);user-select:none;}
+
+
+/* ══════════════════════════════════════
+   MINI-BOSS — Visual especial
+══════════════════════════════════════ */
+.boss-card{
+  background:linear-gradient(135deg,rgba(10,30,10,.95),rgba(5,20,5,.98));
+  border:2px solid rgba(30,180,30,.5);
+  border-radius:10px;
+  padding:16px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 0 30px rgba(20,200,20,.12), inset 0 0 20px rgba(0,0,0,.5);
+}
+.boss-card::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 3px,
+    rgba(20,180,20,.03) 3px,rgba(20,180,20,.03) 4px
+  );
+  pointer-events:none;
+}
+.boss-label{
+  font-family:var(--font-ui);font-size:8px;letter-spacing:4px;
+  color:rgba(30,200,30,.6);margin-bottom:6px;
+  animation:bossLabelPulse 1.5s ease-in-out infinite;
+}
+@keyframes bossLabelPulse{0%,100%{opacity:.5}50%{opacity:1}}
+.boss-name{
+  font-family:var(--title);font-size:28px;
+  color:#30ff30;letter-spacing:3px;
+  text-shadow:0 0 20px rgba(30,255,30,.4), 0 0 40px rgba(30,255,30,.15);
+  margin-bottom:4px;
+}
+.boss-art{
+  font-family:monospace;font-size:13px;
+  line-height:1.6;color:#22cc22;
+  text-align:center;margin:10px 0;
+  text-shadow:0 0 8px rgba(30,220,30,.4);
+  animation:bossFloat 2s ease-in-out infinite;
+}
+@keyframes bossFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.boss-class{
+  font-family:var(--font-ui);font-size:9px;letter-spacing:3px;
+  color:rgba(30,200,30,.5);margin-bottom:10px;
+}
+.boss-hp-track{
+  width:100%;height:10px;
+  background:rgba(0,0,0,.5);
+  border-radius:5px;overflow:hidden;
+  border:1px solid rgba(30,180,30,.3);
+  margin-bottom:4px;
+}
+.boss-hp-fill{
+  height:100%;
+  background:linear-gradient(90deg,#0a8a0a,#30ff30);
+  border-radius:5px;
+  transition:width .5s ease;
+  box-shadow:0 0 8px rgba(30,255,30,.4);
+}
+.boss-hp-info{
+  font-family:var(--font-ui);font-size:10px;
+  color:rgba(30,200,30,.7);letter-spacing:1px;
+  text-align:right;margin-bottom:8px;
+}
+.boss-special-warn{
+  background:rgba(180,30,30,.15);
+  border:1px solid rgba(180,30,30,.4);
+  border-radius:5px;padding:6px 10px;
+  font-family:var(--font-ui);font-size:9px;
+  color:#ff6060;letter-spacing:1px;
+  margin-bottom:8px;
+  animation:warnPulse .8s ease-in-out infinite;
+}
+@keyframes warnPulse{0%,100%{border-color:rgba(180,30,30,.4)}50%{border-color:rgba(220,60,60,.8)}}
+.boss-log{
+  background:rgba(0,0,0,.4);
+  border:1px solid rgba(30,180,30,.2);
+  border-radius:5px;padding:10px 12px;
+  font-family:var(--font);font-size:12px;
+  color:#88cc88;line-height:1.6;
+  margin-bottom:10px;min-height:44px;
+}
+.boss-log .boss-special-log{
+  color:#ff6060;font-style:italic;
+}
+.boss-scrap-reward{
+  font-family:var(--font-ui);font-size:9px;
+  color:rgba(255,200,50,.5);letter-spacing:2px;
+  text-align:center;margin-bottom:8px;
+}
+.atk-btn-boss{
+  width:100%;padding:14px;
+  background:rgba(20,80,20,.3);
+  border:1px solid rgba(30,200,30,.4);
+  border-radius:8px;
+  color:#30ff30;
+  font-family:var(--font-ui);font-size:13px;
+  letter-spacing:3px;cursor:pointer;
+  transition:all .2s;margin-bottom:8px;
+}
+.atk-btn-boss:hover{background:rgba(30,120,30,.4);border-color:rgba(30,255,30,.6);}
+.atk-btn-boss:disabled{opacity:.3;cursor:default;}
+
 </style>
 </head>
 <body onclick="if(!SFX.ctx)SFX.init();" ontouchstart="if(!SFX.ctx)SFX.init();">
@@ -1357,7 +1722,8 @@ button{-webkit-appearance:none;touch-action:manipulation;}
   <button class="mbtn" onclick="G.startGame()">INICIAR MATRIX</button>
   <button class="mbtn" onclick="G.showFinals()">ÁRVORE DE FINAIS</button>
   <button class="mbtn" id="menu-st-btn" onclick="G.openSkillTree()" style="border-color:rgba(255,200,0,.2);color:#666;">🔒 ÁRVORE DE HABILIDADES</button>
-<button class="mbtn" id="ws-menu-btn" onclick="G.showWorkStation();SFX.click()">
+<div style="display:flex;gap:8px;width:min(300px,88vw);margin:5px 0;align-items:stretch">
+  <button class="mbtn" id="ws-menu-btn" onclick="G.showWorkStation();SFX.click()" style="flex:1;margin:0">
   <div class="ws-btn-inner">
     <div class="ws-train-row">
       <span class="ws-train-emoji">🚃</span>
@@ -1368,6 +1734,18 @@ button{-webkit-appearance:none;touch-action:manipulation;}
   </div>
   <div class="ws-sparks" id="ws-sparks"></div>
 </button>
+  <button onclick="G.showDiary();SFX.click()" title="Diário de William" style="
+    background:rgba(200,130,26,.06);
+    border:1px solid rgba(200,130,26,.35);
+    border-radius:var(--radius);
+    cursor:pointer;
+    font-size:22px;
+    padding:0 14px;
+    transition:all .2s;
+    color:#c8841a;
+    flex-shrink:0;
+  " onmouseover="this.style.background='rgba(200,130,26,.15)'" onmouseout="this.style.background='rgba(200,130,26,.06)'">📖</button>
+</div>
   <button class="mbtn" onclick="G.showComputer()">💻 COMPUTADOR CENTRAL</button>
   <button class="mbtn" id="install-btn" onclick="installApp()" style="display:none;border-color:rgba(0,230,118,.4);margin-top:10px">⬇ INSTALAR COMO APP</button>
   </div>
@@ -1542,6 +1920,249 @@ button{-webkit-appearance:none;touch-action:manipulation;}
 // GAME DATA
 // ============================================================
 const DATA = {
+
+
+  // ── DIÁRIO DO WILLIAM ──────────────────────────
+  // Desbloqueio: 2 páginas por nível de cidade (níveis 1-4)
+  // cityLevel() calcula baseado nos edifícios construídos
+  diary:{
+    pages:[
+      // NÍVEL 1 → páginas 0 e 1
+      {
+        num:'PÁG. 01', date:'DIA 1 — 12:35',
+        title:'"Primeira Nota"',
+        preview:'Bem, não sei o que está acontecendo lá fora...',
+        unlocksAt:1,
+        content:`Bem, não sei o que está acontecendo lá fora, porém desde ontem a galera da limpeza e manutenção do Bunker não aparecem, e minha cela abriu — porém tenho medo de sair e apenas ser tudo um teste.
+
+Desde que me separaram da minha família eu venho lutando contra esses testes e desafios ridículos. No entanto, já fazem 5 dias que fico sem comida e não sei por quanto tempo mais posso aguentar. Esses desgraçados só dão comida para quem é <RED>Bom</RED> na concepção deles.
+
+De qualquer forma vou ver se encontro as minhas coisas — das quais eu perdi ao vir para cá — e ver se acho algum sinal de vida por aí.
+
+Se estiverem lendo isso: meu nome é William Castelo. A maioria me chama de 0047 ou um tal de "Super Soldado".
+
+Mas... mas eu Juro.
+
+<RED>E U.  V O U.  M A T A R.  C A D A.  U M.  D E.  V O C Ê S.  U M.  A.  U M.</RED>
+
+<VOICE>.....[Hummm. Ele é tão raivoso, não é? Linda... a minha criação se tornou...]</VOICE>`,
+      },
+      {
+        num:'PÁG. 02', date:'DIA 3 — 08:12',
+        title:'"O Corredor"',
+        preview:'Saí da cela hoje de manhã. Estava tudo escuro...',
+        unlocksAt:1,
+        content:`Saí da cela hoje de manhã. Estava tudo escuro — luzes de emergência piscando. Laranja. Esse laranja me dá ânsia.
+
+Andei pelo corredor B7 por uns 20 minutos. Silêncio total. Nem os drones de vigilância estavam mais passando. Isso nunca tinha acontecido nos 2 anos que estou aqui.
+
+Encontrei comida numa sala de descanso dos guardas. Enlatados. Comi três de uma vez. Envergonhado? Não mais.
+
+Numa das gavetas tinha um rádio quebrado e... uma foto. Uma família. Pai, mãe, duas crianças pequenas. No verso, escrito à mão: <FADED>"Volte logo, João."</FADED>
+
+Não sei onde está João. Mas sei que ele não voltou.
+
+<VOICE>[Observação — Sujeito demonstra empatia residual. Interessante. Não eliminar ainda.]</VOICE>`,
+      },
+      // NÍVEL 2 → páginas 2 e 3
+      {
+        num:'PÁG. 03', date:'DIA 6 — 15:44',
+        title:'"A Estação"',
+        preview:'Encontrei a Work Station. Não é o que esperava...',
+        unlocksAt:2,
+        content:`Encontrei a Work Station hoje. 
+
+Não é o que esperava — achei que seria um posto militar abandonado. É uma estação de trem. Subterrânea. Com gente.
+
+Com GENTE.
+
+Primeiro ser humano que vi em semanas foi um cara enorme vendendo facas enferrujadas numa barraca improvisada. Me olhou como se eu fosse mercadoria. Talvez fosse.
+
+Tem uma mulher chamada Medusa. Esse não é o nome dela de verdade — ninguém usa nome de verdade aqui. Ela curou um corte na minha mão com ervas que cheiravam a petróleo. Funcionou.
+
+Um cara chamado Lester me deu sopa. Perguntou de onde eu vinha. Disse que vinha do Bunker Setor 7. Ele parou de mexer a panela por três segundos. Depois continuou como se nada.
+
+O que ele sabe sobre o Setor 7?
+
+<VOICE>[Sujeito está se integrando. Fase 2 iniciada.]</VOICE>`,
+      },
+      {
+        num:'PÁG. 04', date:'DIA 9 — 22:08',
+        title:'"Bullet"',
+        preview:'Tive que comprar uma arma hoje. Não queria...',
+        unlocksAt:2,
+        content:`Tive que comprar uma arma hoje. Não queria.
+
+O cara chamado Bullet vende de tudo. Armas, informação, silêncio. Perguntei quanto custava silêncio. Ele disse que depende de sobre o que. Saí de lá sem comprar silêncio.
+
+Comprei uma faca.
+
+Fora da Work Station as coisas estão piores do que imaginei. Animais mudaram. Não sei como explicar — eles parecem maiores. Mais agressivos. Olhos diferentes. Um urso me encurralou num prédio abandonado por duas horas.
+
+Matei ele saindo. Não me orgulho. Mas é isso agora.
+
+A Work Station tem regras não escritas. A principal: não perguntar sobre o que aconteceu. Ninguém sabe. Ou ninguém fala.
+
+Acho que é a segunda opção.
+
+<FADED>Minha família está lá fora em algum lugar. Tem que estar.</FADED>`,
+      },
+      // NÍVEL 3 → páginas 4 e 5
+      {
+        num:'PÁG. 05', date:'DIA 13 — 06:55',
+        title:'"O Butcher"',
+        preview:'Finalmente entrei na Sala de Comando...',
+        unlocksAt:3,
+        content:`Finalmente entrei na Sala de Comando.
+
+O Butcher não é o que imaginei. Imaginei um general. É um palhaço. Literalmente — ele usa maquiagem. Não o tempo todo, mas quando quer impressionar. Hoje ele queria impressionar.
+
+Me olhou por 40 segundos sem falar nada. Contei. Depois disse:
+
+<FADED>"Você é do 047, né? Achei que tivessem te matado."</FADED>
+
+Ele sabe meu número. Ele sabe do Bunker.
+
+Não perguntei como. Qualquer pergunta que eu fizesse ia custar algo que eu não tenho. Então fiquei quieto e deixei ele falar.
+
+Disse que a Work Station vai crescer. Que tem planos. Que precisa de pessoas "que já passaram pelo fogo". Me convidou para uma reunião amanhã.
+
+Não sei se é armadilha. Mas vou.
+
+O que eu tenho a perder que já não perdi?
+
+<VOICE>[Excelente. Ele está chegando aonde precisamos.]</VOICE>`,
+      },
+      {
+        num:'PÁG. 06', date:'DIA 15 — 23:59',
+        title:'"O que está nos esgotos"',
+        preview:'Não consigo dormir. Ouvi algo nos esgotos hoje...',
+        unlocksAt:3,
+        content:`Não consigo dormir.
+
+Ouvi algo nos esgotos hoje. Não é a primeira vez — mas hoje era diferente. Era próximo. E era rítmico. Como se algo batesse numa sequência específica.
+
+Três batidas. Pausa. Duas batidas. Pausa. Uma batida.
+
+3-2-1.
+
+Perguntei para Medusa se ela tinha ouvido. Ela me olhou de um jeito que não consigo descrever — não era medo. Era resignação. Como se soubesse de algo há muito tempo e tivesse desistido de se preocupar.
+
+<FADED>"Fica longe dos esgotos à noite, William."</FADED>
+
+Foi tudo que ela disse.
+
+Os cadeados nas entradas do esgoto são novos. Trocados recentemente — a ferragem não enferrujou ainda.
+
+Quem trocou? Por quê agora?
+
+Preciso descobrir o que está lá embaixo.
+
+<RED>3 — 2 — 1</RED>
+
+<VOICE>[Ele está ouvindo. Cedo demais. Retardar acesso.]</VOICE>`,
+      },
+      // NÍVEL 4 → páginas 6 e 7
+      {
+        num:'PÁG. 07', date:'DIA 20 — 14:30',
+        title:'"O Trem"',
+        preview:'O trem voltou a funcionar hoje de manhã...',
+        unlocksAt:4,
+        content:`O trem voltou a funcionar hoje de manhã.
+
+Não sei como. Não sei quem consertou. Apareceu funcionando — simples assim. Os Collectors ficaram loucos. Finalmente podem ir buscar recursos nas zonas externas sem arriscar a pé.
+
+Fui na primeira viagem. Só para observar.
+
+A zona industrial ainda está de pé — parcialmente. Tem material suficiente para meses de construção. Mas tem outra coisa — marcas nas paredes. Escritas recentes. Símbolos que não reconheço. E um em particular que reconheço muito bem:
+
+<RED>0047</RED>
+
+Meu número. Na parede de um prédio que eu nunca estive.
+
+Alguém sabe onde eu estou. Alguém está me rastreando. Ou tentando me avisar.
+
+Voltei para a Work Station sem falar nada para ninguém. Essa noite durmo com a faca na mão.
+
+<VOICE>[Ele encontrou os marcadores. Mais cedo que o calculado. Revisar protocolo.]</VOICE>`,
+      },
+      {
+        num:'PÁG. 08', date:'DIA 24 — 04:17',
+        title:'"Última Entrada"',
+        preview:'Se alguém ler isso, precisa saber a verdade...',
+        unlocksAt:4,
+        content:`Se alguém ler isso, precisa saber a verdade.
+
+O Matrix não acabou. Nunca acabou.
+
+O "colapso" foi planejado. A radiação, os animais mutados, os bunkers — tudo foi construído. Um experimento em escala real. E nós somos os sujeitos.
+
+O Butcher sabe. Medusa suspeita. Lester não quer saber.
+
+Eu estou no centro de algo que não entendo completamente, mas entendo o suficiente para ter medo.
+
+A voz que às vezes ouço — nos esgotos, nas paredes, dentro da minha cabeça — não é loucura. É uma frequência. Uma frequência específica de 47 Hz. Meu número. Uma frequência desenhada para mim.
+
+Alguém me criou para isso. Alguém está assistindo.
+
+E eu vou encontrar esse alguém.
+
+<FADED>Não por vingança. Não mais. Por resposta.</FADED>
+
+<RED>W. CASTELO — 0047
+"Super Soldado"
+Dia 24 de uma jornada que não tem nome ainda.</RED>
+
+<VOICE>[Linda. A minha criação chegou aonde precisava chegar.
+Fase final autorizada.
+Bem-vindo ao Matrix, William.]</VOICE>`,
+      },
+    ],
+
+    // ── CATÁLOGO DE CONHECIMENTO ──────────────────
+    catalog:{
+      monstros:[
+        {icon:'🐻',name:'Urso',status:'known',
+         known:'Fraqueza: Espada (2x dano). HP: 30. Drena Sanidade e Lucidez.',
+         hint:'Encontrado em zonas externas. William aprendeu a matá-lo na semana 2.'},
+        {icon:'🦉',name:'Coruja',status:'known',
+         known:'Fraqueza: Arco (2x dano). HP: 15. Drena Esperança.',
+         hint:'Ataca à distância. Difícil de acertar sem arco.'},
+        {icon:'🦌',name:'Cervo',status:'known',
+         known:'Fraqueza: Escopeta (2x dano). HP: 20. Drena RAD e Lucidez.',
+         hint:'Rápido. Causa radiação — cuidado se já estiver contaminado.'},
+      ],
+      finais:[
+        {icon:'🌅',name:'Sobreviver 25 dias',status:'known',
+         known:'Complete os 25 dias sem morrer.',hint:'Gerencie os 5 stats. Não arrisque à toa.'},
+        {icon:'💾',name:'5 Drivers coletados',status:'partial',
+         known:'Colete os 5 drivers principais durante a run.',hint:'Aparecem em dias específicos e aleatoriamente (15% por dia).'},
+        {icon:'☢️',name:'Morte por Radiação',status:'known',
+         known:'Deixe a radioatividade chegar a 100.',hint:'Evite escolhas com RAD+ se já estiver acima de 70.'},
+        {icon:'🌀',name:'Morte por Insanidade',status:'known',
+         known:'Sanidade zero. William perde contato com a realidade.',hint:'Sanidade cai -2 por dia. Combates aceleram o processo.'},
+        {icon:'🐾',name:'O Treinador',status:'partial',
+         known:'???',hint:'Relacionado à Árvore da Peste. Doma um animante...'},
+        {icon:'💀',name:'???',status:'unknown',
+         known:'',hint:'Ainda não descoberto.'},
+        {icon:'🎪',name:'O Palhaço',status:'unknown',
+         known:'',hint:'Relacionado ao Butcher. Dia 18.'},
+      ],
+      dicas:[
+        {icon:'⚔️',name:'Sistema de Fraquezas',status:'known',
+         known:'Cada monstro tem 1 arma que causa 2x dano. Descubra na batalha ou no catálogo.',hint:''},
+        {icon:'🌳',name:'Árvores de Habilidade',status:'known',
+         known:'Desbloqueadas com 5 drivers. Bênção, Maldito ou Peste — escolha define o estilo.',hint:''},
+        {icon:'🔩',name:'Sucata',status:'known',
+         known:'Acumulada entre runs. Usada para construir na Work Station.',hint:'Não se perde ao morrer.'},
+        {icon:'📡',name:'Frequência 47 Hz',status:'unknown',
+         known:'',hint:'Algo no diário menciona isso... Será que afeta o jogo?'},
+        {icon:'🚇',name:'O Trem',status:'partial',
+         known:'Volta a funcionar no nível 4 da Work Station.',hint:'O que ele traz além de recursos?'},
+      ],
+    },
+  },
+
   weapons:{
     espada:{icon:'⚔️',label:'ESPADA',crit:10,min:3,max:8,special:'urso',ascension:true},
     arco:{icon:'🏹',label:'ARCO',crit:10,min:2,max:7,special:'coruja'},
@@ -1553,6 +2174,52 @@ const DATA = {
     urso:{name:'Urso',icon:'🐻',hp:30,spawn:35,scale:1.5,dmg:{sanidade:8,lucidez:5},weakness:'espada',class:'FORÇA'},
     coruja:{name:'Coruja',icon:'🦉',hp:15,spawn:35,scale:1.2,dmg:{esperanca:12},weakness:'arco',class:'PERCEPÇÃO'},
     cervo:{name:'Cervo',icon:'🦌',hp:20,spawn:30,scale:2.0,dmg:{radioatividade:8,lucidez:3},weakness:'escopeta',class:'RAPIDEZ'}
+  },
+
+  // ── MINI-BOSSES ──────────────────────────────────────────────
+  // Aparecem apenas em dias >= 10, com chance baixa (5-12% por evento de combate)
+  // Têm muito mais HP, recompensam +scrap, e possuem ataques especiais
+  miniBosses:{
+    gosma_viva:{
+      name:'Gosma Viva',
+      icon:'🟢',
+      hp:80,
+      scale:1.0,
+      scrapReward:12,          // sucata bônus ao derrotar
+      class:'HORROR ORGÂNICO',
+      weakness:'escopeta',     // explosão dispersa a gosma
+      minDay:10,               // dia mínimo para aparecer
+      spawnChance:0.08,        // 8% de chance quando rola combate em dia >= minDay
+      lore:'Uma massa de matéria orgânica radioativa. Dois braços gigantes a arrastam pelo solo. Uma boca larga cospe veneno.',
+      // Ataque especial: Cuspe de Gosma Radioativa
+      specialAttack:{
+        name:'Cuspe de Gosma',
+        icon:'🤢',
+        triggerHpPct:0.6,      // ativa quando HP cai abaixo de 60%
+        cooldown:2,             // a cada 2 turnos
+        dmg:{hp:8, radioatividade:12, sanidade:8},
+        message:'A Gosma Viva cospe uma massa radioativa verde! Você sente a pele queimar...',
+        color:'#22aa22',
+      },
+      // Ataque normal (braçadas)
+      normalAttack:{
+        dmg:{hp:12, sanidade:6},
+        messages:[
+          'O braço esquerdo da Gosma te esmaga contra a parede!',
+          'O braço direito te arrasta pelo chão!',
+          'A Gosma te envolveu num abraço podre!',
+        ]
+      },
+      // Animação visual do boss
+      art:[
+        '    🟢🟢🟢    ',
+        '  🫁👁️🟢👁️🫁  ',
+        '🦾🟢🟢👄🟢🟢🦾',
+        '   🟢🟢🟢🟢   ',
+        '    🫧  🫧    ',
+      ],
+    },
+    // Adicione novos mini-bosses aqui no futuro
   },
 
   dialogs:{
@@ -3463,7 +4130,12 @@ const G = {
     const dead=this.checkDeath();
     if(dead) return;
     if(c.combat){
-      this.startCombat();
+      // Mini-boss: chance crescente em dias >= 10
+      if(this._shouldSpawnMiniBoss()){
+        this.startMiniBoss('gosma_viva');
+      } else {
+        this.startCombat();
+      }
     } else {
       this.nextDay();
     }
@@ -3480,6 +4152,197 @@ const G = {
   },
 
   // --- COMBAT ---
+
+  // ╔══════════════════════════════════════════════════╗
+  // ║           SISTEMA DE MINI-BOSS                   ║
+  // ╚══════════════════════════════════════════════════╝
+
+  _shouldSpawnMiniBoss(){
+    // Só aparece em dias >= 10, com chance crescente
+    if(!this.run || this.run.day < 10) return false;
+    // Chance base 8%, sobe 1% a cada 3 dias após dia 10
+    const extraChance = Math.floor((this.run.day - 10) / 3) * 0.01;
+    const chance = 0.08 + extraChance;
+    return Math.random() < chance;
+  },
+
+  startMiniBoss(bossKey){
+    SFX.startGeiger(90); // geiger no máximo — sinal de perigo
+    const b = DATA.miniBosses[bossKey];
+    this.combat = {
+      key: bossKey,
+      name: b.name,
+      icon: b.icon,
+      maxHp: b.hp,
+      hp: b.hp,
+      class: b.class,
+      weakness: b.weakness,
+      isBoss: true,
+      bossData: b,
+      specialCooldown: 0,   // turno do próximo ataque especial
+      turnCount: 0,
+      specialTriggered: false,
+    };
+    this.renderBossCombat('');
+  },
+
+  renderBossCombat(log){
+    this.renderHUD();
+    const c = this.combat;
+    const b = c.bossData;
+    const hpPct = Math.max(0, (c.hp / c.maxHp) * 100);
+    const w = DATA.weapons[this.run.weapon];
+    const isWeak = w.special === c.key;
+
+    // Aviso de ataque especial iminente
+    const specialReady = c.hp / c.maxHp < b.specialAttack.triggerHpPct
+                         && c.specialCooldown <= 0;
+    const warnHTML = specialReady
+      ? `<div class="boss-special-warn">⚠ ${b.specialAttack.icon} ATAQUE ESPECIAL CARREGANDO...</div>`
+      : '';
+
+    const weakHTML = isWeak
+      ? `<div class="monster-weakness" style="border-color:rgba(30,200,30,.4);color:#30ff30">⚡ FRAQUEZA: ${w.label} — DANO 2x</div>`
+      : '';
+
+    const artHTML = b.art
+      ? `<div class="boss-art">${b.art.join('<br>')}</div>`
+      : '';
+
+    const logHTML = log
+      ? `<div class="boss-log">${log}</div>`
+      : `<div class="boss-log">▶ A ${c.name} aguarda seu próximo movimento...</div>`;
+
+    const html = `
+      <div class="boss-card">
+        <div class="boss-label">⚠ MINI-BOSS DETECTADO ⚠</div>
+        <div class="boss-name">${c.icon} ${c.name}</div>
+        <div class="boss-class">CLASSE: ${c.class}</div>
+        ${artHTML}
+        <div class="boss-hp-track">
+          <div class="boss-hp-fill" id="boss-hp-fill" style="width:${hpPct}%"></div>
+        </div>
+        <div class="boss-hp-info">HP: ${c.hp} / ${c.maxHp}</div>
+        ${warnHTML}
+        ${weakHTML}
+        <div class="boss-scrap-reward">🔩 RECOMPENSA: +${b.scrapReward} SUCATA AO DERROTAR</div>
+        ${logHTML}
+        <button class="atk-btn-boss" id="boss-atk-btn" onclick="G.attackBoss()">⚔ ATACAR A ${c.name.toUpperCase()}</button>
+        <button class="flee-btn" onclick="G.fleeBoss()">↩ RECUAR (HP -15 | Esperança -10)</button>
+      </div>`;
+
+    this.setGameBody(html, false);
+  },
+
+  attackBoss(){
+    if(this._advancing) return;
+    // Desabilitar botões
+    document.querySelectorAll('.atk-btn-boss,.flee-btn').forEach(b=>{
+      b.disabled=true; b.style.opacity='.4';
+    });
+
+    const c = this.combat;
+    const b = c.bossData;
+    const w = DATA.weapons[this.run.weapon];
+    c.turnCount++;
+    c.specialCooldown = Math.max(0, c.specialCooldown - 1);
+
+    // ── Dano do jogador ──
+    let dmg = Math.floor(Math.random() * (w.max - w.min + 1)) + w.min;
+    let crit = false;
+    if(Math.random() * 100 < w.crit){ dmg += 12; crit = true; }
+    if(this._critHeal && crit){
+      this.run.stats.hp = Math.min(100, this.run.stats.hp + this._critHeal);
+    }
+    if(w.special === c.key) dmg = Math.floor(dmg * 2); // fraqueza 2x
+    c.hp = Math.max(0, c.hp - dmg);
+
+    let logParts = [];
+    logParts.push(`<span style="color:${crit?'#78ff88':'#a8d8a8'}">Você atacou ${c.name} por <b>${dmg}</b> de dano${crit?' <b style="color:#ffff60">CRÍTICO!</b>':''}${w.special===c.key?' <b style="color:#30ff30">FRAQUEZA!</b>':''}.</span>`);
+
+    const self = this;
+
+    const afterBossHit = () => {
+      // Atualizar HP bar
+      const hpPct = Math.max(0, (c.hp / c.maxHp) * 100);
+      const fill = document.getElementById('boss-hp-fill');
+      if(fill) fill.style.width = hpPct + '%';
+
+      // ── Boss derrotado ──
+      if(c.hp <= 0){
+        SFX.victory();
+        const scrap = b.scrapReward;
+        self.save.scrap = (self.save.scrap || 0) + scrap;
+        // Registrar kill para catálogo
+        self.run.killedTypes = self.run.killedTypes || {};
+        self.run.killedTypes[c.key] = true;
+        self.run.monstersKilled++;
+        SAVE.save(self.save);
+        const log = `<span style="color:#30ff30"><b>A ${c.name} foi destruída!</b><br>🔩 +${scrap} SUCATA COLETADA!</span>`;
+        const el = document.querySelector('.boss-log');
+        if(el) el.innerHTML = log;
+        setTimeout(()=>self.nextDay(), 1400);
+        return;
+      }
+
+      // ── Contra-ataque do boss ──
+      const useSpecial = c.hp / c.maxHp < b.specialAttack.triggerHpPct
+                         && c.specialCooldown <= 0;
+
+      if(useSpecial){
+        // ATAQUE ESPECIAL — Cuspe de Gosma
+        c.specialCooldown = b.specialAttack.cooldown;
+        const sp = b.specialAttack;
+        const s = self.run.stats;
+        for(const [stat, val] of Object.entries(sp.dmg)){
+          s[stat] = Math.max(0, Math.min(stat==='radioatividade'?100:100, s[stat] - val));
+        }
+        const dmgStr = Object.entries(sp.dmg).map(([k,v])=>k.toUpperCase()+' -'+v).join(' | ');
+        logParts.push(`<br><span class="boss-special-log">${sp.icon} <b>ATAQUE ESPECIAL: ${sp.name}!</b><br>${sp.message}<br>${dmgStr}</span>`);
+        // Efeito visual — flash verde
+        document.body.style.backgroundColor = 'rgba(0,80,0,.4)';
+        setTimeout(()=>{ document.body.style.backgroundColor = ''; }, 300);
+        SFX.hurt();
+      } else {
+        // Ataque normal — braçada
+        const msgs = b.normalAttack.messages;
+        const msg = msgs[Math.floor(Math.random() * msgs.length)];
+        const s = self.run.stats;
+        for(const [stat, val] of Object.entries(b.normalAttack.dmg)){
+          s[stat] = Math.max(0, s[stat] - val);
+        }
+        const dmgStr = Object.entries(b.normalAttack.dmg).map(([k,v])=>k.toUpperCase()+' -'+v).join(' | ');
+        logParts.push(`<br><span style="color:#ff8888">${c.icon} ${msg}<br>${dmgStr}</span>`);
+        SFX.hurt();
+      }
+
+      self.renderHUD();
+      const dead = self.checkDeath();
+      if(!dead){
+        // Re-render do combate com novo log
+        self.renderBossCombat(logParts.join(''));
+        // Reabilitar botões (renderBossCombat já cria botões novos)
+      }
+    };
+
+    if(crit){
+      CRIT_ANIM.show(this.run.weapon, afterBossHit);
+    } else {
+      SFX.hit(false);
+      afterBossHit();
+    }
+  },
+
+  fleeBoss(){
+    if(this._advancing) return;
+    const s = this.run.stats;
+    s.hp = Math.max(0, s.hp - 15);
+    s.esperanca = Math.max(0, s.esperanca - 10);
+    this.renderHUD();
+    const dead = this.checkDeath();
+    if(!dead) this.nextDay();
+  },
+
   startCombat(){
     SFX.startGeiger(this.run.stats.radioatividade);
     const monsterKeys=Object.keys(DATA.monsters);
@@ -4117,6 +4980,419 @@ const G = {
   },
 
   // --- FINALS TREE ---
+
+  // ╔══════════════════════════════════════════════╗
+  // ║           DIÁRIO DO WILLIAM                  ║
+  // ╚══════════════════════════════════════════════╝
+
+  _diaryTab: 'pages',
+
+  showDiary(){
+    SFX.click();
+    this._diaryTab='pages';
+    this.showScreen('s-diary');
+    // Aguarda transição e renderiza
+    setTimeout(()=>{ this._renderDiaryPages(); }, 350);
+  },
+
+  switchDiaryTab(tab){
+    SFX.click();
+    this._diaryTab=tab;
+    document.querySelectorAll('.diary-tab').forEach(t=>t.classList.remove('active'));
+    const el=document.getElementById('dtab-'+tab);
+    if(el) el.classList.add('active');
+    if(tab==='pages') this._renderDiaryPages();
+    else this._renderDiaryCatalog();
+  },
+
+  _cityLevel(){
+    const built=(this.save.city||{built:[]}).built||[];
+    const n=built.length;
+    if(n>=7) return 4;
+    if(n>=4) return 3;
+    if(n>=2) return 2;
+    return 1;
+  },
+
+  _renderDiaryPages(){
+    const body=document.getElementById('diary-body');
+    if(!body) return;
+    const lvl=this._cityLevel();
+    const pages=DATA.diary.pages;
+    // Páginas lidas (guardadas no save)
+    const read=this.save.diaryRead||[];
+
+    const cards=pages.map((pg,i)=>{
+      const unlocked=pg.unlocksAt<=lvl;
+      const isNew=unlocked&&!read.includes(i);
+      if(!unlocked){
+        return `<div class="diary-page-card locked">
+          <div class="diary-pg-num">${pg.num}</div>
+          <div class="diary-pg-title" style="color:rgba(160,100,30,.3)">${pg.title}</div>
+          <div class="diary-pg-lock">🔒 Nível ${pg.unlocksAt} da Work Station</div>
+        </div>`;
+      }
+      return `<div class="diary-page-card" onclick="G.openDiaryPage(${i})">
+        ${isNew?'<div class="diary-pg-new">NOVO</div>':''}
+        <div class="diary-pg-num">${pg.num}</div>
+        <div class="diary-pg-date">${pg.date}</div>
+        <div class="diary-pg-title">${pg.title}</div>
+        <div class="diary-pg-preview">${pg.preview}</div>
+      </div>`;
+    }).join('');
+
+    body.innerHTML=`<div class="diary-pages-grid">${cards}</div>`;
+  },
+
+  openDiaryPage(i){
+    SFX.click();
+    const pg=DATA.diary.pages[i];
+    if(!pg) return;
+
+    // Marcar como lida
+    this.save.diaryRead=this.save.diaryRead||[];
+    if(!this.save.diaryRead.includes(i)){
+      this.save.diaryRead.push(i);
+      try{localStorage.setItem('matrix_tll_save',JSON.stringify(this.save));}catch{}
+    }
+
+    // Converter marcadores de texto em spans
+    const formatText=(txt)=>txt
+      .replace(/<RED>([\s\S]*?)<\/RED>/g,'<span class="ink-red">$1</span>')
+      .replace(/<FADED>([\s\S]*?)<\/FADED>/g,'<span class="ink-faded">$1</span>')
+      .replace(/<VOICE>([\s\S]*?)<\/VOICE>/g,'<span class="ink-voice">$1</span>');
+
+    // Criar overlay
+    const overlay=document.createElement('div');
+    overlay.className='parchment-overlay';
+    overlay.id='parchment-overlay';
+    // Fechar ao clicar fora do papel (no fundo escuro)
+    overlay.addEventListener('click', function(e){
+      if(e.target===overlay){ overlay.remove(); G._renderDiaryPages(); }
+    });
+
+    // Canvas de pergaminho vai ser desenhado depois
+    overlay.innerHTML=`
+      <div class="parchment-wrap" id="parch-wrap">
+        <canvas class="parchment-canvas" id="parch-canvas"></canvas>
+        <div class="parchment-content">
+          <div class="parchment-scroll">
+            <div class="parchment-pg-number">${pg.num}</div>
+            <div class="parchment-pg-date">${pg.date}</div>
+            <div class="parchment-pg-title">${pg.title}</div>
+            <div class="parchment-text" id="parch-text"></div>
+          </div>
+          <div class="parchment-close">
+            <button class="parchment-close-btn" onclick="document.getElementById('parchment-overlay').remove();G._renderDiaryPages();">✕ FECHAR DIÁRIO</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Desenhar canvas de pergaminho
+    requestAnimationFrame(()=>{
+      this._drawParchment();
+      // Typewriter no texto
+      const el=document.getElementById('parch-text');
+      const raw=pg.content;
+      // Converter antes do typewriter para HTML com spans
+      const formatted=formatText(raw);
+      // Typewriter caracter a caracter no HTML pré-formatado
+      el.innerHTML='';
+      let charIdx=0;
+      const stripped=raw.replace(/<[A-Z]+>|<\/[A-Z]+>/g,'');
+      const totalChars=stripped.length;
+      const speed=18; // ms por char
+
+      // Mostrar tudo logo (sem typewriter em HTML formatado — evitar bugs)
+      // Usar typewriter só no texto plano, depois trocar por HTML
+      let displayed='';
+      const timer=setInterval(()=>{
+        if(charIdx>=raw.length){
+          clearInterval(timer);
+          el.innerHTML=formatted;
+          return;
+        }
+        // Pular tags inteiras de uma vez
+        if(raw[charIdx]==='<'){
+          const closeIdx=raw.indexOf('>',charIdx);
+          if(closeIdx!==-1){charIdx=closeIdx+1;}
+        }
+        // Mostrar texto plano progressivamente até o índice atual
+        const visibleRaw=raw.slice(0,charIdx);
+        el.innerHTML=formatText(visibleRaw);
+        charIdx+=2;
+      },speed);
+    });
+  },
+
+  _drawParchment(){
+    const canvas=document.getElementById('parch-canvas');
+    if(!canvas) return;
+    const wrap=document.getElementById('parch-wrap');
+    if(!wrap) return;
+    const W=wrap.offsetWidth||360, H=wrap.offsetHeight||520;
+    canvas.width=W; canvas.height=H;
+    const cx=canvas.getContext('2d');
+
+    // ══ 1. BASE — gradiente de pergaminho envelhecido (tons dourados/ocre) ══
+    const base=cx.createLinearGradient(0,0,W,H);
+    base.addColorStop(0,   '#cfa05a');
+    base.addColorStop(0.12,'#d8aa65');
+    base.addColorStop(0.28,'#c89848');
+    base.addColorStop(0.45,'#d4a85c');
+    base.addColorStop(0.62,'#c49040');
+    base.addColorStop(0.78,'#d0a255');
+    base.addColorStop(1,   '#b88535');
+    cx.fillStyle=base; cx.fillRect(0,0,W,H);
+
+    // ══ 2. PATCHES DE COR — variações irregulares de tonalidade ══
+    const rng=(s,mn,mx)=>{const x=Math.sin(s)*43758.5453;return mn+(x-Math.floor(x))*(mx-mn);};
+    for(let i=0;i<18;i++){
+      const px=rng(i*1.1,0,W), py=rng(i*2.3,0,H);
+      const pr=rng(i*3.7,W*.05,W*.22);
+      const bright=rng(i*5.1,0,1)>.5;
+      const g=cx.createRadialGradient(px,py,0,px,py,pr);
+      const col=bright?`rgba(210,170,80,${rng(i*7.3,.04,.14)})`:`rgba(80,45,5,${rng(i*9.1,.04,.13)})`;
+      g.addColorStop(0,col); g.addColorStop(1,'transparent');
+      cx.fillStyle=g; cx.fillRect(0,0,W,H);
+    }
+
+    // ══ 3. TEXTURA DE FIBRA DE PAPIRO — linhas orgânicas horizontais ══
+    cx.save();
+    for(let y=0;y<H;y+=1){
+      const seed=y*.17;
+      const wave=Math.sin(seed)*2;
+      const alpha=0.03+Math.abs(Math.sin(seed+1.2))*.04;
+      const dark=Math.sin(seed*.7)>.3;
+      cx.fillStyle=dark?`rgba(60,30,5,${alpha})`:`rgba(200,160,80,${alpha*.5})`;
+      cx.fillRect(0,y+wave,W,1);
+    }
+    // Fibras verticais mais sutis
+    for(let x=0;x<W;x+=3){
+      const alpha=.01+Math.abs(Math.sin(x*.23))*.015;
+      cx.fillStyle=`rgba(80,45,10,${alpha})`;
+      cx.fillRect(x,0,1,H);
+    }
+    cx.restore();
+
+    // ══ 4. LINHAS DE PAUTA — como no manuscrito da imagem ══
+    cx.save();
+    cx.strokeStyle='rgba(90,55,15,.12)';
+    cx.lineWidth=.8;
+    const lineStart=50, lineSpacing=19;
+    for(let y=lineStart;y<H-40;y+=lineSpacing){
+      // Leve ondulação nas linhas (papel não é perfeitamente plano)
+      cx.beginPath();
+      for(let x=18;x<=W-18;x+=4){
+        const dy=Math.sin((x+y)*.025)*.6;
+        if(x===18) cx.moveTo(x,y+dy);
+        else cx.lineTo(x,y+dy);
+      }
+      cx.stroke();
+    }
+    // Margem esquerda vertical (como nos manuscritos medievais)
+    cx.strokeStyle='rgba(90,55,15,.15)';
+    cx.lineWidth=.7;
+    cx.beginPath(); cx.moveTo(28,20); cx.lineTo(28,H-20); cx.stroke();
+    cx.restore();
+
+    // ══ 5. MANCHAS DE ÁGUA / UMIDADE ══
+    const water=[
+      {x:W*.07, y:H*.18, rx:W*.08, ry:H*.06, a:.07},
+      {x:W*.85, y:H*.12, rx:W*.06, ry:H*.05, a:.06},
+      {x:W*.15, y:H*.75, rx:W*.1,  ry:H*.07, a:.08},
+      {x:W*.78, y:H*.72, rx:W*.07, ry:H*.05, a:.06},
+      {x:W*.5,  y:H*.92, rx:W*.12, ry:H*.04, a:.05},
+      {x:W*.92, y:H*.45, rx:W*.05, ry:H*.06, a:.07},
+    ];
+    water.forEach(({x,y,rx,ry,a})=>{
+      cx.save();
+      cx.translate(x,y); cx.scale(rx,ry);
+      const g=cx.createRadialGradient(0,0,0,0,0,1);
+      g.addColorStop(0,`rgba(90,55,10,${a})`);
+      g.addColorStop(0.6,`rgba(70,40,5,${a*.5})`);
+      g.addColorStop(1,'transparent');
+      cx.fillStyle=g; cx.beginPath(); cx.arc(0,0,1,0,Math.PI*2); cx.fill();
+      cx.restore();
+    });
+
+    // ══ 6. FOXING — pontos de oxidação (característicos de papel velho) ══
+    cx.save();
+    const foxSeeds=[17,31,47,59,73,89,101,113,127,139,
+                    151,163,179,191,197,211,223,229,241,251,
+                    257,263,269,271,277,281,283,293,307,311];
+    foxSeeds.forEach((s,i)=>{
+      const fx=(s*137+i*53)%W;
+      const fy=(s*91+i*67)%H;
+      const fr=rng(s*.3,0.8,3.5);
+      const fa=rng(s*.7,.15,.45);
+      const rust=rng(s*1.1,0,1)>.4;
+      const col=rust?`rgba(120,60,15,${fa})`:`rgba(80,40,8,${fa})`;
+      cx.beginPath(); cx.arc(fx,fy,fr,0,Math.PI*2);
+      cx.fillStyle=col; cx.fill();
+      // Halo em volta do ponto
+      const hg=cx.createRadialGradient(fx,fy,fr*.5,fx,fy,fr*2.5);
+      hg.addColorStop(0,`rgba(100,50,10,${fa*.3})`); hg.addColorStop(1,'transparent');
+      cx.fillStyle=hg; cx.beginPath(); cx.arc(fx,fy,fr*2.5,0,Math.PI*2); cx.fill();
+    });
+    cx.restore();
+
+    // ══ 7. ESCURECIMENTO DAS BORDAS ══
+    // Borda geral
+    const edgeG=cx.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,Math.max(W,H)*.75);
+    edgeG.addColorStop(0,'transparent');
+    edgeG.addColorStop(0.65,'rgba(40,20,3,.06)');
+    edgeG.addColorStop(1,'rgba(20,8,1,.5)');
+    cx.fillStyle=edgeG; cx.fillRect(0,0,W,H);
+    // Topo
+    const tG=cx.createLinearGradient(0,0,0,H*.1);
+    tG.addColorStop(0,'rgba(15,6,1,.55)'); tG.addColorStop(1,'transparent');
+    cx.fillStyle=tG; cx.fillRect(0,0,W,H*.1);
+    // Base
+    const bG=cx.createLinearGradient(0,H*.9,0,H);
+    bG.addColorStop(0,'transparent'); bG.addColorStop(1,'rgba(15,6,1,.5)');
+    cx.fillStyle=bG; cx.fillRect(0,H*.9,W,H*.1);
+    // Lateral esquerda (mais escura — como dobra)
+    const lG=cx.createLinearGradient(0,0,W*.06,0);
+    lG.addColorStop(0,'rgba(10,4,1,.45)'); lG.addColorStop(1,'transparent');
+    cx.fillStyle=lG; cx.fillRect(0,0,W*.06,H);
+    // Lateral direita
+    const rG=cx.createLinearGradient(W*.94,0,W,0);
+    rG.addColorStop(0,'transparent'); rG.addColorStop(1,'rgba(10,4,1,.4)');
+    cx.fillStyle=rG; cx.fillRect(W*.94,0,W*.06,H);
+
+    // ══ 8. BORDAS IRREGULARES — desgaste físico ══
+    cx.save();
+    cx.fillStyle='rgba(8,3,0,.6)';
+    // Topo irregular
+    for(let x=0;x<W;x+=2){
+      const h2=Math.abs(Math.sin(x*.13+.5)*3+Math.sin(x*.07)*2)+1;
+      cx.fillRect(x,0,2,h2);
+    }
+    // Base irregular
+    for(let x=0;x<W;x+=2){
+      const h2=Math.abs(Math.sin(x*.11+1.2)*3+Math.sin(x*.08)*2)+1;
+      cx.fillRect(x,H-h2,2,h2);
+    }
+    // Lateral esquerda irregular
+    for(let y=0;y<H;y+=2){
+      const w2=Math.abs(Math.sin(y*.09+.3)*2+Math.sin(y*.05)*1.5)+0.5;
+      cx.fillRect(0,y,w2,2);
+    }
+    // Lateral direita irregular
+    for(let y=0;y<H;y+=2){
+      const w2=Math.abs(Math.sin(y*.12+2.1)*2+Math.sin(y*.06)*1.5)+0.5;
+      cx.fillRect(W-w2,y,w2,2);
+    }
+    cx.restore();
+
+    // ══ 9. CANTO DOBRADO (inferior direito, como no manuscrito) ══
+    cx.save();
+    const cs=28;
+    cx.fillStyle='rgba(90,55,15,.25)';
+    cx.beginPath(); cx.moveTo(W,H-cs); cx.lineTo(W-cs,H); cx.lineTo(W,H); cx.closePath(); cx.fill();
+    cx.fillStyle='rgba(180,130,60,.4)';
+    cx.beginPath(); cx.moveTo(W-cs,H); cx.lineTo(W,H-cs); cx.lineTo(W-cs-8,H-8); cx.closePath(); cx.fill();
+    // Sombra da dobra
+    const csG=cx.createLinearGradient(W-cs-4,H-4,W-2,H-cs-4);
+    csG.addColorStop(0,'rgba(20,8,1,.3)'); csG.addColorStop(1,'transparent');
+    cx.fillStyle=csG;
+    cx.beginPath(); cx.moveTo(W-cs-8,H-8); cx.lineTo(W,H-cs); cx.lineTo(W-cs,H); cx.closePath(); cx.fill();
+    cx.restore();
+
+    // ══ 10. BRILHO CENTRAL (papel mais claro no centro como iluminação) ══
+    const centerG=cx.createRadialGradient(W*.45,H*.4,0,W*.45,H*.4,Math.min(W,H)*.5);
+    centerG.addColorStop(0,'rgba(240,200,120,.06)');
+    centerG.addColorStop(1,'transparent');
+    cx.fillStyle=centerG; cx.fillRect(0,0,W,H);
+
+    // ══ 11. ORNAMENTO NO TOPO (como decoração dos manuscritos medievais) ══
+    cx.save();
+    cx.globalAlpha=0.12;
+    cx.strokeStyle='rgba(60,30,5,1)';
+    cx.lineWidth=1;
+    const oy=16, ow=W*.6, ox=W*.2;
+    // Linha decorativa dupla
+    cx.beginPath(); cx.moveTo(ox,oy); cx.lineTo(ox+ow,oy); cx.stroke();
+    cx.beginPath(); cx.moveTo(ox,oy+3); cx.lineTo(ox+ow,oy+3); cx.stroke();
+    // Pequenos losangos ao longo da linha (estilo bizantino)
+    for(let x=ox+10;x<ox+ow-10;x+=14){
+      cx.beginPath();
+      cx.moveTo(x,oy-3); cx.lineTo(x+4,oy+1.5); cx.lineTo(x,oy+6); cx.lineTo(x-4,oy+1.5);
+      cx.closePath(); cx.stroke();
+    }
+    cx.restore();
+  },
+
+  _renderDiaryCatalog(){
+    const body=document.getElementById('diary-body');
+    if(!body) return;
+    const run=this.run;
+    const kills=run?run.tipos_mortos||{}:{};
+    const d=this.save.drivers||[];
+    const finaisUnlock=this.save.finals||[];
+
+    // ── Monstros ──
+    const catMon=DATA.diary.catalog.monstros.map(m=>{
+      const viu=kills[m.name.toLowerCase()]||false;
+      const status=viu?'known':'unknown';
+      return `<div class="catalog-row">
+        <div class="cat-icon">${m.icon}</div>
+        <div class="cat-body">
+          <div class="cat-name">${m.name}</div>
+          <div class="cat-hint ${viu?'':'cat-blur'}">${viu?m.known:'???'}</div>
+        </div>
+        <div class="cat-status ${viu?'cat-known':'cat-unknown'}">${viu?'SABE':'???'}</div>
+      </div>`;
+    }).join('');
+
+    // ── Finais ──
+    const catFin=DATA.diary.catalog.finais.map(f=>{
+      const got=finaisUnlock.includes(f.icon)||f.status==='known';
+      const partial=f.status==='partial';
+      const cls=got?'cat-known':partial?'cat-partial':'cat-unknown';
+      const lbl=got?'DESBLOQUEADO':partial?'PISTA':'???';
+      return `<div class="catalog-row">
+        <div class="cat-icon">${f.icon}</div>
+        <div class="cat-body">
+          <div class="cat-name">${f.name}</div>
+          <div class="cat-hint ${got||partial?'':'cat-blur'}">${got?f.known:partial?f.hint:'???'}</div>
+        </div>
+        <div class="cat-status ${cls}">${lbl}</div>
+      </div>`;
+    }).join('');
+
+    // ── Dicas ──
+    const catDic=DATA.diary.catalog.dicas.map(d2=>{
+      const show=d2.status==='known'||(d2.status==='partial');
+      return `<div class="catalog-row">
+        <div class="cat-icon">${d2.icon}</div>
+        <div class="cat-body">
+          <div class="cat-name">${d2.name}</div>
+          <div class="cat-hint ${d2.status!=='unknown'?'':'cat-blur'}">${d2.status!=='unknown'?d2.known:'???'}</div>
+        </div>
+        <div class="cat-status ${d2.status==='known'?'cat-known':d2.status==='partial'?'cat-partial':'cat-unknown'}">${d2.status==='known'?'SABE':d2.status==='partial'?'PISTA':'???'}</div>
+      </div>`;
+    }).join('');
+
+    body.innerHTML=`<div class="diary-catalog">
+      <div class="catalog-section">
+        <div class="catalog-sec-title">⚔ CRIATURAS ENCONTRADAS</div>
+        ${catMon}
+      </div>
+      <div class="catalog-section">
+        <div class="catalog-sec-title">🌿 FINAIS DESCOBERTOS</div>
+        ${catFin}
+      </div>
+      <div class="catalog-section">
+        <div class="catalog-sec-title">💡 DICAS E PISTAS</div>
+        ${catDic}
+      </div>
+    </div>`;
+  },
+
   showWorkStation(){
     const d=this.save.drivers||[];
     // Precisa dos 4 drivers comuns (indices 0-3) E do driver do Butcher (index 4)
@@ -5862,6 +7138,24 @@ window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_dPrmt=e;co
 function installApp(){if(!_dPrmt){G.popup('Abra no Chrome → Menu → Adicionar à tela inicial','#00E676');return;}_dPrmt.prompt();_dPrmt.userChoice.then(()=>{_dPrmt=null;});}
 window.addEventListener('appinstalled',()=>{G.popup('✓ Matrix TLL instalado como app!','#00E676');const b=document.getElementById('install-btn');if(b)b.style.display='none';});
 </script>
+
+
+<!-- ═══════════════════════════════════ DIÁRIO ═══ -->
+<div id="s-diary" class="scr" style="padding:0;justify-content:flex-start;">
+  <div style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px 8px;border-bottom:1px solid rgba(160,100,30,.2);background:rgba(14,10,6,.98);flex-shrink:0;">
+    <button onclick="document.querySelectorAll('.parchment-overlay').forEach(el=>el.remove());G.showScreen('s-menu')" style="background:transparent;border:1px solid rgba(200,140,26,.3);color:#c8901a;font-family:monospace;font-size:11px;letter-spacing:1px;padding:6px 10px;cursor:pointer;border-radius:4px;flex-shrink:0;">← MENU</button>
+    <div style="flex:1;text-align:center;">
+      <div class="diary-title" style="font-size:18px">📖 DIÁRIO DE WILLIAM</div>
+      <div class="diary-sub">CASTELO · 0047</div>
+    </div>
+    <div style="width:60px"></div>
+  </div>
+  <div class="diary-tabs" style="flex-shrink:0;">
+    <button class="diary-tab active" id="dtab-pages" onclick="G.switchDiaryTab('pages')">📝 PÁGINAS</button>
+    <button class="diary-tab" id="dtab-catalog" onclick="G.switchDiaryTab('catalog')">📋 CATÁLOGO</button>
+  </div>
+  <div class="diary-body" id="diary-body" style="flex:1;overflow-y:auto;width:100%;"></div>
+</div>
 
 </body>
 </html>
