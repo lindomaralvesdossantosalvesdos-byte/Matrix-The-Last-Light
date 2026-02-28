@@ -1799,7 +1799,7 @@ button{-webkit-appearance:none;touch-action:manipulation;}
     <div class="ws-sub">Construa. Fortaleça. Sobreviva.</div>
     <div class="ws-scrap">🔩 Sucata: <span id="cidade-scrap">0</span></div>
   </div>
-  <div id="cidade-mapa" style="position:relative;flex:1;overflow:hidden;"></div>
+  <div id="cidade-mapa" style="position:relative;width:100%;overflow:hidden;flex:0 0 auto;"></div>
   <div id="cidade-info" style="padding:12px;border-top:1px solid rgba(0,255,65,.08);min-height:80px;"></div>
   <button class="flee-btn" onclick="G.showWorkStation();SFX.click()">← WORK STATION</button>
 </div>
@@ -1811,7 +1811,7 @@ button{-webkit-appearance:none;touch-action:manipulation;}
     <div class="ws-scrap">🔩 Sucata: <span id="ws-scrap-count">0</span></div>
   </div>
   <div id="ws-body" class="ws-body"></div>
-  <button class="fonclick="G.showScreen('s-menu');G._updateMenuButtons();SFX.click()">← VOLTAR</button>
+  <button class="flee-btn" onclick="G.showScreen('s-menu');G._updateMenuButtons();SFX.click()">← MENU PRINCIPAL</button>
 </div>
 
 <div id="s-auditorio" class="scr">
@@ -6837,13 +6837,19 @@ function draw(){
       btn.style.top=(pos.y*100)+'%';
       btn.style.width='14%'; btn.style.height='10%';
       if(isBuilt){
-        btn.style.border='2px solid rgba(0,255,65,.4)';
-        btn.style.borderRadius='3px';
-        btn.style.boxShadow='0 0 8px rgba(0,255,65,.2)';
+        // Construído: botão invisível — o mapa já mostra o edifício
+        btn.style.border='none';
+        btn.style.pointerEvents='none'; // não captura cliques
+        btn.style.opacity='0';
       } else if(canAfford){
-        btn.style.border='2px solid rgba(255,153,0,.6)';
+        btn.style.border='2px solid rgba(255,153,0,.7)';
         btn.style.borderRadius='3px';
+        btn.style.background='rgba(255,153,0,.08)';
         btn.style.animation='pulse-orange 1s infinite';
+      } else {
+        // Não pode comprar: bordinha discreta
+        btn.style.border='1px solid rgba(255,153,0,.2)';
+        btn.style.borderRadius='3px';
       }
       btn.title=b.name+(isBuilt?' ✓':' — '+b.cost+' sucata');
       btn.onclick=()=>self.showBuildingInfo(b,isBuilt,canAfford);
